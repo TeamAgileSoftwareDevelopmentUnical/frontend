@@ -21,17 +21,17 @@
 
     <ion-item lines="full">
       <ion-label position="floating">Email</ion-label>
-      <ion-input type="text" required [(ngModel)] ="customerAccount.email"></ion-input>
+      <ion-input type="email" inputmode="email" pattern=".+@.+\..+" required [(ngModel)] ="customerAccount.email"></ion-input>
     </ion-item>
 
     <ion-item lines="full">
       <ion-label position="floating">Username</ion-label>
-      <ion-input type="text" required [(ngModel)] ="customerAccount.username"></ion-input>
+      <ion-input type="text" required minlength="6" maxlength = "25" [(ngModel)] ="customerAccount.username"></ion-input>
     </ion-item>
 
     <ion-item lines="full">
       <ion-label position="floating">Password</ion-label>
-      <ion-input type="password" required [(ngModel)] ="customerAccount.password"></ion-input>
+      <ion-input type="password" clearOnEdit="false" minlength="6" required [(ngModel)] ="customerAccount.password"></ion-input>
     </ion-item>
 
     <ion-row>
