@@ -1,7 +1,7 @@
 import { CustomerAccount } from "./customeraccount";
 import { Product } from "./product";
 
-export class Chart{
+export class Purhcase{
     id: number;
     customer: CustomerAccount;
     date: Date;

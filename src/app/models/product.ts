@@ -1,4 +1,4 @@
-import { Chart } from "./chart";
+import { Purhcase } from "./purhcase";
 import { Type } from "./enumproduct";
 import { SellerAccount } from "./selleraccount";
 
@@ -9,7 +9,7 @@ export class Product{
     price: number;
     seller : SellerAccount;
     availableQuantity: number;
-    charts : Chart[];
+    charts : Purhcase[];
     type : Type;
 
 }
