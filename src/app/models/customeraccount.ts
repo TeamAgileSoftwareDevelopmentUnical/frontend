@@ -1,6 +1,6 @@
 import { Account } from "./account";
-import { Purhcase } from "./purhcase";
+import { Purchase } from "./purchase";
 
 export class CustomerAccount extends Account {
-    charts : Purhcase[]; 
+    charts : Purchase[]; 
 }
