@@ -16,5 +16,4 @@ import { SellerAccount } from "../models/selleraccount";
 
         return this.http.post(this.host+"/create-seller", sellerAccount);
       }
-
   }

@@ -34,15 +34,19 @@
       <ion-input type="password" clearOnEdit="false" minlength="6" required [(ngModel)] ="customerAccount.password"></ion-input>
     </ion-item>
 
+    <ion-item>
+      <ion-label>Account type</ion-label>
+      <ion-select placeholder="Select One" value="c">
+        <ion-select-option value="c">Customer</ion-select-option>
+        <ion-select-option value="s">Seller</ion-select-option>
+      </ion-select>
+    </ion-item>
+
     <ion-row>
       <ion-col>
         <ion-button [disabled]="cantSubmit()" (click)="submit()" type="submit" color="danger" expand="block">Sign Up</ion-button>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-button (click)="submitSeller()" type="submit" color="danger" expand="block">Sign Up</ion-button>
-      </ion-col>
-    </ion-row>
+
   </ion-list>
 </ion-content>

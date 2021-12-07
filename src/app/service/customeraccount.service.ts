@@ -20,4 +20,8 @@ import { CustomerAccount } from "../models/customeraccount";
     {
       return this.http.get(this.host+"/login" + [user + pass]);
     }
+    update(name : string, surname : string, email : string )
+    {
+      return this.http.get(this.host+"/login" + [name + surname + email]);
+    }
 }
