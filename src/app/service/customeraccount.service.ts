@@ -16,9 +16,9 @@ import { CustomerAccount } from "../models/customeraccount";
     {
       return this.http.post(this.host+"/create", request);
     }
-    login(user : string, pass : string )
-    {
-      return this.http.get(this.host+"/login" + [user + pass]);
+    login(username : string, password : string )
+    {//todo
+    return this.http.post(this.host+"/login" , {username,password});
     }
     update(name : string, surname : string, email : string )
     {
