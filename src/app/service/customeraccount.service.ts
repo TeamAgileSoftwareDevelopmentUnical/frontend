@@ -9,6 +9,7 @@ import { CustomerAccount } from "../models/customeraccount";
   export class CustomerAccountService {
   
     host = environment.apiBaseUrl+"/customer-account";
+    h = environment.apiBaseUrl
 
     constructor(private http: HttpClient) { }
   
@@ -16,9 +17,9 @@ import { CustomerAccount } from "../models/customeraccount";
     {
       return this.http.post(this.host+"/create", request);
     }
-    login(username : string, password : string )
+    login( c : CustomerAccount )
     {//todo
-    return this.http.post(this.host+"/login" , {username,password});
+    return this.http.post(this.h+"/login" , c);
     }
     update(name : string, surname : string, email : string )
     {

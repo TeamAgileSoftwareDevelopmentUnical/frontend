@@ -16,12 +16,29 @@ export class LoginPage implements OnInit {
   username : string = "";
   password : string = "";
 
+  respUser : string;
+  respPass : string;
+  c : CustomerAccount = new CustomerAccount();
   ngOnInit() {
   }
 
   submit(){
-    this.customerAccountService.login(this.username, this.password)
+    this.c.username = this.username;
+    this.c.password = this.password;
+    this.customerAccountService.login(this.c)
     .subscribe((response: CustomerAccount) => {
+      if (response) {
+        sessionStorage.setItem(
+          'token',
+          btoa(this.respUser + ':' + this.respPass)
+        );
+        console.log("se", sessionStorage)
+        console.log("acc= ",sessionStorage.getItem)
+        // this.router.navigate(['']);
+        console.log(response)
+    } else {
+        alert("Authentication failed.");
+    }
       console.log("Customer : ",response);
     },(error : HttpErrorResponse)=>{
       console.log("Error : ", error);
