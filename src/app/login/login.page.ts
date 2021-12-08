@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerAccount } from '../models/customeraccount';
 import { CustomerAccountService } from '../service/customeraccount.service';
 
@@ -11,14 +11,16 @@ import { CustomerAccountService } from '../service/customeraccount.service';
 })
 export class LoginPage implements OnInit {
 
-  constructor(private customerAccountService : CustomerAccountService, private route: ActivatedRoute,) { }
+  constructor(private customerAccountService : CustomerAccountService, private route: ActivatedRoute, private router: Router) { }
 
   username : string = "";
   password : string = "";
 
   respUser : string;
   respPass : string;
+
   c : CustomerAccount = new CustomerAccount();
+  
   ngOnInit() {
   }
 
@@ -28,13 +30,12 @@ export class LoginPage implements OnInit {
     this.customerAccountService.login(this.c)
     .subscribe((response: CustomerAccount) => {
       if (response) {
-        sessionStorage.setItem(
-          'token',
-          btoa(this.respUser + ':' + this.respPass)
-        );
-        console.log("se", sessionStorage)
-        console.log("acc= ",sessionStorage.getItem)
-        // this.router.navigate(['']);
+        sessionStorage.setItem( 'token', btoa(this.username + ':' + this.password) );
+        sessionStorage.setItem( 'username', this.username );
+
+        console.log("sessoin details", sessionStorage)
+
+        this.router.navigate(['/profile']);
         console.log(response)
     } else {
         alert("Authentication failed.");

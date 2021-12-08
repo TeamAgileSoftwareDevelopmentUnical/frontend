@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen="true" slot="fixed" >
+<ion-content fullscreen="true" slot="fixed" username={getUsername()} >
   <div class="ion-padding">
   </div>
   <div class="card">
@@ -21,11 +21,11 @@
   </div>
   <div class="card-body">
     <div class="user-meta ion-text-center">
-      <h3 class="playername">USERNAME</h3>
+      <h3 class="playername">{{userName}}</h3>
     </div>
     <ion-item>
       <ion-label position="floating">Name</ion-label>
-      <ion-input value="ciao"></ion-input>
+      <ion-input></ion-input>
     </ion-item>
     
     <ion-item>
