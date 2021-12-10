@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Account } from '../models/account';
 import { CustomerAccount } from '../models/customeraccount';
 import { CustomerAccountService } from '../service/customeraccount.service';
 
@@ -19,7 +20,7 @@ export class LoginPage implements OnInit {
   respUser : string;
   respPass : string;
 
-  c : CustomerAccount = new CustomerAccount();
+  c : Account = new Account();
   
   ngOnInit() {
   }
@@ -28,15 +29,12 @@ export class LoginPage implements OnInit {
     this.c.username = this.username;
     this.c.password = this.password;
     this.customerAccountService.login(this.c)
-    .subscribe((response: CustomerAccount) => {
+    .subscribe((response: any) => {
       if (response) {
-        sessionStorage.setItem( 'token', btoa(this.username + ':' + this.password) );
-        sessionStorage.setItem( 'username', this.username );
-
-        console.log("sessoin details", sessionStorage)
+        sessionStorage.setItem( 'token', response.token);
+        sessionStorage.setItem( 'username', response.username);
 
         this.router.navigate(['/profile']);
-        console.log(response)
     } else {
         alert("Authentication failed.");
     }

@@ -1,6 +1,7 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
+import { Account } from "../models/account";
 import { CustomerAccount } from "../models/customeraccount";
 
 @Injectable({
@@ -13,16 +14,28 @@ import { CustomerAccount } from "../models/customeraccount";
 
     constructor(private http: HttpClient) { }
   
-    create(request : CustomerAccount )
+    create(request : Account )
     {
       return this.http.post(this.host+"/create", request);
     }
-    login( c : CustomerAccount )
-    {//todo
-    return this.http.post(this.h+"/login" , c);
-    }
-    update(name : string, surname : string, email : string )
+
+    getCustomerAccount(id)
     {
-      return this.http.get(this.host+"/login" + [name + surname + email]);
+      let headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': sessionStorage.getItem('token')});
+      let options = { headers: headers };
+      return this.http.post(this.host+"/get-account/"+[id], options);
+    }
+
+    login( c : Account )
+    {//todo
+      return this.http.post(this.h+"/login" , c);
+    }
+
+    update(request : Account )
+    {//to do
+      return this.http.post(this.host+"/update-account", request);
     }
 }

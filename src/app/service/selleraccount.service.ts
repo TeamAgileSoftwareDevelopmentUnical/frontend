@@ -12,8 +12,13 @@ import { SellerAccount } from "../models/selleraccount";
 
       constructor(private http: HttpClient){}
 
-      create(sellerAccount: SellerAccount){
-
+      create(sellerAccount: SellerAccount)
+      {
         return this.http.post(this.host+"/create-seller", sellerAccount);
+      }
+
+      getSellerAccount(id)
+      {
+        return this.http.get(this.host+"/get-account"+[id]);
       }
   }
