@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { CustomerAccountService } from '../service/customeraccount.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ForgotPasswordPage implements OnInit {
 
-  constructor() { }
+  email = '';
 
-  ngOnInit() {
+  constructor(private customerAccountService: CustomerAccountService, private route: ActivatedRoute) { }
+
+  ngOnInit() { }
+
+  cantSend()  {
+    if (!this.email)  {
+      return false;
+    }
+    return true;
+  }
+
+  submit()  {
+
   }
 
 }

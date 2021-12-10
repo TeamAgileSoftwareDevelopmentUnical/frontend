@@ -11,10 +11,10 @@ import { CustomerAccountService } from '../service/customeraccount.service';
 })
 export class LoginPage implements OnInit {
 
-  constructor(private customerAccountService : CustomerAccountService, private route: ActivatedRoute,) { }
+  username  = '';
+  password  = '';
 
-  username : string = "";
-  password : string = "";
+  constructor(private customerAccountService: CustomerAccountService, private route: ActivatedRoute,) { }
 
   ngOnInit() {
   }
@@ -22,9 +22,9 @@ export class LoginPage implements OnInit {
   submit(){
     this.customerAccountService.login(this.username, this.password)
     .subscribe((response: CustomerAccount) => {
-      console.log("Customer : ",response);
-    },(error : HttpErrorResponse)=>{
-      console.log("Error : ", error);
+      console.log('Customer : ',response);
+    },(error: HttpErrorResponse)=>{
+      console.log('Error : ', error);
     }
     );
   }
