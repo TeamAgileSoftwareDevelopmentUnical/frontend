@@ -7,37 +7,46 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="customerAccount">
-  <ion-list>
+<ion-content >
+  <form [formGroup]="accountForm">
     <ion-item lines="full">
       <ion-label position="floating">First name</ion-label>
-      <ion-input type="text" required [(ngModel)] ="customerAccount.name"></ion-input>
+      <ion-input type="text" required formControlName="name"></ion-input>
     </ion-item>
 
     <ion-item lines="full">
       <ion-label position="floating">Last name</ion-label>
-      <ion-input type="text" required [(ngModel)] ="customerAccount.surname"></ion-input>
+      <ion-input type="text" required formControlName="surname"></ion-input>
     </ion-item>
 
     <ion-item lines="full">
       <ion-label position="floating">Email</ion-label>
-      <ion-input type="email" inputmode="email" pattern=".+@.+\..+" required [(ngModel)] ="customerAccount.email"></ion-input>
+      <ion-input type="email" inputmode="email" pattern=".+@.+\..+" required formControlName="email"></ion-input>
     </ion-item>
 
     <ion-item lines="full">
       <ion-label position="floating">Username</ion-label>
-      <ion-input type="text" required minlength="6" maxlength = "25" [(ngModel)] ="customerAccount.username"></ion-input>
+      <ion-input type="text" required minlength="6" maxlength = "25" formControlName="username"></ion-input>
     </ion-item>
 
     <ion-item lines="full">
       <ion-label position="floating">Password</ion-label>
-      <ion-input type="password" clearOnEdit="false" minlength="6" required [(ngModel)] ="customerAccount.password"></ion-input>
+      <ion-input type="password" clearOnEdit="false" minlength="6" required formControlName="password"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Account type</ion-label>
+      <ion-select placeholder="Select One" (ionChange)="selectType($event)">
+        <ion-select-option value="c">Customer</ion-select-option>
+        <ion-select-option value="s">Seller</ion-select-option>
+      </ion-select>
     </ion-item>
 
     <ion-row>
       <ion-col>
-        <ion-button [disabled]="cantSubmit()" (click)="submit()" type="submit" color="danger" expand="block">Sign Up</ion-button>
+        <ion-button  (click)="submit()" type="submit" color="danger" expand="block">Sign Up</ion-button>
       </ion-col>
     </ion-row>
-  </ion-list>
+
+  </form>
 </ion-content>
