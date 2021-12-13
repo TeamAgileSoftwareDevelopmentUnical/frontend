@@ -1,15 +1,15 @@
-import { Purchase } from "./purchase";
-import { Type } from "./enumproduct";
-import { SellerAccount } from "./selleraccount";
+import { Purchase } from './purchase';
+import { Type } from './enumproduct';
+import { SellerAccount } from './selleraccount';
 
 export class Product{
     id: number;
-    name : string;
+    name: string;
     description: string;
     price: number;
-    seller : SellerAccount;
+    seller: SellerAccount;
     availableQuantity: number;
-    purchase : Purchase[];
-    type : Type;
+    purchase: Purchase[];
+    type: Type;
 
 }

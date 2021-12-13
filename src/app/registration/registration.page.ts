@@ -13,12 +13,12 @@ import { SellerAccountService } from '../service/selleraccount.service';
   styleUrls: ['./registration.page.scss'],
 })
 export class RegistrationPage implements OnInit {
-
-  constructor(private customerAccountService : CustomerAccountService, private sellerAccountService: SellerAccountService,
-              private formBuilder: FormBuilder,private route: Router,) { }
-
-  customerAccount : CustomerAccount;
+  
+  customerAccount: CustomerAccount;
   sellerAccount: SellerAccount;
+
+  constructor(private customerAccountService: CustomerAccountService, private sellerAccountService: SellerAccountService,
+              private formBuilder: FormBuilder,private route: Router,) { }
 
   accountForm = this.formBuilder.group({
     username : '',
@@ -27,7 +27,7 @@ export class RegistrationPage implements OnInit {
     surname : '',
     email : '',
   });
-  accountType : string;
+  accountType: string;
 
   ngOnInit() {
   }
@@ -41,7 +41,7 @@ export class RegistrationPage implements OnInit {
       .subscribe((response: SellerAccount) => {
         console.log("Seller : ",response);
         this.route.navigate(['/login']);
-      },(error : HttpErrorResponse)=>{
+      },(error: HttpErrorResponse)=>{
         console.log("Error : ", error);
       }
       );
@@ -52,7 +52,7 @@ export class RegistrationPage implements OnInit {
       .subscribe((response: CustomerAccount) => {
         console.log("Customer : ",response);
         this.route.navigate(['/login']);
-      },(error : HttpErrorResponse)=>{
+      },(error: HttpErrorResponse)=>{
         console.log("Error : ", error);
       }
       );
@@ -67,7 +67,7 @@ export class RegistrationPage implements OnInit {
     }
     return false;
   }
-  selectType(event : any){
+  selectType(event: any){
     this.accountType = event.target.value;
   }
 

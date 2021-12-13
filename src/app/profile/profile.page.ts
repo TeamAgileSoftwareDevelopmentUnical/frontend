@@ -13,11 +13,16 @@ import { SellerAccountService } from '../service/selleraccount.service';
 })
 export class ProfilePage implements OnInit {
 
-  constructor(private customerAccountService : CustomerAccountService, private sellerAccountService: SellerAccountService) { }
-
-  customerAccount : CustomerAccount;
+  customerAccount: CustomerAccount;
   sellerAccount: SellerAccount;
-  id: number = 1; //it's a Long in Java
+  // FIXME: get `id` from localstorage or whatever
+  id = 1; //it's a Long in Java
+
+  name: string;
+  surname: string;
+  mail: string;
+
+  constructor(private customerAccountService: CustomerAccountService, private sellerAccountService: SellerAccountService) { }
 
   ngOnInit() {
     this.getAccount();
@@ -27,10 +32,10 @@ export class ProfilePage implements OnInit {
     //TO DO: same but with seller account and add an IF?
     this.customerAccountService.getCustomerAccount(this.id).subscribe(
       (response: CustomerAccount) => {
-        console.log("Account: ",response);
+        console.log('Account: ',response);
         this.customerAccount = response;
       },(error: HttpErrorResponse) => {
-        console.log("Error in finding a customer account: ", error);
+        console.log('Error in finding a customer account: ', error);
       }
     );
   }
@@ -39,12 +44,21 @@ export class ProfilePage implements OnInit {
     //TO DO: same but with seller account and add an IF?
     this.customerAccountService.update(this.customerAccount).subscribe(
       (response: CustomerAccount) => {
-      console.log("Customer : ",response);
+      console.log('Customer : ',response);
       this.customerAccount = response;
-    },(error : HttpErrorResponse)=>{
-      console.log("Error in updating a customer account: ", error);
-    }
-    );
+    },(error: HttpErrorResponse)=>{
+      console.log('Error in updating a customer account: ', error);
+    });
+
+    let request = {
+      id: this.id,
+      name: this.name,
+      surname: this.surname,
+      mail: this.mail,
+    };
+    // FIXME: update request needs to be adjusted according to this json format
+    this.customerAccountService.update(request);
+
   }
 
 }

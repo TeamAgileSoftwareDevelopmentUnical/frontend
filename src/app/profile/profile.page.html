@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>&nbsp;</ion-title>
     <ion-buttons slot="end">
-      <ion-button>
+      <ion-button (click)="modifyAccount()" type="submit">
         <ion-icon slot="icon-only" src="../../assets/checkmark-filled.svg"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -24,17 +24,17 @@
       <h3 class="playername">username</h3>
     </div>
     <ion-item>
-      <ion-label position="floating">Name</ion-label>
+      <ion-label [(ngModel)]="name" position="floating">Name</ion-label>
       <ion-input></ion-input>
     </ion-item>
     
     <ion-item>
-      <ion-label position="floating">Surname</ion-label>
+      <ion-label [(ngModel)]="surname" position="floating">Surname</ion-label>
       <ion-input></ion-input>
     </ion-item>
     
     <ion-item>
-      <ion-label position="floating">Email</ion-label>
+      <ion-label [(ngModel)]="mail" position="floating">Email</ion-label>
       <ion-input></ion-input>
     </ion-item>
   </div>
