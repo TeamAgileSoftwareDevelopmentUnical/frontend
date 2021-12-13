@@ -33,8 +33,8 @@ export class LoginPage implements OnInit {
       if (response) {
         sessionStorage.setItem( 'token', response.token);
         sessionStorage.setItem( 'username', response.username);
-
-        this.router.navigate(['/profile']);
+        console.log("resp = ", response)
+        this.router.navigate(['/profile', response.id]);
     } else {
         alert("Authentication failed.");
     }

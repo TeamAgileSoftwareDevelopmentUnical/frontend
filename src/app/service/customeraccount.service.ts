@@ -21,16 +21,24 @@ import { CustomerAccount } from "../models/customeraccount";
 
     getCustomerAccount(id)
     {
-      let headers = new HttpHeaders({
+      console.log("token = " , sessionStorage.getItem("token"))
+      let reqheaders = new HttpHeaders({
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
         'Authorization': sessionStorage.getItem('token')});
-      let options = { headers: headers };
-      return this.http.post(this.host+"/get-account/"+[id], options);
+      let options = { headers: reqheaders };
+      // const headers= new HttpHeaders()
+      // .set('content-type', 'application/json')
+      // .set('Access-Control-Allow-Origin', '*')
+      // .set('Authorization', sessionStorage.getItem('token'));
+      // console.log("head = ", headers)
+      // return this.http.post(this.host+"/get-account/"+[id], {headers : reqheaders});
+      return this.http.post(this.h+"/profile/" , id, {headers : reqheaders});
     }
 
     login( c : Account )
     {//todo
+
       return this.http.post(this.h+"/login" , c);
     }
 
