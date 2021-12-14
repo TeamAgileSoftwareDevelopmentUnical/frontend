@@ -33,7 +33,7 @@ import { CustomerAccount } from "../models/customeraccount";
       // .set('Authorization', sessionStorage.getItem('token'));
       // console.log("head = ", headers)
       // return this.http.post(this.host+"/get-account/"+[id], {headers : reqheaders});
-      return this.http.post(this.h+"/profile/" , id, {headers : reqheaders});
+      return this.http.get(this.h+"/profile/" + id, {headers : reqheaders});
     }
 
     login( c : Account )
