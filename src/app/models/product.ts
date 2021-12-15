@@ -7,9 +7,8 @@ export class Product{
     name : string;
     description: string;
     price: number;
-    seller : SellerAccount;
+    seller : number;
     availableQuantity: number;
-    purchase : Purchase[];
-    type : Type;
+    type : string;
 
 }

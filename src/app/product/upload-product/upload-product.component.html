@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/home"><ion-icon name="arrow-back-circle-outline"></ion-icon></ion-button>
+    </ion-buttons>
+    <ion-title>Upload Product</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+  <form [formGroup]="productForm">
+    <ion-item lines="full">
+      <ion-label position="floating">Product Name</ion-label>
+      <ion-input type="text" required formControlName="name"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Product Description</ion-label>
+      <ion-input type="text" required formControlName="description"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Product Price</ion-label>
+      <ion-input type="number" required formControlName="price"></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Product Quantity</ion-label>
+      <ion-input type="number" required formControlName="availableQuantity"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Product type</ion-label>
+      <ion-select placeholder="Select One" (ionChange)="selectType($event)">
+        <ion-select-option value="Vegetable">Vegetable</ion-select-option>
+        <ion-select-option value="MEAT">Meat</ion-select-option>
+        <ion-select-option value="CEREAL">Cereal</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-row>
+      <ion-col>
+        <ion-button  (click)="submit()" type="submit" color="danger" expand="block">Sign Up</ion-button>
+      </ion-col>
+    </ion-row>
+
+  </form>
+</ion-content>

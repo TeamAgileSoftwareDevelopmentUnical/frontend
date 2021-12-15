@@ -16,7 +16,7 @@ export class HomePage implements OnInit{
   }
 
   create(){
-    let p = new Product();
+    /*let p = new Product();
     p.name = "productname";
     this.productService.create(p)
     .subscribe((response: Product) => {
@@ -24,7 +24,7 @@ export class HomePage implements OnInit{
     },(error : HttpErrorResponse)=>{
       console.log("Error : ", error);
     }
-    );
+    );*/
   }
 
 }

@@ -12,16 +12,16 @@ import { CustomerAccountService } from '../service/customeraccount.service';
 })
 export class LoginPage implements OnInit {
 
-  constructor(private customerAccountService : CustomerAccountService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private customerAccountService: CustomerAccountService, private route: ActivatedRoute, private router: Router) { }
 
-  username : string = "";
-  password : string = "";
+  username  = '';
+  password = '';
 
-  respUser : string;
-  respPass : string;
+  respUser: string;
+  respPass: string;
 
-  c : Account = new Account();
-  
+  c: Account = new Account();
+
   ngOnInit() {
   }
 
@@ -36,11 +36,11 @@ export class LoginPage implements OnInit {
 
         this.router.navigate(['/profile']);
     } else {
-        alert("Authentication failed.");
+        alert('Authentication failed.');
     }
-      console.log("Customer : ",response);
-    },(error : HttpErrorResponse)=>{
-      console.log("Error : ", error);
+      console.log('Customer : ',response);
+    },(error: HttpErrorResponse)=>{
+      console.log('Error : ', error);
     }
     );
   }
