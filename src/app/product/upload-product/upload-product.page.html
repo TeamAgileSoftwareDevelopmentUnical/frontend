@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Upload A New product</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="uploadProductFrom">
+    <ion-item>
+      <ion-label position="floating">Product Name</ion-label>
+      <ion-input type="text" required formControlName="name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Product Price</ion-label>
+      <ion-input type="number" required formControlName="price"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Product Quantity</ion-label>
+      <ion-input type="number" required formControlName="availableQuantity"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Product Description</ion-label>
+      <ion-textarea type="text" required formControlName="description"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Product Type</ion-label>
+      <ion-select required  placeholder="Select One" formControlName="type">
+        <ion-select-option value="VEGETABLE">Vegetable</ion-select-option>
+        <ion-select-option value="MEAT">Meat</ion-select-option>
+        <ion-select-option value="CEREAL">Cereal</ion-select-option>
+        <ion-select-option value="ELECTRONIC">Electronic</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-button (click)="uploadProduct()" color="primary">Upload</ion-button>
+  </form>
+</ion-content>

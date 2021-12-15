@@ -24,8 +24,12 @@ const routes: Routes = [
     loadChildren: () => import('./forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
   },
   {
-    path: 'profile/:id',
-    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+    path: 'all-product',
+    loadChildren: () => import('./product/all-product/all-product.module').then( m => m.AllProductPageModule)
+  },
+  {
+    path: 'upload-product',
+    loadChildren: () => import('./product/upload-product/upload-product.module').then( m => m.UploadProductPageModule)
   },
 
 ];
