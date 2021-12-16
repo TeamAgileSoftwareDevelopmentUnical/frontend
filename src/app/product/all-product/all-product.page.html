@@ -30,17 +30,19 @@
               {{p.productDesc}}
           </ion-card-content>
           <ion-footer>
-            <ion-row>
-              <ion-col center text-center>
-                <ion-button fill="outline">View</ion-button>
-              </ion-col>
-              <ion-col center text-center>
-                <ion-button fill="outline">Update</ion-button>
-              </ion-col>
-              <ion-col end text-center>
-                <ion-button fill="outline">Delete</ion-button>
-              </ion-col>
-            </ion-row>
+            <ion-item>
+              <ion-row>
+                <ion-col center text-center>
+                  <ion-button size="small" fill="outline" color="dark">View</ion-button>
+                </ion-col>
+                <ion-col center text-center>
+                  <ion-button size="small" fill="outline" color="tertiary" (click)="updateProduct(p.productId)">Update</ion-button>
+                </ion-col>
+                <ion-col end text-center>
+                  <ion-button size="small" fill="outline" color="danger" (click)="deleteProduct(p.productId)">Delete</ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-item>
           </ion-footer>
         </ion-card>
       </ion-col>

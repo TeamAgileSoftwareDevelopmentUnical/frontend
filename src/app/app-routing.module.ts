@@ -31,6 +31,10 @@ const routes: Routes = [
     path: 'upload-product',
     loadChildren: () => import('./product/upload-product/upload-product.module').then( m => m.UploadProductPageModule)
   },
+  {
+    path: 'update-product/:productId',
+    loadChildren: () => import('./product/update-product/update-product.module').then( m => m.UpdateProductPageModule)
+  },
 
 ];
 

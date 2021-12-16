@@ -6,6 +6,6 @@ export class ProductResponse{
   productName: string;
   productDesc: string;
   type: string;
-  batch: BatchResponse;
-  seller: SellerResponse;
+  batch: BatchResponse = new BatchResponse();
+  seller: SellerResponse = new SellerResponse();
 }

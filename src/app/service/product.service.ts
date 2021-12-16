@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
 import { Product } from "../models/product";
 import {ProductUploadRequest} from "../models/request/productUploadRequest";
+import {ProductUpdateRequest} from "../models/request/productUpdateRequest";
 
 @Injectable({
     providedIn: 'root'
@@ -17,15 +18,19 @@ import {ProductUploadRequest} from "../models/request/productUploadRequest";
       return this.http.get(this.host+'/get-all?seller_id='+seller_id);
     }
 
-    getProductBy(id){
-
+    getProductBy(product_id: number){
+      return this.http.get(this.host+'/get-product?product_id='+product_id);
     }
 
-    updateProduct(request: ProductUploadRequest){
+    uploadProduct(request: ProductUploadRequest){
       return this.http.post(this.host+'/upload',request);
     }
 
-    deleteProduct(id){
+    updateProduct(request: ProductUpdateRequest){
+      return this.http.post(this.host+'/update',request);
+    }
 
+    deleteProduct(productID: number){
+      return this.http.delete(this.host+'/delete?id='+productID);
     }
 }
