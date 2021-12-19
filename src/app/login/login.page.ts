@@ -26,15 +26,15 @@ export class LoginPage implements OnInit {
   }
 
   submit(){
-    this.c.username = this.username;
-    this.c.password = this.password;
+    this.c.username = this.username
+    this.c.password = this.password
     this.customerAccountService.login(this.c)
     .subscribe((response: any) => {
       if (response) {
         sessionStorage.setItem( 'token', response.token);
-        sessionStorage.setItem( 'username', response.username);
+
         console.log("resp = ", response);
-        this.router.navigate(['/profile', response.id]);
+        //this.router.navigate(['/profile', response.id]);
     } else {
         alert('Authentication failed.');
     }

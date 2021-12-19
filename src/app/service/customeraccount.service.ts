@@ -28,9 +28,9 @@ import { Account } from '../models/account';
       return this.http.post(this.host+'/get-account/'+[id], options);
     }
 
-    login( c: Account )
+    login(c : Account)
     {//todo
-      return this.http.post(this.h+'/login' , c);
+      return this.http.post(this.h+'/authenticate' , {"username": c.surname, "password": c.password});
     }
 
     update(request: Account )
