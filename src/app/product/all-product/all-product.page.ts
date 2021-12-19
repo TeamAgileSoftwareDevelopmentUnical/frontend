@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ProductService} from "../../service/product.service";
 import {Router} from "@angular/router";
 import {ProductResponse} from "../../models/response/productResponse";
+import {AlertController} from "@ionic/angular";
 
 @Component({
   selector: 'app-all-product',
@@ -10,7 +11,7 @@ import {ProductResponse} from "../../models/response/productResponse";
 })
 export class AllProductPage implements OnInit {
 
-  constructor(private service: ProductService, private route: Router) { }
+  constructor(private service: ProductService, private route: Router, private alertCtrl: AlertController) { }
 
   allProduct: ProductResponse[] = [];
   product: ProductResponse;
@@ -31,11 +32,33 @@ export class AllProductPage implements OnInit {
   }
 
   deleteProduct(productId: number) {
-    this.service.deleteProduct(productId)
-      .subscribe((response: boolean)=>{
-        if (response){
-          this.getAllProduct();
+    this.showAlert('Product Delete','Are you really wants to delete this product?',null, productId);
+  }
+
+  async showAlert(headers: string, messages: string, redirectTo: string, productId: number){
+    const alert = await this.alertCtrl.create({
+      header: headers,
+      message: messages,
+      buttons: [
+        {
+          text: 'Agree',
+          handler: ()=>{
+            this.service.deleteProduct(productId)
+              .subscribe((response: boolean)=>{
+                if (response){
+                  this.getAllProduct();
+                }
+              });
+          }
+        },
+        {
+          text: 'Disagree',
+          handler: ()=>{
+            alert.dismiss();
+          }
         }
-      });
+      ]
+    });
+    await alert.present();
   }
 }

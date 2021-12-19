@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ProductService} from "../../service/product.service";
 import {FormBuilder, Validators} from "@angular/forms";
 import {ProductUpdateRequest} from "../../models/request/productUpdateRequest";
+import {AlertController} from "@ionic/angular";
 
 @Component({
   selector: 'app-update-product',
@@ -12,7 +13,7 @@ import {ProductUpdateRequest} from "../../models/request/productUpdateRequest";
 })
 export class UpdateProductPage implements OnInit {
 
-  constructor(private route: ActivatedRoute, private navRoute: Router, private service: ProductService, private form: FormBuilder) { }
+  constructor(private route: ActivatedRoute, private navRoute: Router, private service: ProductService, private form: FormBuilder, private alertCtrl: AlertController) { }
   product_id: number;
   product: ProductResponse = new ProductResponse();
   request: ProductUpdateRequest;
@@ -36,11 +37,28 @@ export class UpdateProductPage implements OnInit {
   updateProduct() {
     this.request = this.updateProductForm.value;
     this.request.productID = this.product_id;
+    console.log(this.request);
     this.service.updateProduct(this.request)
       .subscribe((response: boolean)=>{
         if (response){
-          this.navRoute.navigate(['/all-product']);
+          this.showAlert('Product Update','Product Update Successfully!!','all-product');
         }
       });
+  }
+
+  async showAlert(headers: string, messages: string, redirectTo: string){
+    const alert = await this.alertCtrl.create({
+      header: headers,
+      message: messages,
+      buttons: [
+        {
+          text: 'Okay',
+          handler: ()=>{
+            this.navRoute.navigate(['/'+redirectTo]);
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 }

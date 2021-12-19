@@ -3,6 +3,7 @@ import {ProductService} from "../../service/product.service";
 import {Router} from "@angular/router";
 import {FormBuilder, Validators} from "@angular/forms";
 import {ProductUploadRequest} from "../../models/request/productUploadRequest";
+import {AlertController} from "@ionic/angular";
 
 @Component({
   selector: 'app-upload-product',
@@ -11,7 +12,7 @@ import {ProductUploadRequest} from "../../models/request/productUploadRequest";
 })
 export class UploadProductPage implements OnInit {
   request: ProductUploadRequest;
-  constructor(private service: ProductService, private route: Router, private formBuilder: FormBuilder) { }
+  constructor(private service: ProductService, private route: Router, private formBuilder: FormBuilder, private alertCtrl: AlertController) { }
   uploadProductFrom = this.formBuilder.group({
     name: ['', Validators.required],
     description: ['', Validators.required],
@@ -28,8 +29,24 @@ export class UploadProductPage implements OnInit {
     this.service.uploadProduct(this.request)
       .subscribe((response: boolean)=>{
         if (response){
-          this.route.navigate(['/all-product']);
+          this.showAlert('Product Upload','Product Upload Successfully!','all-product');
         }
       });
+  }
+
+  async showAlert(headers: string, messages: string, redirectTo: string){
+    const alert = await this.alertCtrl.create({
+      header: headers,
+      message: messages,
+      buttons: [
+        {
+          text: 'Okay',
+          handler: ()=>{
+            this.route.navigate(['/'+redirectTo]);
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 }
