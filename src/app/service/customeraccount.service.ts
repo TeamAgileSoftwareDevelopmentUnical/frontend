@@ -30,7 +30,7 @@ import { Account } from '../models/account';
 
     login(c : Account)
     {//todo
-      return this.http.post(this.h+'/authenticate' , {"username": c.surname, "password": c.password});
+      return this.http.post(this.h+'/authenticate' , {"username": c.username, "password": c.password});
     }
 
     update(request: Account )
