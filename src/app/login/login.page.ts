@@ -33,6 +33,7 @@ export class LoginPage implements OnInit {
     .subscribe((response: any) => {
       if (response) {
         sessionStorage.setItem( 'token', response.token);
+        sessionStorage.setItem( 'id', response.id);
 
         console.log("resp = ", response);
         //this.router.navigate(['/profile', response.id]);
