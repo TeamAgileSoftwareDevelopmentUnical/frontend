@@ -4,6 +4,14 @@ import {Router} from "@angular/router";
 import {ProductResponse} from "../../models/response/productResponse";
 import {AlertController} from "@ionic/angular";
 
+class LoginResponse {
+  token: string;
+}
+
+class MeResponse {
+  value: string;
+}
+
 @Component({
   selector: 'app-all-product',
   templateUrl: './all-product.page.html',
@@ -15,16 +23,24 @@ export class AllProductPage implements OnInit {
 
   allProduct: ProductResponse[] = [];
   product: ProductResponse;
+  tokenValue: string;
 
   ngOnInit() {
     this.getAllProduct();
   }
 
   getAllProduct(){
-    this.service.getAllProduct(1)
+    this.service.textApplication().subscribe((response: LoginResponse)=>{
+      console.log(response.token);
+      this.service.testMe(response.token).subscribe((response1: MeResponse)=>{
+        console.log(response1.value);
+      });
+    });
+
+    /*this.service.getAllProduct(1)
       .subscribe((response: ProductResponse[]) => {
         this.allProduct = response;
-      });
+      });*/
   }
 
   updateProduct(productId: number) {

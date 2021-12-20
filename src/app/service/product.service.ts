@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
 import { Product } from "../models/product";
@@ -10,9 +10,23 @@ import {ProductUpdateRequest} from "../models/request/productUpdateRequest";
   })
   export class ProductService {
 
-    host = environment.apiBaseUrl+"/product";
+    //host = environment.apiBaseUrl+"/product";
+    host = environment.apiBaseUrl;
 
     constructor(private http: HttpClient) { }
+
+    textApplication(){
+      return this.http.get(this.host+'/login');
+    }
+
+  testMe(token: string){
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json; charset=utf-8',
+        'Authorization': 'Bearer '+token
+      });
+      console.log(headers.has('Authorization'));
+      return this.http.get(this.host+'/me', {headers});
+  }
 
     getAllProduct(seller_id: number){
       return this.http.get(this.host+'/get-all?seller_id='+seller_id);
