@@ -30,17 +30,10 @@ export class AllProductPage implements OnInit {
   }
 
   getAllProduct(){
-    this.service.textApplication().subscribe((response: LoginResponse)=>{
-      console.log(response.token);
-      this.service.testMe(response.token).subscribe((response1: MeResponse)=>{
-        console.log(response1.value);
-      });
-    });
-
-    /*this.service.getAllProduct(1)
+    this.service.getAllProduct(1)
       .subscribe((response: ProductResponse[]) => {
         this.allProduct = response;
-      });*/
+      });
   }
 
   updateProduct(productId: number) {

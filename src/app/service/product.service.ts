@@ -15,19 +15,6 @@ import {ProductUpdateRequest} from "../models/request/productUpdateRequest";
 
     constructor(private http: HttpClient) { }
 
-    textApplication(){
-      return this.http.get(this.host+'/login');
-    }
-
-  testMe(token: string){
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': 'Bearer '+token
-      });
-      console.log(headers.has('Authorization'));
-      return this.http.get(this.host+'/me', {headers});
-  }
-
     getAllProduct(seller_id: number){
       return this.http.get(this.host+'/get-all?seller_id='+seller_id);
     }
