@@ -35,6 +35,15 @@ const routes: Routes = [
     path: 'update-product/:productId',
     loadChildren: () => import('./product/update-product/update-product.module').then( m => m.UpdateProductPageModule)
   },
+  {
+    path: 'store',
+    loadChildren: () => import('./store/store.module').then( m => m.StorePageModule)
+  },
+  {
+    path: 'profile/:id',
+    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+  },
+
 
 ];
 

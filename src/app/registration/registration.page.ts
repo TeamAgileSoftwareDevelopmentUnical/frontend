@@ -1,10 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerAccount } from '../models/customeraccount';
 import { SellerAccount } from '../models/selleraccount';
 import { CustomerAccountService } from '../service/customeraccount.service';
+import { HomeService } from '../service/home.service';
 import { SellerAccountService } from '../service/selleraccount.service';
 
 @Component({
@@ -14,18 +15,18 @@ import { SellerAccountService } from '../service/selleraccount.service';
 })
 export class RegistrationPage implements OnInit {
 
-  constructor(private customerAccountService : CustomerAccountService, private sellerAccountService: SellerAccountService,
+  constructor(private homeSrv : HomeService,
               private formBuilder: FormBuilder,private route: Router,) { }
 
   customerAccount : CustomerAccount;
   sellerAccount: SellerAccount;
 
   accountForm = this.formBuilder.group({
-    username : '',
-    password : '',
-    name : '',
-    surname : '',
-    email : '',
+    username : ['', Validators.required],
+    password : ['', Validators.required],
+    name : ['', Validators.required],
+    surname : ['', Validators.required],
+    email : ['', Validators.required],
   });
   accountType : string;
 
@@ -33,14 +34,18 @@ export class RegistrationPage implements OnInit {
   }
 
   submit(){
-    console.log("form = ", this.accountForm.value)
+    console.log("form = ", this.accountForm.value);
     if(this.accountType && this.accountType === "s"){
       this.sellerAccount = new SellerAccount();
       this.sellerAccount = this.accountForm.value;
-      this.sellerAccountService.create(this.sellerAccount)
-      .subscribe((response: SellerAccount) => {
-        console.log("Seller : ",response);
-        this.route.navigate(['/login']);
+      this.homeSrv.createSeller(this.sellerAccount)
+      .subscribe((response: boolean) => {
+        if(response){
+          this.route.navigate(['/login']);
+        }
+        else{
+          alert('Registration failed.');
+        }
       },(error : HttpErrorResponse)=>{
         console.log("Error : ", error);
       }
@@ -48,10 +53,13 @@ export class RegistrationPage implements OnInit {
     }else{
       this.customerAccount = new CustomerAccount();
       this.customerAccount = this.accountForm.value;
-      this.customerAccountService.create(this.customerAccount)
-      .subscribe((response: CustomerAccount) => {
-        console.log("Customer : ",response);
-        this.route.navigate(['/login']);
+      this.homeSrv.createCustomer(this.customerAccount)
+      .subscribe((response: boolean) => {
+        if(response){
+          this.route.navigate(['/login']);
+        }else {
+          alert('Registration failed.');
+      }
       },(error : HttpErrorResponse)=>{
         console.log("Error : ", error);
       }
@@ -62,13 +70,17 @@ export class RegistrationPage implements OnInit {
   }
 
   cantSubmit(){//TODO: redo
-    if(this.customerAccount && (!this.customerAccount.username || !this.customerAccount.password  || !this.customerAccount.name  || !this.customerAccount.surname)){
-      return true;
-    }
+    if(!this.accountForm.value.name || !this.accountForm.value.surname || !this.accountForm.value.email 
+        || !this.accountForm.value.username || !this.accountForm.value.password || !this.accountType){
+          return true;
+        }
     return false;
   }
   selectType(event : any){
     this.accountType = event.target.value;
   }
+
+
+  
 
 }

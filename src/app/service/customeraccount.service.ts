@@ -28,10 +28,6 @@ import { Account } from '../models/account';
       return this.http.post(this.host+'/get-account/'+[id], options);
     }
 
-    login(c : Account)
-    {//todo
-      return this.http.post(this.h+'/authenticate' , {"username": c.username, "password": c.password});
-    }
 
     update(request: Account )
     {//to do
