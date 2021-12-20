@@ -44,7 +44,7 @@
 
     <ion-row>
       <ion-col>
-        <ion-button  (click)="submit()" type="submit" color="danger" expand="block">Sign Up</ion-button>
+        <ion-button [disabled] = "cantSubmit()" (click)="submit()" type="submit" color="danger" expand="block">Sign Up</ion-button>
       </ion-col>
     </ion-row>
 

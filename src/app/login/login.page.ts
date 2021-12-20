@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Account } from '../models/account';
 import { CustomerAccount } from '../models/customeraccount';
 import { CustomerAccountService } from '../service/customeraccount.service';
+import { HomeService } from '../service/home.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ import { CustomerAccountService } from '../service/customeraccount.service';
 })
 export class LoginPage implements OnInit {
 
-  constructor(private customerAccountService: CustomerAccountService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private homeSrv: HomeService, private route: ActivatedRoute, private router: Router) { }
 
   username  = '';
   password = '';
@@ -28,7 +29,7 @@ export class LoginPage implements OnInit {
   submit(){
     this.c.username = this.username
     this.c.password = this.password
-    this.customerAccountService.login(this.c)
+    this.homeSrv.login(this.c)
     .subscribe((response: any) => {
       if (response) {
         sessionStorage.setItem( 'token', response.token);
