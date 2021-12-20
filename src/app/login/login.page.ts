@@ -32,8 +32,12 @@ export class LoginPage implements OnInit {
     this.homeSrv.login(this.c)
     .subscribe((response: any) => {
       if (response) {
-        sessionStorage.setItem( 'token', response.token);
+        console.log(response);
+        sessionStorage.setItem( 'token', response.jwtToken);
         sessionStorage.setItem( 'id', response.id);
+
+        console.log(sessionStorage.getItem('token'));
+        console.log(sessionStorage.getItem('id'));
 
         console.log("resp = ", response);
         //this.router.navigate(['/profile', response.id]);

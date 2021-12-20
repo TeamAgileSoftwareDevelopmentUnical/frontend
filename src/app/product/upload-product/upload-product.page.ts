@@ -25,7 +25,7 @@ export class UploadProductPage implements OnInit {
 
   uploadProduct() {
     this.request = this.uploadProductFrom.value;
-    this.request.sellerID = 1;
+    this.request.sellerID = +sessionStorage.getItem('id');
     this.service.uploadProduct(this.request)
       .subscribe((response: boolean)=>{
         if (response){

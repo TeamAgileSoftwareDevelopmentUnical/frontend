@@ -10,28 +10,46 @@ import {ProductUpdateRequest} from "../models/request/productUpdateRequest";
   })
   export class ProductService {
 
-    //host = environment.apiBaseUrl+"/product";
-    host = environment.apiBaseUrl;
+    host = environment.apiBaseUrl+'/product';
+    //host = environment.apiBaseUrl;
 
     constructor(private http: HttpClient) { }
 
-    getAllProduct(seller_id: number){
-      return this.http.get(this.host+'/get-all?seller_id='+seller_id);
+    getAllProduct(){
+      const headers = new HttpHeaders({
+        'Authorization': 'Bearer '+sessionStorage.getItem('token')
+      });
+      return this.http.get(this.host+'/get-all?seller_id='+sessionStorage.getItem('id'),{headers});
     }
 
     getProductBy(product_id: number){
-      return this.http.get(this.host+'/get-product?product_id='+product_id);
+      const headers = new HttpHeaders({
+        'Authorization': 'Bearer '+sessionStorage.getItem('token')
+      });
+      return this.http.get(this.host+'/get-product?product_id='+product_id,{headers});
     }
 
     uploadProduct(request: ProductUploadRequest){
-      return this.http.post(this.host+'/upload',request);
+      console.log(sessionStorage.getItem('token'));
+      const headers = new HttpHeaders({
+        'Authorization': 'Bearer '+sessionStorage.getItem('token')
+      });
+      console.log(headers);
+      return this.http.post(this.host+'/upload',request,{headers});
     }
 
     updateProduct(request: ProductUpdateRequest){
-      return this.http.post(this.host+'/update',request);
+      const headers = new HttpHeaders({
+        'Authorization': 'Bearer '+sessionStorage.getItem('token')
+      });
+      return this.http.post(this.host+'/update',request,{headers});
     }
 
     deleteProduct(productID: number){
-      return this.http.delete(this.host+'/delete?id='+productID);
+      const headers = new HttpHeaders({
+        'Authorization': 'Bearer '+sessionStorage.getItem('token')
+      });
+      console.log(productID);
+      return this.http.get(this.host+'/delete?id='+productID,{headers});
     }
 }

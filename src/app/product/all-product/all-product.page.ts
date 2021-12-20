@@ -30,7 +30,8 @@ export class AllProductPage implements OnInit {
   }
 
   getAllProduct(){
-    this.service.getAllProduct(1)
+
+    this.service.getAllProduct()
       .subscribe((response: ProductResponse[]) => {
         this.allProduct = response;
       });
