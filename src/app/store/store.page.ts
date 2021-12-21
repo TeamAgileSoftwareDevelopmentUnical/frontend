@@ -22,13 +22,22 @@ export class StorePage implements OnInit {
   initializePhaser() {
     this.config = {
       type: Phaser.AUTO,
-      width: 224,
-      height: 224,
+      //width: 400,
+      //height: 250,
       parent: 'game',
       scene: [MainScene],
       //scale: {
-      //  mode: Phaser.Scale.ENVELOP
+      //  mode: Phaser.Scale.FIT
       //}
+      render: {
+        pixelArt: true
+      },
+      physics: {
+        default: "arcade",
+        arcade: {
+            debug: true
+        } 
+      }
     };
     
     this.phaserGame = new Phaser.Game(this.config);
