@@ -22,8 +22,8 @@ export class StorePage implements OnInit {
   initializePhaser() {
     this.config = {
       type: Phaser.AUTO,
-      //width: 400,
-      //height: 250,
+      width: 960,
+      height: 480,
       parent: 'game',
       scene: [MainScene],
       //scale: {
@@ -33,9 +33,9 @@ export class StorePage implements OnInit {
         pixelArt: true
       },
       physics: {
-        default: "arcade",
+        default: 'arcade',
         arcade: {
-            debug: true
+            debug: false
         } 
       }
     };
