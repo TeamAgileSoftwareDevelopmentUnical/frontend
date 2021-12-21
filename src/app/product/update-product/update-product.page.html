@@ -8,22 +8,22 @@
   <form [formGroup]="updateProductForm">
     <ion-item>
       <ion-label position="floating">Product Name</ion-label>
-      <ion-input type="text" [value]="product.productName" required formControlName="productName"></ion-input>
+      <ion-input type="text" [(ngModel)]="product.productName" required formControlName="productName"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Product Price</ion-label>
-      <ion-input type="number" [value]="product.batch.productPrice" required formControlName="productPrice"></ion-input>
+      <ion-input type="number" [ngModel]="product.batch.productPrice" required formControlName="productPrice"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Product Quantity</ion-label>
-      <ion-input type="number" [value]="product.batch.availableQuantity" required formControlName="productQuantity"></ion-input>
+      <ion-input type="number" [ngModel]="product.batch.availableQuantity" required formControlName="productQuantity"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Product Description</ion-label>
-      <ion-textarea type="text" [value]="product.productDesc" required formControlName="productDescription"></ion-textarea>
+      <ion-textarea type="text" [ngModel]="product.productDesc" required formControlName="productDescription"></ion-textarea>
     </ion-item>
 
     <ion-button (click)="updateProduct()" color="primary">Update</ion-button>
