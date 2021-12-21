@@ -14,6 +14,11 @@ export default class MainScene extends Phaser.Scene {
         this.load.image('market','assets/market.png');
         this.load.image('objects','assets/objects.png');
 
+        this.load.image('character1','assets/character1.png');
+        this.load.image('character2','assets/character2.png');
+        this.load.image('character3','assets/character3.png');
+        this.load.image('character4','assets/character4.png');
+
         this.load.tilemapTiledJSON('map','assets/map.json');
 
         this.load.atlas('player', 'assets/player-sheet.png', 'assets/player-sheet.json')
@@ -28,11 +33,16 @@ export default class MainScene extends Phaser.Scene {
         const tilesetObjects = map.addTilesetImage('objects','objects');
         const tilesetGround = map.addTilesetImage('ground','ground');
 
-        var ground_layer = map.createLayer('ground', [tilesetMarket ,tilesetObjects, tilesetGround]);
-        var water_layer = map.createLayer('water', [tilesetMarket ,tilesetObjects, tilesetGround]);
+        const ground_layer = map.createLayer('ground', [tilesetMarket ,tilesetObjects, tilesetGround]);
+        const water_layer = map.createLayer('water', [tilesetMarket ,tilesetObjects, tilesetGround]);
         const stand_layer = map.createLayer('stand', [tilesetMarket ,tilesetObjects, tilesetGround]);
         const stand_2_layer = map.createLayer('stand_2', [tilesetMarket ,tilesetObjects, tilesetGround]);
         const stand_3_layer = map.createLayer('stand_3', [tilesetMarket ,tilesetObjects, tilesetGround]);
+
+        const character1 = this.physics.add.sprite(120, 270, 'character1').setScale(0.2).setImmovable();
+        const character2 = this.physics.add.sprite(530, 400, 'character2').setScale(0.2).setImmovable();
+        const character3 = this.physics.add.sprite(420, 270, 'character3').setScale(0.2).setImmovable();
+        const character4 = this.physics.add.sprite(800, 270, 'character4').setScale(0.2).setImmovable();
 
         this.player = this.physics.add.sprite(480, 450, 'player').setScale(3);
         this.player.body.setSize(6, 6, true);
@@ -54,6 +64,11 @@ export default class MainScene extends Phaser.Scene {
         this.physics.add.collider(this.player, stand_layer);
         this.physics.add.collider(this.player, stand_2_layer);
         this.physics.add.collider(this.player, stand_3_layer);
+
+        this.physics.add.collider(this.player, character1);
+        this.physics.add.collider(this.player, character2);
+        this.physics.add.collider(this.player, character3);
+        this.physics.add.collider(this.player, character4);
 
         this.cursors = this.input.keyboard.createCursorKeys()
 
