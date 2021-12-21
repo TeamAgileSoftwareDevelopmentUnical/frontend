@@ -40,7 +40,7 @@ export class LoginPage implements OnInit {
         console.log(sessionStorage.getItem('id'));
 
         console.log("resp = ", response);
-        //this.router.navigate(['/profile', response.id]);
+        this.router.navigate(['/profile', response.id]);
     } else {
         alert('Authentication failed.');
     }

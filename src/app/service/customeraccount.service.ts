@@ -15,22 +15,26 @@ import { Account } from '../models/account';
 
     create(request: Account )
     {
-      return this.http.post(this.host+'/create', request);
+      const headers = new HttpHeaders({
+        'Authorization': 'Bearer '+sessionStorage.getItem('token')
+      });
+      return this.http.post(this.host+'/create', request, {headers});
     }
 
     getCustomerAccount(id)
     {
       const headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        /*'Authorization': sessionStorag.getItem('token')*/});
-      const options = { headers };
-      return this.http.post(this.host+'/get-account/'+[id], options);
+        'Authorization': 'Bearer '+sessionStorage.getItem('token')
+      });
+      return this.http.get(this.host+'/get-account/'+[id] ,{headers});
     }
 
 
     update(request: Account )
     {//to do
-      return this.http.post(this.host+'/update-account', request);
+      const headers = new HttpHeaders({
+        'Authorization': 'Bearer '+sessionStorage.getItem('token')
+      });
+      return this.http.post(this.host+'/update', request,{headers});
     }
 }

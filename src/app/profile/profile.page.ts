@@ -1,7 +1,9 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { CustomerAccount } from '../models/customeraccount';
 import { SellerAccount } from '../models/selleraccount';
+import { Account } from '../models/account';
 import { CustomerAccountService } from '../service/customeraccount.service';
 import { SellerAccountService } from '../service/selleraccount.service';
 
@@ -13,22 +15,30 @@ import { SellerAccountService } from '../service/selleraccount.service';
 })
 export class ProfilePage implements OnInit {
 
-  constructor(private customerAccountService : CustomerAccountService, private sellerAccountService: SellerAccountService) { }
+  constructor(private customerAccountService : CustomerAccountService, private sellerAccountService: SellerAccountService,
+              private route : ActivatedRoute) { }
 
-  customerAccount : CustomerAccount;
-  sellerAccount: SellerAccount;
-  id: number = 1; //it's a Long in Java
+  // customerAccount : CustomerAccount;
+  // sellerAccount: SellerAccount;
+  id: number; //it's a Long in Java
+  account : Account;
+  mod: boolean = false;
 
   ngOnInit() {
-    this.getAccount();
+    this.route.paramMap.subscribe(paramMap =>{
+      this.id = +paramMap.get('id');
+      console.log("id = ", this.id)
+      console.log("token = ",  sessionStorage.getItem('token'))
+    });
+     this.getAccount();
   }
 
   getAccount(){
     //TO DO: same but with seller account and add an IF?
     this.customerAccountService.getCustomerAccount(this.id).subscribe(
-      (response: CustomerAccount) => {
+      (response: any) => {
         console.log("Account: ",response);
-        this.customerAccount = response;
+        this.account = response;
       },(error: HttpErrorResponse) => {
         console.log("Error in finding a customer account: ", error);
       }
@@ -36,11 +46,16 @@ export class ProfilePage implements OnInit {
   }
 
   modifyAccount(){
+    this.mod = !this.mod;
+    
+  }
+
+  submitAccount(){console.log("CIAO", this.account);
     //TO DO: same but with seller account and add an IF?
-    this.customerAccountService.update(this.customerAccount).subscribe(
-      (response: CustomerAccount) => {
-      console.log("Customer : ",response);
-      this.customerAccount = response;
+    this.customerAccountService.update(this.account).subscribe(
+      (response: any) => {
+      console.log("Account : ",response);
+      this.mod = false;
     },(error : HttpErrorResponse)=>{
       console.log("Error in updating a customer account: ", error);
     }

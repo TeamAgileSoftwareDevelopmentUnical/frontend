@@ -9,7 +9,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen="true" slot="fixed" username={getUsername()} >
+
+<ion-content fullscreen="true" slot="fixed" *ngIf="account" >
   <div class="ion-padding">
   </div>
   <div class="card">
@@ -21,21 +22,34 @@
   </div>
   <div class="card-body">
     <div class="user-meta ion-text-center">
-      <h3 class="playername">username</h3>
+      <ion-label class="playername"  >{{account.username}}</ion-label>
     </div>
     <ion-item>
-      <ion-label position="floating">Name</ion-label>
-      <ion-input></ion-input>
+      <ion-label position="floating"  >Name</ion-label>
+      <ion-input [(ngModel)] = "account.name"  disabled = "{{!mod}}"></ion-input>
     </ion-item>
     
     <ion-item>
-      <ion-label position="floating">Surname</ion-label>
-      <ion-input></ion-input>
+      <ion-label position="floating"  >Surname</ion-label>
+      <ion-input [(ngModel)] = "account.surname" disabled = "{{!mod}}"></ion-input>
     </ion-item>
     
     <ion-item>
-      <ion-label position="floating">Email</ion-label>
-      <ion-input></ion-input>
+      <ion-label position="floating"  >Email</ion-label>
+      <ion-input [(ngModel)] = "account.email" disabled = "{{!mod}}"></ion-input>
     </ion-item>
+
+    <ion-button *ngIf="!mod" (click)="modifyAccount()">
+      modify account
+    </ion-button>
+    <ion-button *ngIf="mod"(click)="submitAccount()">
+      submit
+    </ion-button>
+    <ion-button *ngIf="!mod">
+      purhcases
+    </ion-button>
+
+
+
   </div>
 </ion-content>
