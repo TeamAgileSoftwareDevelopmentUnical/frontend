@@ -35,7 +35,7 @@ export class StorePage implements OnInit {
       physics: {
         default: 'arcade',
         arcade: {
-            debug: false
+            debug: true
         } 
       }
     };
