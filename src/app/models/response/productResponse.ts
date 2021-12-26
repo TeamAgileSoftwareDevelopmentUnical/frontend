@@ -6,6 +6,7 @@ export class ProductResponse{
   productName: string;
   productDesc: string;
   type: string;
+  photo: string;
   batch: BatchResponse = new BatchResponse();
   seller: SellerResponse = new SellerResponse();
 }

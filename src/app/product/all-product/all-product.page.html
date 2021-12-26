@@ -9,7 +9,7 @@
         <ion-icon slot="icon-only" name="search"></ion-icon>
       </ion-button>
       <ion-button [routerLink]="['/upload-product']">
-        <ion-icon slot="icon-only" name="cloud-upload"></ion-icon>
+        <ion-icon slot="icon-only" name="add"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>All Product</ion-title>
@@ -23,8 +23,9 @@
       <ion-col size="auto" *ngFor="let p of allProduct">
         <div class="horizontal-card">
           <ion-card>
-            <!--<ion-img style="width: 25%; height: 25%; alignment: center" src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/shopping-bag-full-of-fresh-vegetables-and-fruits-royalty-free-image-1128687123-1564523576.jpg"></ion-img>-->
-            <img src="https://www.collinsdictionary.com/images/full/vegetable_82806697.jpg">
+            <div class="avatar-preview">
+              <img src="{{ p.photo }}" id="imagePreview" alt="product-image"/>
+            </div>
             <ion-card-header>
               <ion-card-title class="ion-text-uppercase">{{p.productName}}</ion-card-title>
               <ion-card-subtitle>${{p.batch.productPrice}}</ion-card-subtitle>
