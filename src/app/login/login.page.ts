@@ -27,8 +27,8 @@ export class LoginPage implements OnInit {
   }
 
   submit(){
-    this.c.username = this.username
-    this.c.password = this.password
+    this.c.username = this.username;
+    this.c.password = this.password;
     this.homeSrv.login(this.c)
     .subscribe((response: any) => {
       if (response) {
@@ -40,7 +40,11 @@ export class LoginPage implements OnInit {
         console.log(sessionStorage.getItem('id'));
 
         console.log("resp = ", response);
-        this.router.navigate(['/store']);
+        if (response.type === 'S') {
+          this.router.navigate(['/all-product']);
+        }else {
+          this.router.navigate(['/store']);
+        }
     } else {
         alert('Authentication failed.');
     }

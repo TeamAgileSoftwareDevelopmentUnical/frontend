@@ -20,31 +20,39 @@
 <ion-content class="ion-padding">
   <ion-grid>
     <ion-row>
-      <ion-col size="3" *ngFor="let p of allProduct">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>{{p.productName}}</ion-card-title>
-            <ion-card-subtitle>${{p.batch.productPrice}}</ion-card-subtitle>
-          </ion-card-header>
-          <ion-card-content>
-              {{p.productDesc}}
-          </ion-card-content>
-          <ion-footer>
-            <ion-item>
-              <ion-row>
-                <ion-col center text-center>
-                  <ion-button size="small" fill="outline" color="dark">View</ion-button>
-                </ion-col>
-                <ion-col center text-center>
-                  <ion-button size="small" fill="outline" color="tertiary" (click)="updateProduct(p.productId)">Update</ion-button>
-                </ion-col>
-                <ion-col end text-center>
-                  <ion-button size="small" fill="outline" color="danger" (click)="deleteProduct(p.productId)">Delete</ion-button>
-                </ion-col>
-              </ion-row>
-            </ion-item>
-          </ion-footer>
-        </ion-card>
+      <ion-col size="auto" *ngFor="let p of allProduct">
+        <div class="horizontal-card">
+          <ion-card>
+            <!--<ion-img style="width: 25%; height: 25%; alignment: center" src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/shopping-bag-full-of-fresh-vegetables-and-fruits-royalty-free-image-1128687123-1564523576.jpg"></ion-img>-->
+            <img src="https://www.collinsdictionary.com/images/full/vegetable_82806697.jpg">
+            <ion-card-header>
+              <ion-card-title class="ion-text-uppercase">{{p.productName}}</ion-card-title>
+              <ion-card-subtitle>${{p.batch.productPrice}}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content class="ion-text-wrap">
+              {{p.productDesc.length>20?p.productDesc.substring(0,21)+'...':p.productDesc}}
+            </ion-card-content>
+            <ion-footer>
+              <ion-item>
+                <ion-row style="align-content: end">
+                  <ion-col style="align-content: center; margin-top: 5px; cursor: pointer">
+                    <ion-icon name="eye-outline" color="primary"></ion-icon>
+                    <!--<ion-button size="small" fill="outline" color="dark">View</ion-button>-->
+                  </ion-col>
+                  <ion-col>
+                    <ion-icon name="create-outline" color="tertiary" style="align-content: center; margin-top: 5px; cursor: pointer" (click)="updateProduct(p.productId)"></ion-icon>
+                    <!--<ion-button size="small" fill="outline" color="tertiary" (click)="updateProduct(p.productId)">Update</ion-button>-->
+                  </ion-col>
+                  <ion-col>
+                    <ion-icon name="trash-outline" color="danger" style="align-content: center; margin-top: 5px; cursor: pointer" (click)="deleteProduct(p.productId)"></ion-icon>
+                    <!--<ion-button size="small" fill="outline" color="danger" (click)="deleteProduct(p.productId)">Delete</ion-button>-->
+                  </ion-col>
+                </ion-row>
+              </ion-item>
+            </ion-footer>
+          </ion-card>
+        </div>
+
       </ion-col>
     </ion-row>
   </ion-grid>
