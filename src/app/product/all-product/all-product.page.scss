@@ -1,0 +1,25 @@
+.horizontal-card{
+  ion-card{
+    display: inline-block;
+    width: 300px;
+    height: auto;
+  }
+}
+
+.avatar-preview {
+  width: 192px;
+  height: 192px;
+  position: relative;
+  margin: 5px auto;
+  border-radius: 50%;
+  border: 0px solid transparent;
+
+  > img {
+    width: 100%;
+    height: 100%;
+    //border-radius: 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}

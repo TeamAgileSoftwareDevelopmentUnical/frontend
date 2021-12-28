@@ -5,4 +5,5 @@ export class ProductUploadRequest{
   sellerID: number;
   availableQuantity: number;
   type: string;
+  photo: string;
 }

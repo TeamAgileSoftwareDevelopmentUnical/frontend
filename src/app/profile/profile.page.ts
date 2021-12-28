@@ -1,11 +1,12 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { CustomerAccount } from '../models/customeraccount';
 import { SellerAccount } from '../models/selleraccount';
 import { Account } from '../models/account';
 import { CustomerAccountService } from '../service/customeraccount.service';
 import { SellerAccountService } from '../service/selleraccount.service';
+import {AlertController} from "@ionic/angular";
 
 
 @Component({
@@ -15,8 +16,9 @@ import { SellerAccountService } from '../service/selleraccount.service';
 })
 export class ProfilePage implements OnInit {
 
-  constructor(private customerAccountService : CustomerAccountService, private sellerAccountService: SellerAccountService,
-              private route : ActivatedRoute) { }
+  constructor(private customerAccountService: CustomerAccountService, private sellerAccountService: SellerAccountService,
+              private route: ActivatedRoute, private router: Router,
+              private alertCtrl: AlertController) { }
 
   // customerAccount : CustomerAccount;
   // sellerAccount: SellerAccount;
@@ -47,7 +49,7 @@ export class ProfilePage implements OnInit {
 
   modifyAccount(){
     this.mod = !this.mod;
-    
+
   }
 
   submitAccount(){console.log("CIAO", this.account);
@@ -62,4 +64,34 @@ export class ProfilePage implements OnInit {
     );
   }
 
+  deleteAccount(id: number) {
+    this.showAlert('Account Delete','Are you really want to delete this account?','/loin',id);
+  }
+
+  async showAlert(headers: string, messages: string, redirectTo: string, id: number){
+    const alert = await this.alertCtrl.create({
+      header: headers,
+      message: messages,
+      buttons: [
+        {
+          text: 'Agree',
+          handler: ()=>{
+            this.customerAccountService.delete(id)
+              .subscribe((response: boolean) => {
+                if (response){
+                  this.router.navigate(['/login']);
+                }
+              });
+          }
+        },
+        {
+          text: 'Disagree',
+          handler: ()=>{
+            alert.dismiss();
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
 }
