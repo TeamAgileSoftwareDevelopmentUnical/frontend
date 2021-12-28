@@ -37,4 +37,11 @@ import { Account } from '../models/account';
       });
       return this.http.post(this.host+'/update', request,{headers});
     }
+
+    delete(user_id:number){
+      const headers = new HttpHeaders({
+        'Authorization': 'Bearer '+sessionStorage.getItem('token')
+      });
+      return this.http.get(this.h+'/remove-account?user_id='+user_id,{headers});
+    }
 }

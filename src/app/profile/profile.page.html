@@ -28,12 +28,12 @@
       <ion-label position="floating"  >Name</ion-label>
       <ion-input [(ngModel)] = "account.name"  disabled = "{{!mod}}"></ion-input>
     </ion-item>
-    
+
     <ion-item>
       <ion-label position="floating"  >Surname</ion-label>
       <ion-input [(ngModel)] = "account.surname" disabled = "{{!mod}}"></ion-input>
     </ion-item>
-    
+
     <ion-item>
       <ion-label position="floating"  >Email</ion-label>
       <ion-input [(ngModel)] = "account.email" disabled = "{{!mod}}"></ion-input>
@@ -48,6 +48,7 @@
     <ion-button *ngIf="!mod">
       purhcases
     </ion-button>
+    <ion-button (click)="deleteAccount(account.id)" color="danger">Delete Account</ion-button>
 
 
 
