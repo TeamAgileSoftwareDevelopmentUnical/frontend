@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { GzDialog } from './plugins/GzDialog';
 
-import Phaser from 'phaser'
+import Phaser from 'phaser';
 import MainScene from './MainScene';
 
 @Component({
@@ -26,9 +27,9 @@ export class StorePage implements OnInit {
       height: 480,
       parent: 'game',
       scene: [MainScene],
-      //scale: {
-      //  mode: Phaser.Scale.FIT
-      //}
+      scale: {
+        mode: Phaser.Scale.MAX_ZOOM
+      },
       render: {
         pixelArt: true
       },
@@ -37,6 +38,11 @@ export class StorePage implements OnInit {
         arcade: {
             debug: true
         } 
+      },
+      plugins: {
+        scene: [
+          { key: 'gzDialog', plugin: GzDialog, mapping: 'gzDialog' }
+        ]
       }
     };
     

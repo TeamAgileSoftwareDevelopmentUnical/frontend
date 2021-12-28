@@ -1,8 +1,12 @@
+import { ThrowStmt } from "@angular/compiler";
+import { getOriginalNode, sortAndDeduplicateDiagnostics } from "typescript";
+import { GzDialog } from "./plugins/GzDialog";
+
 export default class MainScene extends Phaser.Scene {
     constructor(config) {
         super(config);
     }
-
+    gzDialog: GzDialog;
     player;
     character1;
     character2;
@@ -26,8 +30,6 @@ export default class MainScene extends Phaser.Scene {
         this.load.tilemapTiledJSON('map','assets/map.json');
 
         this.load.atlas('player', 'assets/player-sheet.png', 'assets/player-sheet.json')
-
-        this.load.json('speech', 'assets/speech.json');
     }
     
     create() {
@@ -73,10 +75,10 @@ export default class MainScene extends Phaser.Scene {
         this.physics.add.collider(this.player, stand_2_layer);
         this.physics.add.collider(this.player, stand_3_layer);
 
-        this.physics.add.collider(this.player, this.character1);
-        this.physics.add.collider(this.player, this.character2);
-        this.physics.add.collider(this.player, this.character3);
-        this.physics.add.collider(this.player, this.character4);
+        this.physics.add.collider(this.player, this.character1, this.speech, null, this);
+        this.physics.add.collider(this.player, this.character2, this.speech, null, this);
+        this.physics.add.collider(this.player, this.character3, this.speech, null, this);
+        this.physics.add.collider(this.player, this.character4, this.speech, null, this);
 
         this.cursors = this.input.keyboard.createCursorKeys()
 
@@ -85,7 +87,6 @@ export default class MainScene extends Phaser.Scene {
             1000 // duration/speed of zoom
             );;
         this.cameras.main.startFollow(this.player);
-
     }
 
     update() {
@@ -109,5 +110,24 @@ export default class MainScene extends Phaser.Scene {
         }
         else { this.player.stop(), this.player.setVelocity(0) }
 
+        // Close the dialog on spacebar press
+		if( this.gzDialog.visible && this.cursors.space.isDown ) {
+            this.gzDialog.display(false);
+        }
+
+
     }
+
+    /**  
+	 * Handle collisions with the script layer. Tiles which have a dialog response are given
+	 * a 'name' property with a value that corresponds to a key in the script object found
+	 * in script.js
+     * @param {Phaser.Physics.Arcade.Sprite} player
+     * @param {Phaser.Physics.Arcade.Sprite} npc
+	 */
+     speech(player, npc){
+		if(!this.gzDialog.visible){
+            this.gzDialog.setText('ciao come va spero bene supercalifragilistichespiralidoso');
+		}
+	}
 }
