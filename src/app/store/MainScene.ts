@@ -6,12 +6,14 @@ export default class MainScene extends Phaser.Scene {
     constructor(config) {
         super(config);
     }
+
+    speeches;
     gzDialog: GzDialog;
     player;
-    character1;
+    butcher;
     character2;
-    character3;
-    character4;
+    ortolan;
+    fruiterer;
     cursors;
     up;
 
@@ -22,14 +24,16 @@ export default class MainScene extends Phaser.Scene {
         this.load.image('market','assets/market.png');
         this.load.image('objects','assets/objects.png');
 
-        this.load.image('character1','assets/character1.png');
+        this.load.image('butcher','assets/butcher.png');
         this.load.image('character2','assets/character2.png');
-        this.load.image('character3','assets/character3.png');
-        this.load.image('character4','assets/character4.png');
+        this.load.image('ortolan','assets/ortolan.png');
+        this.load.image('fruiterer','assets/fruiterer.png');
 
         this.load.tilemapTiledJSON('map','assets/map.json');
 
         this.load.atlas('player', 'assets/player-sheet.png', 'assets/player-sheet.json')
+
+        this.load.json('speeches', 'assets/speeches.json');
     }
     
     create() {
@@ -43,16 +47,16 @@ export default class MainScene extends Phaser.Scene {
 
         const ground_layer = map.createLayer('ground', [tilesetMarket ,tilesetObjects, tilesetGround]);
         const water_layer = map.createLayer('water', [tilesetMarket ,tilesetObjects, tilesetGround]);
-        this.character1 = this.physics.add.sprite(180, 200, 'character1').setScale(0.2).setImmovable();
-        this.character1.body.setSize(850, 730, true);
-        this.character3 = this.physics.add.sprite(480, 200, 'character3').setScale(0.2).setImmovable();
-        this.character3.body.setSize(850, 730, true);
-        this.character4 = this.physics.add.sprite(850, 200, 'character4').setScale(0.2).setImmovable();
-        this.character4.body.setSize(850, 730, true);
+        this.butcher = this.physics.add.sprite(180, 200, 'butcher').setScale(0.2).setImmovable();
+        this.butcher.body.setSize(850, 730, true);
+        this.ortolan = this.physics.add.sprite(480, 200, 'ortolan').setScale(0.2).setImmovable();
+        this.ortolan.body.setSize(850, 730, true);
+        this.fruiterer = this.physics.add.sprite(850, 200, 'fruiterer').setScale(0.2).setImmovable();
+        this.fruiterer.body.setSize(850, 730, true);
         const stand_layer = map.createLayer('stand', [tilesetMarket ,tilesetObjects, tilesetGround]);
         const stand_2_layer = map.createLayer('stand_2', [tilesetMarket ,tilesetObjects, tilesetGround]);
         const stand_3_layer = map.createLayer('stand_3', [tilesetMarket ,tilesetObjects, tilesetGround]);     
-        this.character2 = this.physics.add.sprite(530, 400, 'character2').setScale(0.2).setImmovable();
+        this.character2 = this.physics.add.sprite(520, 400, 'character2').setScale(0.2).setImmovable();
 
         this.player = this.physics.add.sprite(480, 450, 'player').setScale(3);
         this.player.body.setSize(6, 6, true);
@@ -75,10 +79,10 @@ export default class MainScene extends Phaser.Scene {
         this.physics.add.collider(this.player, stand_2_layer);
         this.physics.add.collider(this.player, stand_3_layer);
 
-        this.physics.add.collider(this.player, this.character1, this.speech, null, this);
+        this.physics.add.collider(this.player, this.butcher, this.speech, null, this);
         this.physics.add.collider(this.player, this.character2, this.speech, null, this);
-        this.physics.add.collider(this.player, this.character3, this.speech, null, this);
-        this.physics.add.collider(this.player, this.character4, this.speech, null, this);
+        this.physics.add.collider(this.player, this.ortolan, this.speech, null, this);
+        this.physics.add.collider(this.player, this.fruiterer, this.speech, null, this);
 
         this.cursors = this.input.keyboard.createCursorKeys()
 
@@ -87,6 +91,8 @@ export default class MainScene extends Phaser.Scene {
             1000 // duration/speed of zoom
             );;
         this.cameras.main.startFollow(this.player);
+
+        this.speeches = this.cache.json.get('speeches');
     }
 
     update() {
@@ -111,8 +117,11 @@ export default class MainScene extends Phaser.Scene {
         else { this.player.stop(), this.player.setVelocity(0) }
 
         // Close the dialog on spacebar press
-		if( this.gzDialog.visible && this.cursors.space.isDown ) {
-            this.gzDialog.display(false);
+		if( this.gzDialog.visible) {
+            this.player.setVelocity(0);
+            this.player.stop();
+            if(this.cursors.space.isDown ) 
+                this.gzDialog.display(false);
         }
 
 
@@ -121,13 +130,13 @@ export default class MainScene extends Phaser.Scene {
     /**  
 	 * Handle collisions with the script layer. Tiles which have a dialog response are given
 	 * a 'name' property with a value that corresponds to a key in the script object found
-	 * in script.js
+	 * in speeches.js
      * @param {Phaser.Physics.Arcade.Sprite} player
      * @param {Phaser.Physics.Arcade.Sprite} npc
 	 */
      speech(player, npc){
-		if(!this.gzDialog.visible){
-            this.gzDialog.setText('ciao come va spero bene supercalifragilistichespiralidoso');
+		if(!this.gzDialog.visible) {
+            this.gzDialog.setText(this.speeches[npc.texture.key]);
 		}
 	}
 }
