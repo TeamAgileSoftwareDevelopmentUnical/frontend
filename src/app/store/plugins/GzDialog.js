@@ -88,14 +88,10 @@ export class GzDialog extends Phaser.Plugins.ScenePlugin {
 	_calculateWindowDimensions() {
 		var gameHeight = this.scene.sys.game.config.height;
 		var gameWidth = this.scene.sys.game.config.width;
-		//var x = this.padding;
-		//var y = gameHeight - this.windowHeight - this.padding;
-		//var width = gameWidth - (this.padding * 2);
-		//var height = this.windowHeight;
-		var x = 205;
-		var y = 280;
-		var width = 550;
-		var height = 100; 
+		var x = this.padding;
+		var y = gameHeight - this.windowHeight - this.padding;
+		var width = gameWidth - (this.padding * 2);
+		var height = this.windowHeight;
 		return {
 			x,
 			y,
