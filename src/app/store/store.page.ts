@@ -26,7 +26,7 @@ export class StorePage implements OnInit {
     this.initializeChart();
   }
 
-  initializePhaser() {
+  initializePhaser(): void {
     this.config = {
       type: Phaser.AUTO,
       width: window.innerWidth * window.devicePixelRatio,
@@ -57,7 +57,7 @@ export class StorePage implements OnInit {
     this.phaserGame = new Phaser.Game(this.config);
   }
 
-  initializeChart() {
+  initializeChart(): void {
     this.chart = [];
     if (this.debug) {
       this.chart.push(new Item('Lemons', 'MISS! THE LEMONS! MISSSSS!', 1.20));
@@ -71,7 +71,12 @@ export class StorePage implements OnInit {
     }
   }
 
-  public removeOne(event: any) {
+  /**
+   * Decrease the `quantity` of the selected item by 1, if it reachs 0, then it is removed from the chart
+   *
+   * @param event The event fired from the button
+   */
+  public removeOne(event: any): void {
     const target = event.target || event.srcElement || event.currentTarget;
     const itemNodeList = target.parentElement.parentElement.childNodes;
 
@@ -97,7 +102,12 @@ export class StorePage implements OnInit {
       console.log(new Item(itemName, itemDescription, itemPrice));
     }
   }
-  public addOne(event: any) {
+  /**
+   * Add another item to the chart, effectively incrementing its `quantity` by 1
+   *
+   * @param event The event fired from the button
+   */
+  public addOne(event: any): void {
     const target = event.target || event.srcElement || event.currentTarget;
     const itemNodeList = target.parentElement.parentElement.childNodes;
 
@@ -115,7 +125,12 @@ export class StorePage implements OnInit {
       console.log(new Item(itemName, itemDescription, itemPrice));
     }
   }
-  public removeAll(event: any) {
+  /**
+   * Remove, regardless of its `quantity`, the selected item
+   *
+   * @param event The event fired from the button
+   */
+  public removeAll(event: any): void {
     const target = event.target || event.srcElement || event.currentTarget;
     const itemNodeList = target.parentElement.parentElement.childNodes;
 
@@ -136,6 +151,23 @@ export class StorePage implements OnInit {
     if (this.debug) {
       console.log(new Item(itemName, itemDescription, itemPrice));
     }
+  }
+  /**
+   * Get the total price by adding up each element's price multiplicated by its quantity.
+   * It rounds up the total to have only two decimal places
+   *
+   * @see <a href="https://stackoverflow.com/a/11832950/10301322">How to round to at most two decimal places</a>
+   * @see <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round">Math.round()</a>
+   *
+   * @returns The total price the user's gonna pay
+   */
+  public getTotalChartPrice(): number {
+    let returnValue = 0;
+    this.chart.forEach((element) => {
+      returnValue += (element.getQuantity() * Number(element.getPrice()));
+    });
+    // Round is needed to avoid the js divisions thing
+    return Math.round(returnValue * 100) / 100;
   }
 
 }
