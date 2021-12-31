@@ -10,7 +10,9 @@
       <ion-grid id='chart' inset='true'>
         <ion-list-header id='chart-header'>
           <ion-icon name="cart" ></ion-icon>
-          <!-- Add a total here? -->
+          <ion-item>
+            <p>Total: {{getTotalChartPrice()}}€</p>
+          </ion-item>
         </ion-list-header>
         <ion-row>
           <ion-col sizeLg="3" sizeMd="4" sizeSm="6" size="12" *ngFor="let item of chart; let i = index">
