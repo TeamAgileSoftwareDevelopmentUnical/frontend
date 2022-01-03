@@ -94,4 +94,8 @@ export class ProfilePage implements OnInit {
     });
     await alert.present();
   }
+
+  changeAddress(id: number) {
+    console.log(id);
+  }
 }

@@ -39,16 +39,21 @@
       <ion-input [(ngModel)] = "account.email" disabled = "{{!mod}}"></ion-input>
     </ion-item>
 
+    <ion-item>
+      <ion-label position="floating"  >Address</ion-label>
+      <ion-textarea [(ngModel)] = "account.address" (click)="changeAddress(account.id)" disabled= "{{!mod}}"></ion-textarea>
+    </ion-item>
+
     <ion-button *ngIf="!mod" (click)="modifyAccount()">
       modify account
     </ion-button>
-    <ion-button *ngIf="mod"(click)="submitAccount()">
+    <ion-button *ngIf="mod" (click)="submitAccount()">
       submit
     </ion-button>
     <ion-button *ngIf="!mod">
       purhcases
     </ion-button>
-    <ion-button (click)="deleteAccount(account.id)" color="danger">Delete Account</ion-button>
+    <ion-button *ngIf="!mod" (click)="deleteAccount(account.id)" color="danger">Delete Account</ion-button>
 
 
 
