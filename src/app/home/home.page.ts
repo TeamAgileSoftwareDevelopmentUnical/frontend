@@ -10,21 +10,11 @@ import { ProductService } from '../service/product.service';
 })
 export class HomePage implements OnInit{
 
-  constructor(private productService : ProductService) { }
+  constructor() { }
 
   ngOnInit() {
-  }
-
-  create(){
-    /*let p = new Product();
-    p.name = "productname";
-    this.productService.create(p)
-    .subscribe((response: Product) => {
-      console.log("Product : ",response);
-    },(error : HttpErrorResponse)=>{
-      console.log("Error : ", error);
-    }
-    );*/
+    sessionStorage.clear();
+    console.log("session = " , sessionStorage)
   }
 
 }

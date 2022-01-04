@@ -24,6 +24,7 @@ export class LoginPage implements OnInit {
   c: Account = new Account();
 
   ngOnInit() {
+    sessionStorage.clear();
   }
 
   submit(){
@@ -35,20 +36,17 @@ export class LoginPage implements OnInit {
         console.log(response);
         sessionStorage.setItem( 'token', response.jwtToken);
         sessionStorage.setItem( 'id', response.id);
+        sessionStorage.setItem( 'role' , response.role);
 
-        console.log(sessionStorage.getItem('token'));
-        console.log(sessionStorage.getItem('id'));
-
-        console.log("resp = ", response);
-        if (response.type === 'S') {
+        if (response.type === 'Seller') {
           this.router.navigate(['/all-product']);
         }else {
+          console.log("loggato, storage = ", sessionStorage)
           this.router.navigate(['/store']);
         }
     } else {
         alert('Authentication failed.');
     }
-      console.log('Customer : ',response);
     },(error: HttpErrorResponse)=>{
       console.log('Error : ', error);
     }

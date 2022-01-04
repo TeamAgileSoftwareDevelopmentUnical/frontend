@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthRoleGuard } from './security/auth-role.guard';
 
 const routes: Routes = [
   {
@@ -37,7 +38,11 @@ const routes: Routes = [
   },
   {
     path: 'store',
-    loadChildren: () => import('./store/store.module').then( m => m.StorePageModule)
+    loadChildren: () => import('./store/store.module').then( m => m.StorePageModule),
+    canActivate:[AuthRoleGuard],
+    // data:{
+    //   role:['Customer'], 
+    // }
   },
   {
     path: 'profile/:id',

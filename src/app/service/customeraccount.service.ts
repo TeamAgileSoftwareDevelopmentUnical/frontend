@@ -44,4 +44,7 @@ import { Account } from '../models/account';
       });
       return this.http.get(this.h+'/remove-account?user_id='+user_id,{headers});
     }
+    isAuthenticated(){
+      return !!sessionStorage.getItem('token');
+    }
 }
