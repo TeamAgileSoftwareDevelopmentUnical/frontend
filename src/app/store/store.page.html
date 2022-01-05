@@ -1,70 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Store</ion-title>
+    <ion-title>store</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <div id='game'></div>
-    <div id='chart-div'>
-      <ion-grid id='chart' inset='true'>
-        <ion-list-header id='chart-header'>
-          <ion-icon name="cart" ></ion-icon>
-          <ion-item>
-            <p>Total: {{getTotalChartPrice()}}€</p>
-          </ion-item>
-        </ion-list-header>
-        <ion-row>
-          <ion-col sizeLg="3" sizeMd="4" sizeSm="6" size="12" *ngFor="let item of chart; let i = index">
-            <!-- I really don't know why the hover effect doesn't work withouth setting the item as a button -->
-            <ion-item button="true">
-              <ul>
-                <li>
-                  <span title="Name">
-                    <p>{{item.name}}</p>
-                  </span>
-                </li>
-                <li>
-                  <span title="Description">
-                    <p>{{item.description}}</p>
-                  </span>
-                </li>
-                <li>
-                  <span title="Price">
-                    <p>{{item.getPrice()}}€</p>
-                  </span>
-                </li>
-                <li>
-                  <span title="Quantity">
-                    <p>In the chart: {{item.getQuantity()}}</p>
-                  </span>
-                </li>
-                <li>
-                  <ion-button (click)="removeOne($event)">-</ion-button>
-                  <ion-button (click)="addOne($event)">+</ion-button>
-                  <ion-button (click)="removeAll($event)">Remove all</ion-button>
-                </li>
-              </ul>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </div>
-    <script>
-      angular.module('myApp', [])
-      .controller('chartController', ['$scope', function($scope)  {
-        $scope.removeOne = ($event) => {
-          // TODO: Remove a single item from the total
-          const item = $event.target;
-          console.log(item);
-          window.alert(typeof(item));
-        };
-        $scope.addOne = ($event) => {
-          // TODO: Add a single item from the total
-        };
-        $scope.removeAll = ($event) => {
-          // TODO: Remove all item of this type from the chart
-        };
-      }]);
-    </script>
+    <div id="game"></div>
 </ion-content>
