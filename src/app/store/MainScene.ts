@@ -1,17 +1,14 @@
-import { ThrowStmt } from '@angular/compiler';
-import { getOriginalNode, sortAndDeduplicateDiagnostics } from 'typescript';
 import { GzDialog } from './plugins/GzDialog';
 
 export default class MainScene extends Phaser.Scene {
-  speeches;
+  speeches: any;
   gzDialog: GzDialog;
-  player;
-  butcher;
-  character2;
-  ortolan;
-  fruiterer;
-  cursors;
-  up;
+  player: any;
+  butcher: any;
+  character2: any;
+  ortolan: any;
+  fruiterer: any;
+  cursors: any;
 
   constructor(config) {
     super(config);
@@ -20,15 +17,9 @@ export default class MainScene extends Phaser.Scene {
   preload() {
     // Load all assets here
 
-    speeches;
-    gzDialog: GzDialog;
-    player;
-    butcher;
-    character2;
-    ortolan;
-    fruiterer;
-    cursors;
-    up;
+    this.load.image('ground', 'assets/ground.png');
+    this.load.image('market', 'assets/market.png');
+    this.load.image('objects', 'assets/objects.png');
 
     this.load.image('butcher', 'assets/butcher.png');
     this.load.image('character2', 'assets/character2.png');
@@ -37,7 +28,11 @@ export default class MainScene extends Phaser.Scene {
 
     this.load.tilemapTiledJSON('map', 'assets/map.json');
 
-        this.load.tilemapTiledJSON('map','assets/map.json');
+    this.load.atlas(
+      'player',
+      'assets/player-sheet.png',
+      'assets/player-sheet.json'
+    );
 
     this.load.json('speeches', 'assets/speeches.json');
   }
@@ -47,8 +42,8 @@ export default class MainScene extends Phaser.Scene {
 
     const map = this.make.tilemap({
       key: 'map',
-      tileWidth: 960,
-      tileHeight: 480,
+      tileWidth: window.innerWidth * window.devicePixelRatio,
+      tileHeight: (window.innerHeight * window.devicePixelRatio) * 0.5,
     });
 
     const tilesetMarket = map.addTilesetImage('market', 'market');
@@ -189,22 +184,40 @@ export default class MainScene extends Phaser.Scene {
       this
     );
 
-        this.player.setCollideWorldBounds(true);
+    this.cursors = this.input.keyboard.createCursorKeys();
 
-        water_layer.setCollisionByExclusion([-1]);
-        stand_layer.setCollisionByExclusion([-1]);
-        stand_2_layer.setCollisionByExclusion([-1]);
-        stand_3_layer.setCollisionByExclusion([-1]);
+    this.cameras.main.setBounds(0, 0, 960, 480, true).zoomTo(
+      1.5, //zoom distance
+      1000 // duration/speed of zoom
+    );
+    this.cameras.main.startFollow(this.player);
 
     this.speeches = this.cache.json.get('speeches');
   }
 
-        this.physics.add.collider(this.player, this.butcher, this.speech, null, this);
-        this.physics.add.collider(this.player, this.character2, this.speech, null, this);
-        this.physics.add.collider(this.player, this.ortolan, this.speech, null, this);
-        this.physics.add.collider(this.player, this.fruiterer, this.speech, null, this);
+  update() {
+    // Every 16ms. Game logic here
 
-        this.cursors = this.input.keyboard.createCursorKeys()
+    if (this.cursors.up.isDown) {
+      this.player.setVelocity(0);
+      this.player.play('up', true);
+      this.player.setVelocityY(-100);
+    } else if (this.cursors.down.isDown) {
+      this.player.setVelocity(0);
+      this.player.play('down', true);
+      this.player.setVelocityY(100);
+    } else if (this.cursors.right.isDown) {
+      this.player.setVelocity(0);
+      this.player.play('right', true);
+      this.player.setVelocityX(100);
+    } else if (this.cursors.left.isDown) {
+      this.player.setVelocity(0);
+      this.player.play('left', true);
+      this.player.setVelocityX(-100);
+    } else {
+      this.player.stop();
+      this.player.setVelocity(0);
+    }
 
     // Close the dialog on spacebar press
     if (this.gzDialog.visible) {
