@@ -1,3 +1,4 @@
+
 import { ThrowStmt } from '@angular/compiler';
 import { getOriginalNode, sortAndDeduplicateDiagnostics } from 'typescript';
 
@@ -59,8 +60,8 @@ export default class MainScene extends Phaser.Scene {
 
     const map = this.make.tilemap({
       key: 'map',
-      tileWidth: 960,
-      tileHeight: 480,
+      tileWidth: window.innerWidth * window.devicePixelRatio,
+      tileHeight: (window.innerHeight * window.devicePixelRatio) * 0.5,
     });
 
     const tilesetMarket = map.addTilesetImage('market', 'market');
@@ -226,15 +227,19 @@ export default class MainScene extends Phaser.Scene {
     // Every 16ms. Game logic here
 
     if (this.cursors.up.isDown) {
+      this.player.setVelocity(0);
       this.player.play('up', true);
       this.player.setVelocityY(-100);
     } else if (this.cursors.down.isDown) {
+      this.player.setVelocity(0);
       this.player.play('down', true);
       this.player.setVelocityY(100);
     } else if (this.cursors.right.isDown) {
+      this.player.setVelocity(0);
       this.player.play('right', true);
       this.player.setVelocityX(100);
     } else if (this.cursors.left.isDown) {
+      this.player.setVelocity(0);
       this.player.play('left', true);
       this.player.setVelocityX(-100);
     } else {
