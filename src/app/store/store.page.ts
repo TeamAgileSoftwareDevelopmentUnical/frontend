@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { GzDialog } from './plugins/GzDialog';
 
 import Phaser from 'phaser';
 import MainScene from './MainScene';
@@ -44,13 +43,8 @@ export class StorePage implements OnInit {
       physics: {
         default: 'arcade',
         arcade: {
-            debug: true
+            debug: false
         }
-      },
-      plugins: {
-        scene: [
-          { key: 'gzDialog', plugin: GzDialog, mapping: 'gzDialog' }
-        ]
       }
     };
 
