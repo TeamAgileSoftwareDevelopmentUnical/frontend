@@ -1,6 +1,7 @@
 {
-    "character2": "",
-    "butcher": "",
-    "ortolan": "",
-    "fruiterer": ""
+    "WelcomeCharacter": "ciao amico mio come stai spero bene, qui Puoi trovare tanta buona frutta e u pesc",
+    "butcher": "Would you like to see my products?",
+    "ortolan": "Would you like to see my products?",
+    "fruiterer": "Would you like to see my products?",
+    "cart": "Do you want to checkout?"
 }
