@@ -22,8 +22,10 @@ export class RegistrationPage implements OnInit {
   sellerAccount: SellerAccount;
 
   accountForm = this.formBuilder.group({
-    username : ['', Validators.required],
-    password : ['', Validators.required],
+    username : ['', [Validators.required, Validators.minLength(6)]],
+    password : ['', [Validators.required, 
+      // Validators.pattern("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[A-Za-z\d$@$!%*?&].{8,}"),
+                      Validators.minLength(6)]],
     name : ['', Validators.required],
     surname : ['', Validators.required],
     email : ['', Validators.required],

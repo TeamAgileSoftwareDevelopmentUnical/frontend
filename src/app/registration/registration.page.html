@@ -13,27 +13,48 @@
       <ion-label position="floating">First name</ion-label>
       <ion-input type="text" required formControlName="name"></ion-input>
     </ion-item>
+    <small *ngIf="accountForm.get('name').invalid && (accountForm.get('name').dirty ||accountForm.get('name').touched )">
+      <small *ngIf="(accountForm.get('name')).errors?.required">Name is required</small>
+    </small>
 
     <ion-item lines="full">
       <ion-label position="floating">Last name</ion-label>
       <ion-input type="text" required formControlName="surname"></ion-input>
     </ion-item>
+    <small *ngIf="accountForm.get('surname').invalid && (accountForm.get('surname').dirty ||accountForm.get('surname').touched )">
+      <small *ngIf="(accountForm.get('surname')).errors?.required">Surname is required</small>
+    </small>
 
     <ion-item lines="full">
       <ion-label position="floating">Email</ion-label>
       <ion-input type="email" inputmode="email" pattern=".+@.+\..+" required formControlName="email"></ion-input>
     </ion-item>
+    <div *ngIf="(accountForm.get('email').invalid && (accountForm.get('email')).touched) || (accountForm.get('email')).dirty">
+      <small *ngIf="(accountForm.get('email')).errors?.required">Email is required</small>
+      <!--question mark(?) is a safe navigation operator-->
+      <small *ngIf="(accountForm.get('email')).errors?.pattern">Please provide a valid email address</small>
+    </div>
 
     <ion-item lines="full">
       <ion-label position="floating">Username</ion-label>
       <ion-input type="text" required minlength="6" maxlength = "25" formControlName="username"></ion-input>
     </ion-item>
+    <small *ngIf="accountForm.get('username').invalid && (accountForm.get('username').dirty ||accountForm.get('username').touched )">
+      <small *ngIf="(accountForm.get('username')).errors?.required">Username is required</small>
+      <!--question mark(?) is a safe navigation operator-->
+      <small *ngIf="(accountForm.get('username')).errors?.minlength">Please enter more than 6 character</small>
+    </small>
 
     <ion-item lines="full">
       <ion-label position="floating">Password</ion-label>
-      <ion-input type="password" clearOnEdit="false" minlength="6" required formControlName="password"></ion-input>
+      <ion-input type="password" clearOnEdit="false" required formControlName="password"></ion-input>
     </ion-item>
-
+    <div *ngIf="(accountForm.get('password').invalid && (accountForm.get('password')).touched) || (accountForm.get('password')).dirty">
+      <small *ngIf="(accountForm.get('password')).errors?.required">Password is required</small>
+      <!--question mark(?) is a safe navigation operator-->
+      <!-- <small *ngIf="(accountForm.get('password')).errors?.pattern">Password should contain one number,one character.</small> -->
+      <small *ngIf="(accountForm.get('password')).errors?.minlength">Please enter more than 6 character</small>
+    </div>
     <ion-item>
       <ion-label>Account type</ion-label>
       <ion-select placeholder="Select One" (ionChange)="selectType($event)">
@@ -44,7 +65,7 @@
 
     <ion-row>
       <ion-col>
-        <ion-button [disabled] = "cantSubmit()" (click)="submit()" type="submit" color="danger" expand="block">Sign Up</ion-button>
+        <ion-button [disabled]="!accountForm.valid" (click)="submit()" type="submit" color="danger" expand="block">Sign Up</ion-button>
       </ion-col>
     </ion-row>
 

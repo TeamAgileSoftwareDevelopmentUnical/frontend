@@ -26,27 +26,31 @@ const routes: Routes = [
   },
   {
     path: 'all-product',
-    loadChildren: () => import('./product/all-product/all-product.module').then( m => m.AllProductPageModule)
+    loadChildren: () => import('./product/all-product/all-product.module').then( m => m.AllProductPageModule),
+    canActivate:[AuthRoleGuard],
   },
   {
     path: 'upload-product',
-    loadChildren: () => import('./product/upload-product/upload-product.module').then( m => m.UploadProductPageModule)
+    loadChildren: () => import('./product/upload-product/upload-product.module').then( m => m.UploadProductPageModule),
+    canActivate:[AuthRoleGuard],
   },
   {
     path: 'update-product/:productId',
-    loadChildren: () => import('./product/update-product/update-product.module').then( m => m.UpdateProductPageModule)
+    loadChildren: () => import('./product/update-product/update-product.module').then( m => m.UpdateProductPageModule),
+    canActivate:[AuthRoleGuard],
   },
   {
     path: 'store',
     loadChildren: () => import('./store/store.module').then( m => m.StorePageModule),
     canActivate:[AuthRoleGuard],
     // data:{
-    //   role:['Customer'], 
+    //   role:'Customer' 
     // }
   },
   {
     path: 'profile/:id',
-    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule),
+    canActivate:[AuthRoleGuard],
   },
 
 
