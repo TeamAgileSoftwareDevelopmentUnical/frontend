@@ -1,21 +1,10 @@
-<ion-header>
-  <ion-toolbar color="primary">
 
-    <ion-buttons slot="secondary">
-      <ion-button>
-        <ion-icon slot="icon-only" name="person-circle"></ion-icon>
-      </ion-button>
-      <ion-button>
-        <ion-icon slot="icon-only" name="search"></ion-icon>
-      </ion-button>
-      <ion-button [routerLink]="['/upload-product']">
-        <ion-icon slot="icon-only" name="add"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title>All Product</ion-title>
-
-  </ion-toolbar>
-</ion-header>
+<app-menu   [title]="'All products'"
+[store]=true
+[product]=false
+[account]=true
+[addProd]="isSeller()"
+[id]="getId()"></app-menu>
 
 <ion-content class="ion-padding">
   <ion-grid>

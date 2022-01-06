@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { UploadProductPageRoutingModule } from './upload-product-routing.module';
 
 import { UploadProductPage } from './upload-product.page';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { UploadProductPage } from './upload-product.page';
     FormsModule,
     IonicModule,
     UploadProductPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ComponentsModule,
   ],
   declarations: [UploadProductPage]
 })

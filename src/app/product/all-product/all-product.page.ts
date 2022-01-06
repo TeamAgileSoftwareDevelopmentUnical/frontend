@@ -71,4 +71,19 @@ export class AllProductPage implements OnInit {
     });
     await alert.present();
   }
+  getId(){
+    return sessionStorage.getItem( 'id');
+  }
+  isSeller(){
+    if(sessionStorage.getItem('role')==="Seller"){
+      return true;
+    }
+    return false;
+  }
+  canBack(){
+    if( document.referrer.indexOf('upload') >= 0){
+      return false;
+    }
+    return true;
+  }
 }

@@ -1,13 +1,10 @@
-<ion-header translucent no-border>
-  <ion-toolbar>
-    <ion-title>&nbsp;</ion-title>
-    <ion-buttons slot="end">
-      <ion-button>
-        <ion-icon slot="icon-only" src="../../assets/checkmark-filled.svg"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+
+<app-menu   [title]="'Profile'"
+[store]=true
+[product]=true
+[account]=false
+[addProd]="isSeller()"
+[id]="getId()"></app-menu>
 
 
 <ion-content fullscreen="true" slot="fixed" *ngIf="account" >

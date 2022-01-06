@@ -14,6 +14,7 @@ export class AuthRoleGuard implements CanActivate {
       if(!route.data.role || route.data.role==role)
         return true;
       alert("You have not the permission.")
+      window.history.back();
       return false;
     } 
     alert("You are not logged in.")

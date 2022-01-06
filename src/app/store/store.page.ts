@@ -49,4 +49,8 @@ export class StorePage implements OnInit {
     this.phaserGame = new Phaser.Game(this.config);
   }
 
+  getId(){
+    return sessionStorage.getItem( 'id');
+  }
+
 }

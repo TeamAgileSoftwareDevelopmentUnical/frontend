@@ -98,4 +98,13 @@ export class ProfilePage implements OnInit {
   changeAddress(id: number) {
     console.log(id);
   }
+  getId(){
+    return sessionStorage.getItem( 'id');
+  }
+  isSeller(){
+    if(sessionStorage.getItem('role')==="Seller"){
+      return true;
+    }
+    return false;
+  }
 }
