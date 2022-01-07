@@ -38,7 +38,7 @@ export class LoginPage implements OnInit {
         sessionStorage.setItem( 'id', response.id);
         sessionStorage.setItem( 'role' , response.role);
 
-        if (response.type === 'Seller') {
+        if (response.role === 'Seller') {
           this.router.navigate(['/all-product']);
         }else {
           console.log("loggato, storage = ", sessionStorage)

@@ -86,4 +86,10 @@ export class AllProductPage implements OnInit {
     }
     return true;
   }
+  isCustomer(){
+    if(sessionStorage.getItem('role')==="Customer"){
+      return true;
+    }
+    return false;
+  }
 }

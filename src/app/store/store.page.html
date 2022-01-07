@@ -1,6 +1,6 @@
 <app-menu   [title]="'Storage'"
             [store]=false
-            [product]=true
+            [product]="isSeller()"
             [account]=true
             [addProd]=false
             [id]="getId()"></app-menu>

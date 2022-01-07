@@ -52,5 +52,12 @@ export class StorePage implements OnInit {
   getId(){
     return sessionStorage.getItem( 'id');
   }
+  
+  isSeller(){
+    if(sessionStorage.getItem('role')==="Seller"){
+      return true;
+    }
+    return false;
+  }
 
 }

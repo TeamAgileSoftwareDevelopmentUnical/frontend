@@ -54,6 +54,9 @@ const routes: Routes = [
     path: 'store',
     loadChildren: () => import('./store/store.module').then( m => m.StorePageModule),
     canActivate:[AuthRoleGuard],
+    data:{
+      role: 'Customer'
+    }
   },
   {
     path: 'profile/:id',

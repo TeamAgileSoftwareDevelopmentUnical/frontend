@@ -23,11 +23,9 @@ export class MenuComponent implements OnInit {
   back(){
     window.history.back();
   }
-  canBack(){
-    if( document.referrer.indexOf('upload') >= 0){
-      return false;
-    }
-    return true;
+  isStore(){
+    if(window.location.href.includes('store') || window.location.href.includes('all-product'))return true;
+    return false;
   }
 
   storage(){

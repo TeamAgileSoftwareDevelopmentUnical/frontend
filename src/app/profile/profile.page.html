@@ -1,9 +1,9 @@
 
 <app-menu   [title]="'Profile'"
-[store]=true
-[product]=true
+[store]="!isSeller()"
+[product]="isSeller()"
 [account]=false
-[addProd]="isSeller()"
+[addProd]=false
 [id]="getId()"></app-menu>
 
 
