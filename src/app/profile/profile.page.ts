@@ -107,4 +107,11 @@ export class ProfilePage implements OnInit {
     }
     return false;
   }
+  notFilled(){
+    if(!this.account.name || this.account.name=="" || !this.account.surname || this.account.surname=="" || !this.account.email || 
+        !this.account.email.match("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$") || this.account.email==""){
+          return true;
+        }
+    return false;
+  }
 }
