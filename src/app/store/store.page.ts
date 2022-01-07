@@ -28,14 +28,14 @@ export class StorePage implements OnInit {
   initializePhaser(): void {
     this.config = {
       type: Phaser.AUTO,
-      width: window.innerWidth * window.devicePixelRatio,
-      height: (window.innerHeight * window.devicePixelRatio) * 0.5,
+      width: 1400, //window.innerWidth * window.devicePixelRatio,
+      height: 480, //(window.innerHeight * window.devicePixelRatio) * 0.5,
       parent: 'game',
       scene: [MainScene],
       scale: {
-        mode: Phaser.Scale.NONE,
+        parent: 'game',
+        mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
-        zoom: Phaser.Scale.MAX_ZOOM,
       },
       render: {
         pixelArt: true

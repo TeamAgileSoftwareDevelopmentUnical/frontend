@@ -1,6 +1,7 @@
 
 import { ThrowStmt } from '@angular/compiler';
 import { getOriginalNode, sortAndDeduplicateDiagnostics } from 'typescript';
+import { StorePage } from './store.page';
 
 
 export default class MainScene extends Phaser.Scene {
@@ -60,8 +61,8 @@ export default class MainScene extends Phaser.Scene {
 
     const map = this.make.tilemap({
       key: 'map',
-      tileWidth: window.innerWidth * window.devicePixelRatio,
-      tileHeight: (window.innerHeight * window.devicePixelRatio) * 0.5,
+      tileWidth: 960, //window.innerWidth * window.devicePixelRatio,
+      tileHeight: 480, //(window.innerHeight * window.devicePixelRatio) * 0.5,
     });
 
     const tilesetMarket = map.addTilesetImage('market', 'market');
@@ -215,8 +216,8 @@ export default class MainScene extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys();
 
     this.cameras.main.setBounds(0, 0, 960, 480, true).zoomTo(
-      1.5, //zoom distance
-      1000 // duration/speed of zoom
+      1.7, //zoom distance
+      1500 // duration/speed of zoom
     );
     this.cameras.main.startFollow(this.player);
 
@@ -256,7 +257,6 @@ export default class MainScene extends Phaser.Scene {
       this.player.setVelocity(0);
       this.player.stop();
     }
-
   }
 
   /**
@@ -283,7 +283,7 @@ export default class MainScene extends Phaser.Scene {
     var x = this.cameras.cameras[0].midPoint.x;
     var y = this.cameras.cameras[0].midPoint.y;
     x = ~~x;
-    y = ~~y + 60;
+    y = ~~y + 50;
 
     this.dialogBox = this.rexUI.add.dialog({
       x: x,
@@ -409,7 +409,7 @@ export default class MainScene extends Phaser.Scene {
     var x = this.cameras.cameras[0].midPoint.x;
     var y = this.cameras.cameras[0].midPoint.y;
     x = ~~x -310;
-    y = ~~y +60;
+    y = ~~y +50;
 
     this.textBox = scene.rexUI.add.textBox({
             x: x,
