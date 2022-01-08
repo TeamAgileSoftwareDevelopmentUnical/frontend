@@ -11,7 +11,111 @@ li p {
 ion-item :hover {
 	--background: #111;
 }
-
 #game {
 	height: 50% !important;
+}
+#tutorial-modal-close {
+	color: #aaa;
+	float: right;
+	font-size: xx-large;
+	font-weight: bold;
+}
+#tutorial-modal-close:hover, tutorial-modal-close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+#tutorial-modal {
+	display: table;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: #000;
+	background-color: rgba(0,0,0,0.4);
+	transform: scale(0);
+	z-index: 1;
+	&.unfold {
+		transform:scaleY(.01) scaleX(0);
+		animation:tutorialModalIn 1s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+		#tutorial-modal-background {
+			#tutorial-modal-content {
+				transform:scale(0);
+				animation: zoomIn .5s .8s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+			}
+		}
+		&.out {
+			transform:scale(1);
+			animation:tutorialModalOut 1s .3s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+			#tutorial-modal-background {
+				#tutorial-modal-content {
+					animation: zoomOut .5s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
+				}
+			}
+		}
+	}
+}
+#tutorial-modal-content {
+	position: relative;
+	background-color: #fefefe;
+	margin: 15% auto;
+	padding: 0;
+	border: 1px solid #7F5539;
+	width: 80%;
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+#tutorial-modal-header {
+	padding: 2px 16px;
+	background-color: #B08968;
+	color: #fff;
+}
+#tutorial-modal-body {
+	padding: 2px 16px;
+	color: #000;
+}
+#tutorial-modal-footer {
+	padding: 2px 16px;
+	background-color: #B08968;
+	color: #fff;
+}
+@keyframes tutorialModalIn {
+	0% {
+		transform: scaleY(.005) scaleX(0);
+	}
+	50% {
+		transform: scaleY(.005) scaleX(1);
+	}
+	100% {
+		transform: scaleY(1) scaleX(1);
+	}
+}
+@keyframes tutorialModalOut {
+	0% {
+		transform: scaleY(1) scaleX(1);
+	}
+	50% {
+		transform: scaleY(.005) scaleX(1);
+	}
+	100% {
+		transform: scaleY(.005) scaleX(0);
+	}
+}
+@keyframes zoomIn {
+	0% {
+		transform: scale(0);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+@keyframes zoomOut {
+	0% {
+		transform: scale(1);
+	}
+	100% {
+		transform: scale(0);
+	}
 }
