@@ -1,22 +1,23 @@
+/* eslint-disable no-bitwise */
 
-import { ThrowStmt } from '@angular/compiler';
-import { getOriginalNode, sortAndDeduplicateDiagnostics } from 'typescript';
 import { StorePage } from './store.page';
 
-
 export default class MainScene extends Phaser.Scene {
-  speeches;
-  player;
-  butcher;
-  WelcomeCharacter;
-  ortolan;
-  fruiterer;
-  cart;
-  cursors;
-  up;
-  rexUI;
-  dialogBox;
-  textBox;
+  speeches: any;
+  player: any;
+  butcher: any;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  WelcomeCharacter: any;
+  ortolan: any;
+  fruiterer: any;
+  cart: any;
+  cursors: any;
+  rexUI: any;
+  dialogBox: any;
+  textBox: any;
+
+  maxWidth: number = window.innerWidth * window.devicePixelRatio;
+  maxHeight: number = window.innerHeight * window.devicePixelRatio * 0.5;
 
   constructor(config) {
     super(config);
@@ -50,10 +51,13 @@ export default class MainScene extends Phaser.Scene {
     this.rexUI = this.load.scenePlugin({
       key: 'rexuiplugin',
       url: 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexuiplugin.min.js',
-      sceneKey: 'rexUI'
+      sceneKey: 'rexUI',
     });
-    
-    this.load.image('nextPage', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow-down-left.png');
+
+    this.load.image(
+      'nextPage',
+      'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/assets/images/arrow-down-left.png'
+    );
   }
 
   create() {
@@ -61,8 +65,8 @@ export default class MainScene extends Phaser.Scene {
 
     const map = this.make.tilemap({
       key: 'map',
-      tileWidth: 960, //window.innerWidth * window.devicePixelRatio,
-      tileHeight: 480, //(window.innerHeight * window.devicePixelRatio) * 0.5,
+      tileWidth: this.maxWidth, //960, //
+      tileHeight: this.maxHeight, // 480, //
     });
 
     const tilesetMarket = map.addTilesetImage('market', 'market');
@@ -113,9 +117,7 @@ export default class MainScene extends Phaser.Scene {
       .sprite(520, 400, 'WelcomeCharacter')
       .setScale(0.2)
       .setImmovable();
-    this.cart = this.physics.add
-      .sprite(430, 400,'empty-cart')
-      .setImmovable();
+    this.cart = this.physics.add.sprite(430, 400, 'empty-cart').setImmovable();
 
     this.player = this.physics.add.sprite(480, 450, 'player').setScale(3);
     this.player.body.setSize(6, 6, true);
@@ -215,14 +217,16 @@ export default class MainScene extends Phaser.Scene {
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
-    this.cameras.main.setBounds(0, 0, 960, 480, true).zoomTo(
-      1.7, //zoom distance
-      1500 // duration/speed of zoom
-    );
+    this.cameras.main
+      .setBounds(0, 0, this.maxWidth, this.maxHeight, true)
+      .zoomTo(
+        1.7, //zoom distance
+        1500 // duration/speed of zoom
+      );
     this.cameras.main.startFollow(this.player);
 
     this.speeches = this.cache.json.get('speeches');
-}
+  }
 
   update() {
     // Every 16ms. Game logic here
@@ -248,72 +252,81 @@ export default class MainScene extends Phaser.Scene {
       this.player.setVelocity(0);
     }
 
-    if(this.dialogBox != null) {
+    if (this.dialogBox != null) {
       this.player.setVelocity(0);
       this.player.stop();
     }
 
-    if(this.textBox != null) {
+    if (this.textBox != null) {
       this.player.setVelocity(0);
       this.player.stop();
+    }
+
+    if (StorePage.instance != null) {
+      if (StorePage.instance.howManyItemsInCart() === 0) {
+        this.cart.setTexture('empty-cart');
+      } else {
+        this.cart.setTexture('cart');
+      }
     }
   }
 
   /**
-   *
-   *
    * Handle collisions with the script layer. Tiles which have a dialog response are given
-   *
    * a 'name' property with a value that corresponds to a key in the script object found
-   *
    * in speeches.js
-   *
-   *
    *
    * @param player
    * @param npc
    */
-
   doCheckout(player, npc) {
-    if (npc.texture.key == 'cart')
+    if (npc.texture.key === 'cart') {
       this.speechWithSeller(player, npc);
+    }
   }
 
   speechWithSeller(player, npc) {
-    var x = this.cameras.cameras[0].midPoint.x;
-    var y = this.cameras.cameras[0].midPoint.y;
+    let x = this.cameras.cameras[0].midPoint.x;
+    let y = this.cameras.cameras[0].midPoint.y;
     x = ~~x;
     y = ~~y + 50;
 
-    this.dialogBox = this.rexUI.add.dialog({
-      x: x,
-      y: y,
-
-      background: this.rexUI.add.roundRectangle(0, 0, 100, 100, 20, 0xB7950B),
-
-      title: this.rexUI.add.label({
-          background: this.rexUI.add.roundRectangle(0, 0, 100, 40, 20, 0xB9770E),
-          text: this.add.text(0, 0, npc.texture.key, {
-              fontSize: '20px'
+    this.dialogBox = this.rexUI.add
+      .dialog({
+        x,
+        y,
+        background: this.rexUI.add.roundRectangle(0, 0, 100, 100, 20, 0xb7950b),
+        title: this.rexUI.add.label({
+          background: this.rexUI.add.roundRectangle(
+            0,
+            0,
+            100,
+            40,
+            20,
+            0xb9770e
+          ),
+          text: this.add.text(0, 0, capitalizeFirstLetetr(npc.texture.key), {
+            fontSize: '20px',
           }),
           space: {
-              left: 15,
-              right: 15,
-              top: 10,
-              bottom: 10
+            left: 15,
+            right: 15,
+            top: 10,
+            bottom: 10,
+          },
+        }),
+        content: this.add.text(
+          0,
+          0,
+          this.speeches[npc.texture.key][
+            randomIntFromInterval(0, this.speeches[npc.texture.key].length - 1)
+          ],
+          {
+            fontSize: '20px',
           }
-      }),
-
-      content: this.add.text(0, 0, this.speeches[npc.texture.key], {
-          fontSize: '20px'
-      }),
-
-      actions: [
-          this.createLabel(this, 'Yes'),
-          this.createLabel(this, 'No')
-      ],
-
-      space: {
+        ),
+        actions: [this.createLabel(this, 'Yes'), this.createLabel(this, 'No')],
+        space: {
           title: 20,
           content: 20,
           action: 10,
@@ -322,16 +335,14 @@ export default class MainScene extends Phaser.Scene {
           right: 15,
           top: 15,
           bottom: 15,
-      },
-
-      align: {
+        },
+        align: {
           actions: 'right', // 'center'|'left'|'right'
-      },
-
-      expand: {
+        },
+        expand: {
           content: false, // Content is a pure text object
-      }
-  })
+        },
+      })
       .layout()
       // .drawBounds(this.add.graphics(), 0xff0000)
       .popUp(700);
@@ -356,137 +367,163 @@ export default class MainScene extends Phaser.Scene {
       .on('button.over', function (button, groupName, index) {
           button.getElement('background').setStrokeStyle(1, 0xffffff);
       })
-      .on('button.out', function (button, groupName, index) {
-          button.getElement('background').setStrokeStyle();
+      .on('button.out', (button, groupName, index) => {
+        button.getElement('background').setStrokeStyle();
       });
   }
 
   createLabel(scene, text) {
     return scene.rexUI.add.label({
-        // width: 40,
-        // height: 40,
+      // width: 40,
+      // height: 40,
 
-        background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, 0xAF601A),
+      background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, 0xaf601a),
 
-        text: scene.add.text(0, 0, text, {
-            fontSize: '20px'
-        }),
+      text: scene.add.text(0, 0, text, {
+        fontSize: '20px',
+      }),
 
-        space: {
-            left: 10,
-            right: 10,
-            top: 10,
-            bottom: 10
-        }
+      space: {
+        left: 10,
+        right: 10,
+        top: 10,
+        bottom: 10,
+      },
     });
   }
 
   speechWithWelcomeCharacter() {
-
-    //Just for testing
-    this.cart.setTexture('cart');
+    let content: string =
+      this.speeches.WelcomeCharacter[
+        randomIntFromInterval(0, this.speeches.WelcomeCharacter.length - 1)
+      ];
+    const name = sessionStorage.getItem('user_name');
+    if (name) {
+      content = content.replace('~user~', name);
+    } else {
+      content = content.replace('~user~', 'Utente');
+    }
 
     this.createTextBox(this, {
       wrapWidth: 500,
       //fixedWidth: 500,
       //fixedHeight: 65,
-    })
-    .start(this.speeches['WelcomeCharacter'], 50);
-
+    }).start(content, 50);
   }
-  
+
   createTextBox(scene, config) {
     const COLOR_PRIMARY = 0x4e342e;
     const COLOR_LIGHT = 0x7b5e57;
     const COLOR_DARK = 0x260e04;
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     const GetValue = Phaser.Utils.Objects.GetValue;
 
-    var wrapWidth = GetValue(config, 'wrapWidth', 0);
-    var fixedWidth = GetValue(config, 'fixedWidth', 0);
-    var fixedHeight = GetValue(config, 'fixedHeight', 0);
+    const wrapWidth = GetValue(config, 'wrapWidth', 0);
+    const fixedWidth = GetValue(config, 'fixedWidth', 0);
+    const fixedHeight = GetValue(config, 'fixedHeight', 0);
 
-    var x = this.cameras.cameras[0].midPoint.x;
-    var y = this.cameras.cameras[0].midPoint.y;
-    x = ~~x -310;
-    y = ~~y +50;
+    let x = this.cameras.cameras[0].midPoint.x;
+    let y = this.cameras.cameras[0].midPoint.y;
+    x = ~~x - 310;
+    y = ~~y + 50;
 
-    this.textBox = scene.rexUI.add.textBox({
-            x: x,
-            y: y,
+    this.textBox = scene.rexUI.add
+      .textBox({
+        x,
+        y,
 
-            background: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_PRIMARY)
-                .setStrokeStyle(2, COLOR_LIGHT),
+        background: scene.rexUI.add
+          .roundRectangle(0, 0, 2, 2, 20, COLOR_PRIMARY)
+          .setStrokeStyle(2, COLOR_LIGHT),
 
-            icon: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_DARK),
+        icon: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, COLOR_DARK),
 
-            text: this.getBBcodeText(scene, wrapWidth, fixedWidth, fixedHeight),
+        text: this.getBBcodeText(scene, wrapWidth, fixedWidth, fixedHeight),
 
-            action: scene.add.image(0, 0, 'nextPage').setTint(COLOR_LIGHT).setVisible(false),
+        action: scene.add
+          .image(0, 0, 'nextPage')
+          .setTint(COLOR_LIGHT)
+          .setVisible(false),
 
-            space: {
-                left: 20,
-                right: 20,
-                top: 20,
-                bottom: 20,
-                icon: 10,
-                text: 10,
-            }
-        })
-        .setOrigin(0)
-        .layout();
+        space: {
+          left: 20,
+          right: 20,
+          top: 20,
+          bottom: 20,
+          icon: 10,
+          text: 10,
+        },
+      })
+      .setOrigin(0)
+      .layout();
 
     this.textBox
-        .setInteractive()
-        .on('pointerdown', function () {
-            var icon = this.getElement('action').setVisible(false);
-            this.resetChildVisibleState(icon);
-            if (this.isTyping) {
-                this.stop(true);
-            } else {
-                this.typeNextPage();
-            }
+      .setInteractive()
+      .on(
+        'pointerdown',
+        function() {
+          const icon = this.getElement('action').setVisible(false);
+          this.resetChildVisibleState(icon);
+          if (this.isTyping) {
+            this.stop(true);
+          } else {
+            this.typeNextPage();
+          }
 
-            // LAST CLICK IN THE LAST PAGE
-            if (this.isLastPage && !this.isTyping) { 
-              scene.textBox.destroy();
-              scene.textBox = null;
-            }
-        }, this.textBox)
-        .on('pageend', function () {
-            if (this.isLastPage) {
-              return;
-            }
+          // LAST CLICK IN THE LAST PAGE
+          if (this.isLastPage && !this.isTyping) {
+            scene.textBox.destroy();
+            scene.textBox = null;
+          }
+        },
+        this.textBox
+      )
+      .on(
+        'pageend',
+        function() {
+          if (this.isLastPage) {
+            return;
+          }
 
-            var icon = this.getElement('action').setVisible(true);
-            this.resetChildVisibleState(icon);
-            icon.y -= 30;
-            var tween = scene.tweens.add({
-                targets: icon,
-                y: '+=30', // '+=100'
-                ease: 'Bounce', // 'Cubic', 'Elastic', 'Bounce', 'Back'
-                duration: 500,
-                repeat: 0, // -1: infinity
-                yoyo: false
-            });
-
-        }, this.textBox)
+          const icon = this.getElement('action').setVisible(true);
+          this.resetChildVisibleState(icon);
+          icon.y -= 30;
+          const tween = scene.tweens.add({
+            targets: icon,
+            y: '+=30', // '+=100'
+            ease: 'Bounce', // 'Cubic', 'Elastic', 'Bounce', 'Back'
+            duration: 500,
+            repeat: 0, // -1: infinity
+            yoyo: false,
+          });
+        },
+        this.textBox
+      );
 
     return this.textBox;
   }
 
   getBBcodeText(scene, wrapWidth, fixedWidth, fixedHeight) {
     return scene.rexUI.add.BBCodeText(0, 0, '', {
-        fixedWidth: fixedWidth,
-        fixedHeight: fixedHeight,
+      fixedWidth,
+      fixedHeight,
 
-        fontSize: '20px',
-        wrap: {
-            mode: 'word',
-            width: wrapWidth
-        },
-        maxLines: 3
-    })
+      fontSize: '20px',
+      wrap: {
+        mode: 'word',
+        width: wrapWidth,
+      },
+      maxLines: 3,
+    });
   }
+}
 
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function randomIntFromInterval(min: number, max: number): number {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+function capitalizeFirstLetetr(s: string): string {
+  return s.charAt(0).toUpperCase() + s.slice(1);
 }

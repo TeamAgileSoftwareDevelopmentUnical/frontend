@@ -10,19 +10,23 @@ import { Item } from './add_on/item';
   styleUrls: ['./store.page.scss'],
 })
 export class StorePage implements OnInit {
+  static instance: StorePage = null;
 
   phaserGame: Phaser.Game;
   config: Phaser.Types.Core.GameConfig;
 
-  chart: Item[];
+  cart: Item[];
 
   debug = true;
 
-  constructor() {}
+  constructor() {
+    StorePage.instance = this;
+  }
 
   ngOnInit() {
     this.initializePhaser();
-    this.initializeChart();
+    this.initializeCart();
+    this.initializeTutorial();
   }
 
   initializePhaser(): void {
@@ -51,33 +55,70 @@ export class StorePage implements OnInit {
     this.phaserGame = new Phaser.Game(this.config);
   }
 
-  getId(){
-    return sessionStorage.getItem( 'id');
+  getId(): number{
+    return Number(sessionStorage.getItem('id'));
   }
-  
+
   isSeller(){
-    if(sessionStorage.getItem('role')==="Seller"){
+    if(sessionStorage.getItem('role') === 'Seller'){
       return true;
     }
     return false;
   }
 
-  initializeChart(): void {
-    this.chart = [];
+  initializeCart(): void {
+    this.cart = [];
     if (this.debug) {
-      this.chart.push(new Item('Lemons', 'MISS! THE LEMONS! MISSSSS!', 1.20));
-      this.chart.push(new Item('Apples', 'Just some apples', 1.60));
-      this.chart.push(new Item('Melons', 'Just some melons', 2.60));
-      this.chart.push(new Item('Cherries', 'Just some cherries', 3.60));
-      this.chart.push(new Item('Artichokes', 'Just some artichokes', 4.80));
-      this.chart.push(new Item('Yes', 'No.', 69.420));
-      this.chart.push(new Item('Sausages', 'Hotter than a dog!', 7.50));
-      this.chart.push(new Item('Bananas', 'Just some bananas', 1.20));
+      this.cart.push(new Item('Lemons', 'MISS! THE LEMONS! MISSSSS!', 1.20));
+      this.cart.push(new Item('Apples', 'Just some apples', 1.60));
+      this.cart.push(new Item('Melons', 'Just some melons', 2.60));
+      this.cart.push(new Item('Cherries', 'Just some cherries', 3.60));
+      this.cart.push(new Item('Artichokes', 'Just some artichokes', 4.80));
+      this.cart.push(new Item('Yes', 'No.', 69.420));
+      this.cart.push(new Item('Sausages', 'Hotter than a dog!', 7.50));
+      this.cart.push(new Item('Bananas', 'Just some bananas', 1.20));
     }
   }
 
+  initializeTutorial(): void {
+    if (sessionStorage.getItem('saw_tutorial') !== '1') {
+      const modal = document.getElementById('tutorial-modal');
+      modal.removeAttribute('class');
+      modal.setAttribute('class', 'unfold');
+    }
+
+    document.getElementById('tutorial-modal').addEventListener('click', () => {
+      document.getElementById('tutorial-modal').setAttribute('class', 'out');
+      sessionStorage.setItem('saw_tutorial', '1');
+    });
+    document.body.addEventListener('keydown', (e) => {
+      if (e.key !== 'h') {
+        return false;
+      }
+      if (sessionStorage.getItem('saw_tutorial') === '1') {
+        const modal = document.getElementById('tutorial-modal');
+        modal.removeAttribute('class');
+        modal.setAttribute('class', 'unfold');
+        sessionStorage.setItem('saw_tutorial', '0');
+      } else if (sessionStorage.getItem('saw_tutorial') === '0') {
+        document.getElementById('tutorial-modal').setAttribute('class', 'out');
+        sessionStorage.setItem('saw_tutorial', '1');
+      }
+    });
+    document.getElementById('tutorial-modal-close').addEventListener('click', () => {
+      document.getElementById('tutorial-modal').setAttribute('class', 'out');
+      sessionStorage.setItem('saw_tutorial', '1');
+    });
+    document.getElementById('tutorial-modal-content').addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      return false;
+    });
+  }
+
   /**
-   * Decrease the `quantity` of the selected item by 1, if it reachs 0, then it is removed from the chart
+   * Decrease the `quantity` of the selected item by 1, if it reachs 0, then it is removed from the cart
    *
    * @param event The event fired from the button
    */
@@ -90,7 +131,7 @@ export class StorePage implements OnInit {
     const itemPrice = itemNodeList[2].textContent.slice(0, -1);
 
     let toDelete: Item = null;
-    this.chart.forEach((element) => {
+    this.cart.forEach((element) => {
       if (element.name === itemName && element.description === itemDescription && element.getPrice() === itemPrice) {
         element.removeOne();
         if (element.getQuantity() <= 0) {
@@ -100,7 +141,7 @@ export class StorePage implements OnInit {
     });
 
     if (toDelete) {
-      this.chart.splice(this.chart.indexOf(toDelete), 1);
+      this.cart.splice(this.cart.indexOf(toDelete), 1);
     }
 
     if (this.debug) {
@@ -108,7 +149,7 @@ export class StorePage implements OnInit {
     }
   }
   /**
-   * Add another item to the chart, effectively incrementing its `quantity` by 1
+   * Add another item to the cart, effectively incrementing its `quantity` by 1
    *
    * @param event The event fired from the button
    */
@@ -120,7 +161,7 @@ export class StorePage implements OnInit {
     const itemDescription = itemNodeList[1].textContent;
     const itemPrice = itemNodeList[2].textContent.slice(0, -1);
 
-    this.chart.forEach((element) => {
+    this.cart.forEach((element) => {
       if (element.name === itemName && element.description === itemDescription && element.getPrice() === itemPrice) {
         element.addOne();
       }
@@ -145,13 +186,13 @@ export class StorePage implements OnInit {
 
     let index = 0;
 
-    this.chart.forEach((element) => {
+    this.cart.forEach((element) => {
       if (element.name === itemName && element.description === itemDescription && element.getPrice() === itemPrice) {
-        index = this.chart.indexOf(element);
+        index = this.cart.indexOf(element);
       }
     });
 
-    this.chart.splice(index, 1);
+    this.cart.splice(index, 1);
 
     if (this.debug) {
       console.log(new Item(itemName, itemDescription, itemPrice));
@@ -166,13 +207,20 @@ export class StorePage implements OnInit {
    *
    * @returns The total price the user's gonna pay
    */
-  public getTotalChartPrice(): number {
+  public getTotalCartPrice(): number {
     let returnValue = 0;
-    this.chart.forEach((element) => {
+    this.cart.forEach((element) => {
       returnValue += (element.getQuantity() * Number(element.getPrice()));
     });
     // Round is needed to avoid the js divisions thing
     return Math.round(returnValue * 100) / 100;
+  }
+
+  /**
+   * @returns The number of types of items present in the cart
+   */
+  public howManyItemsInCart() {
+    return this.cart.length;
   }
 
 }
