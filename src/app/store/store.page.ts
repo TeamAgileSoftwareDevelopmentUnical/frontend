@@ -91,6 +91,20 @@ export class StorePage implements OnInit {
       document.getElementById('tutorial-modal').setAttribute('class', 'out');
       sessionStorage.setItem('saw_tutorial', '1');
     });
+    document.body.addEventListener('keydown', (e) => {
+      if (e.key !== 'h') {
+        return false;
+      }
+      if (sessionStorage.getItem('saw_tutorial') === '1') {
+        const modal = document.getElementById('tutorial-modal');
+        modal.removeAttribute('class');
+        modal.setAttribute('class', 'unfold');
+        sessionStorage.setItem('saw_tutorial', '0');
+      } else if (sessionStorage.getItem('saw_tutorial') === '0') {
+        document.getElementById('tutorial-modal').setAttribute('class', 'out');
+        sessionStorage.setItem('saw_tutorial', '1');
+      }
+    });
     document.getElementById('tutorial-modal-close').addEventListener('click', () => {
       document.getElementById('tutorial-modal').setAttribute('class', 'out');
       sessionStorage.setItem('saw_tutorial', '1');
