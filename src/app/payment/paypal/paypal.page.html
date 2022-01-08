@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/store"><ion-icon name="arrow-back-circle-outline"></ion-icon></ion-button>
+    </ion-buttons>
+    <ion-title>Pay With PayPal</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="paymentForm">
+    <ion-item>
+      <ion-label position="floating">Amount</ion-label>
+      <ion-input type="number" required formControlName="price"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Remarks</ion-label>
+      <ion-textarea type="text" required formControlName="description"></ion-textarea>
+    </ion-item>
+    <ion-button color="primary" slot="start" (click)="paymentWithPayPal()">Pay</ion-button>
+  </form>
+</ion-content>

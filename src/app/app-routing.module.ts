@@ -26,11 +26,19 @@ const routes: Routes = [
     loadChildren: () => import('./forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
   },
   {
+    path: 'payment-success',
+    loadChildren: () => import('./payment-success/payment-success.module').then( m => m.PaymentSuccessPageModule)
+  },
+  {
+    path: 'payment-cancel',
+    loadChildren: () => import('./payment-cancel/payment-cancel.module').then( m => m.PaymentCancelPageModule)
+  },
+  {
     path: 'all-product',
     loadChildren: () => import('./product/all-product/all-product.module').then( m => m.AllProductPageModule),
     canActivate:[AuthRoleGuard],
     data:{
-      role:'Seller' 
+      role:'Seller'
     }
   },
   {
@@ -38,16 +46,16 @@ const routes: Routes = [
     loadChildren: () => import('./product/upload-product/upload-product.module').then( m => m.UploadProductPageModule),
     canActivate:[AuthRoleGuard],
     data:{
-      role:'Seller' 
-    } 
-    
+      role:'Seller'
+    }
+
   },
   {
     path: 'update-product/:productId',
     loadChildren: () => import('./product/update-product/update-product.module').then( m => m.UpdateProductPageModule),
     canActivate:[AuthRoleGuard],
         data:{
-        role:'Seller' 
+        role:'Seller'
       }
     },
   {
@@ -64,15 +72,17 @@ const routes: Routes = [
     canActivate:[AuthRoleGuard],
   },
   {
+    path: 'payment',
+    loadChildren: () => import('./payment/payment.module').then( m => m.PaymentPageModule),
+    canActivate:[AuthRoleGuard],
+  },
+  {
     path: 'not-found',
     loadChildren: () => import('./not-found/not-found.module').then( m => m.NotFoundPageModule)
   },
-  
+
   { path: '404', component: NotFoundPage },
   { path: '**', redirectTo: '404' },
-
-
-
 ];
 
 @NgModule({
