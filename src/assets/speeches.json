@@ -1,7 +1,25 @@
 {
-    "WelcomeCharacter": "ciao amico mio come stai spero bene, qui Puoi trovare tanta buona frutta e u pesc",
-    "butcher": "Would you like to see my products?",
-    "ortolan": "Would you like to see my products?",
-    "fruiterer": "Would you like to see my products?",
-    "cart": "Do you want to checkout?"
+  "WelcomeCharacter": [
+    "Hi, ~user~, would you like to watch again the tutorial?",
+    "How's goin' dawg?"
+  ],
+  "butcher": [
+    "Hey! We have the best meat in the city, come take a look!",
+    "Come and take a look!",
+    "I've got the freshest meats!\nThis pork is so fresh that it's still singing Hakuna Matata!"
+  ],
+  "ortolan": [
+      "EGGPLANT! LETTUCE! TOMATOES! WE HAVE THE BEST VEGETABLES!",
+      "Do you want some broccoli? Take a look!",
+      "I ain't jokin'. This white stuff is good. Look at this cauliflower!"
+  ],
+  "fruiterer": [
+      "All the fruits that you want, you can find 'em here!",
+      "We have real apples, not like the one in your pocket",
+      "Bananas? Apples? Melons? You ask, you find it.",
+      "Miss the lemons! THE LEMONS, LADYYYYYYYYY!"
+  ],
+  "cart": [
+      "Do you want to go to the checkout?"
+  ]
 }

@@ -44,7 +44,7 @@
     <ion-button *ngIf="!mod" (click)="modifyAccount()">
       modify account
     </ion-button>
-    <ion-button *ngIf="mod" (click)="submitAccount()">
+    <ion-button *ngIf="mod" [disabled] = "notFilled()" (click)="submitAccount()">
       submit
     </ion-button>
     <ion-button *ngIf="!mod">

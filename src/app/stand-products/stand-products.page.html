@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Stand products</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-col size="auto" *ngFor="let item of standProducts">
+    <ion-item>
+      
+      <!--       AVATAR      -->
+      <ion-avatar slot="start">
+        <img src= "{{item.photo}}" />
+      </ion-avatar>
+
+      <!--       PRODUCTS INFO      -->
+      <ion-label>
+        <h2><b>{{item.productName}}</b></h2>
+        <h3>{{item.batch.productPrice}} €</h3>
+        <h6>Available quantity: {{item.batch.availableQuantity}}</h6>
+        <p>{{item.productDesc}}</p> 
+      </ion-label>
+      
+      <!--       BUTTON AND QUANTITY SELECTOR      -->
+      <ion-col class="alignme">
+        <ion-text>quantity:</ion-text>
+        <ion-input type="number" pattern="[0-9]+" value="1" id="{{item.productId}}" min="{{1}}" max="{{item.batch.availableQuantity}}"></ion-input>
+        <ion-button (click)="addProductInCart(item)">ADD TO CART</ion-button>
+      </ion-col>
+      
+    </ion-item>
+  </ion-col>
+
+</ion-content>

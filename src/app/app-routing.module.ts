@@ -81,8 +81,17 @@ const routes: Routes = [
     loadChildren: () => import('./not-found/not-found.module').then( m => m.NotFoundPageModule)
   },
 
+
+  {
+    path: 'stand-products/:category',
+    loadChildren: () => import('./stand-products/stand-products.module').then( m => m.StandProductsPageModule)
+  },
+
   { path: '404', component: NotFoundPage },
   { path: '**', redirectTo: '404' },
+
+
+
 ];
 
 @NgModule({

@@ -12,16 +12,15 @@ import { HomeService } from '../service/home.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+    username  = '';
+    password = '';
+
+    respUser: string;
+    respPass: string;
+
+    c: Account = new Account();
 
   constructor(private homeSrv: HomeService, private route: ActivatedRoute, private router: Router) { }
-
-  username  = '';
-  password = '';
-
-  respUser: string;
-  respPass: string;
-
-  c: Account = new Account();
 
   ngOnInit() {
     sessionStorage.clear();
@@ -37,11 +36,12 @@ export class LoginPage implements OnInit {
         sessionStorage.setItem( 'token', response.jwtToken);
         sessionStorage.setItem( 'id', response.id);
         sessionStorage.setItem( 'role' , response.role);
+        sessionStorage.setItem( 'user_name', this.c.username);
 
         if (response.role === 'Seller') {
           this.router.navigate(['/all-product']);
         }else {
-          console.log("loggato, storage = ", sessionStorage)
+          console.log('loggato, storage = ', sessionStorage);
           this.router.navigate(['/store']);
         }
     } else {
