@@ -29,7 +29,17 @@ export class StandProductsPage implements OnInit {
         console.log(this.standProducts);
       });
     });
-    
   }
 
+  addProductInCart(product: ProductResponse) {
+    var id: any = product.productId;
+    var selectedQuantity: any = document.getElementById(id).getElementsByTagName('input')[0].value;
+
+    if(selectedQuantity > product.batch.availableQuantity) {
+      var availableQuantityInString: any = product.batch.availableQuantity;
+      document.getElementById(id).getElementsByTagName('input')[0].value = availableQuantityInString;
+    }
+    
+    console.log(document.getElementById(id).getElementsByTagName('input')[0].value)
+  }
 }

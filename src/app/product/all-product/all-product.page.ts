@@ -38,7 +38,9 @@ export class AllProductPage implements OnInit {
   }
 
   updateProduct(productId: number) {
-    this.route.navigate(['/update-product',productId]);
+    this.route.navigate(['/update-product',productId],{
+      replaceUrl : true
+     });
   }
 
   deleteProduct(productId: number) {

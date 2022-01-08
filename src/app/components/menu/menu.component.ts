@@ -41,7 +41,9 @@ export class MenuComponent implements OnInit {
   }
 
   addProduct(){
-    this.router.navigate(['/upload-product']);
+    this.router.navigate(['/upload-product'],{
+      replaceUrl : true
+     });
   }
 
   logout(){
