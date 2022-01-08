@@ -16,8 +16,8 @@ export default class MainScene extends Phaser.Scene {
   dialogBox: any;
   textBox: any;
 
-  maxWidth: number = window.innerWidth * window.devicePixelRatio;
-  maxHeight: number = window.innerHeight * window.devicePixelRatio * 0.5;
+  maxWidth = 960;
+  maxHeight = 480;
 
   constructor(config) {
     super(config);
@@ -348,23 +348,26 @@ export default class MainScene extends Phaser.Scene {
       .popUp(700);
 
   this.dialogBox
-      .on('button.click', function (button, groupName, index) { // index 0 -> YES button, index 1 -> NO button
+      .on('button.click', function(button, groupName, index) { // index 0 -> YES button, index 1 -> NO button
         this.dialogBox.destroy();
         this.dialogBox = null;
-        
-        if(index == 0) {
-          let params = 'scrollbars=no, resizable=no, status=no, location=no, toolbar=no, menubar=no, width=0, height=0, left=-1000, top=-1000';
-          if(npc.texture.key == 'butcher')
-            window.open('/stand-products/MEAT','test', params)
-          else if(npc.texture.key == 'ortolan')
-            window.open('/stand-products/VEGETABLE','test', params)
-          else if(npc.texture.key == 'fruiterer')
-            window.open('/stand-products/FRUITS','test', params)
-          else if(npc.texture.key == 'cart')
-            window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ','test', params)
+
+        if(index === 0) {
+          // eslint-disable-next-line max-len
+          const params = 'scrollbars=no, resizable=no, status=no, location=no, toolbar=no, menubar=no, width=0, height=0, left=-1000, top=-1000';
+          if(npc.texture.key === 'butcher') {
+            window.open('/stand-products/MEAT','test', params);
+          }
+          else if(npc.texture.key === 'ortolan')
+            {window.open('/stand-products/VEGETABLE','test', params);}
+          else if(npc.texture.key === 'fruiterer')
+            {window.open('/stand-products/FRUITS','test', params);}
+          else if(npc.texture.key === 'cart')
+            {window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ','test', params);}
         }
       }, this)
-      .on('button.over', function (button, groupName, index) {
+      // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+      .on('button.over', function(button, groupName, index) {
           button.getElement('background').setStrokeStyle(1, 0xffffff);
       })
       .on('button.out', (button, groupName, index) => {

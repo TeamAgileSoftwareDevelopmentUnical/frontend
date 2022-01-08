@@ -1,10 +1,12 @@
 export class Item {
+	public id: number;
 	public name: string;
 	public description: string;
 	private priceInCents: number;
 	private quantity: number;
 
-	constructor(name: string, description: string, price: number | string, quantity?: number)	{
+	constructor(id: number, name: string, description: string, price: number | string, quantity?: number)	{
+		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.priceInCents = this.numberValue(price) * 100;
@@ -16,6 +18,9 @@ export class Item {
 	}
 
 	public addOne() {this.quantity+=1;}
+	public addMany(num: number) {
+		this.quantity+=num;
+	}
 	public removeOne() {this.quantity-=1;}
 
 	public getQuantity() {return this.quantity;}

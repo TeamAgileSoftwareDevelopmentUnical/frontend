@@ -69,14 +69,14 @@ export class StorePage implements OnInit {
   initializeCart(): void {
     this.cart = [];
     if (this.debug) {
-      this.cart.push(new Item('Lemons', 'MISS! THE LEMONS! MISSSSS!', 1.20));
-      this.cart.push(new Item('Apples', 'Just some apples', 1.60));
-      this.cart.push(new Item('Melons', 'Just some melons', 2.60));
-      this.cart.push(new Item('Cherries', 'Just some cherries', 3.60));
-      this.cart.push(new Item('Artichokes', 'Just some artichokes', 4.80));
-      this.cart.push(new Item('Yes', 'No.', 69.420));
-      this.cart.push(new Item('Sausages', 'Hotter than a dog!', 7.50));
-      this.cart.push(new Item('Bananas', 'Just some bananas', 1.20));
+      this.cart.push(new Item(1, 'Lemons', 'MISS! THE LEMONS! MISSSSS!', 1.20));
+      this.cart.push(new Item(2, 'Apples', 'Just some apples', 1.60));
+      this.cart.push(new Item(3, 'Melons', 'Just some melons', 2.60));
+      this.cart.push(new Item(4, 'Cherries', 'Just some cherries', 3.60));
+      this.cart.push(new Item(5, 'Artichokes', 'Just some artichokes', 4.80));
+      this.cart.push(new Item(6, 'Yes', 'No.', 69.420));
+      this.cart.push(new Item(7, 'Sausages', 'Hotter than a dog!', 7.50));
+      this.cart.push(new Item(8, 'Bananas', 'Just some bananas', 1.20));
     }
   }
 
@@ -126,6 +126,7 @@ export class StorePage implements OnInit {
     const target = event.target || event.srcElement || event.currentTarget;
     const itemNodeList = target.parentElement.parentElement.childNodes;
 
+    const itemId = itemNodeList[0].textContent;
     const itemName = itemNodeList[0].textContent;
     const itemDescription = itemNodeList[1].textContent;
     const itemPrice = itemNodeList[2].textContent.slice(0, -1);
@@ -145,7 +146,7 @@ export class StorePage implements OnInit {
     }
 
     if (this.debug) {
-      console.log(new Item(itemName, itemDescription, itemPrice));
+      console.log(new Item(itemId, itemName, itemDescription, itemPrice));
     }
   }
   /**
@@ -157,6 +158,7 @@ export class StorePage implements OnInit {
     const target = event.target || event.srcElement || event.currentTarget;
     const itemNodeList = target.parentElement.parentElement.childNodes;
 
+    const itemId = itemNodeList[0].textContent;
     const itemName = itemNodeList[0].textContent;
     const itemDescription = itemNodeList[1].textContent;
     const itemPrice = itemNodeList[2].textContent.slice(0, -1);
@@ -168,7 +170,7 @@ export class StorePage implements OnInit {
     });
 
     if (this.debug) {
-      console.log(new Item(itemName, itemDescription, itemPrice));
+      console.log(new Item(itemId, itemName, itemDescription, itemPrice));
     }
   }
   /**
@@ -180,9 +182,10 @@ export class StorePage implements OnInit {
     const target = event.target || event.srcElement || event.currentTarget;
     const itemNodeList = target.parentElement.parentElement.childNodes;
 
-    const itemName = itemNodeList[0].textContent;
-    const itemDescription = itemNodeList[1].textContent;
-    const itemPrice = itemNodeList[2].textContent.slice(0, -1);
+    const itemId = itemNodeList[0].textContent;
+    const itemName = itemNodeList[1].textContent;
+    const itemDescription = itemNodeList[2].textContent;
+    const itemPrice = itemNodeList[3].textContent.slice(0, -1);
 
     let index = 0;
 
@@ -195,7 +198,7 @@ export class StorePage implements OnInit {
     this.cart.splice(index, 1);
 
     if (this.debug) {
-      console.log(new Item(itemName, itemDescription, itemPrice));
+      console.log(new Item(itemId, itemName, itemDescription, itemPrice));
     }
   }
   /**
