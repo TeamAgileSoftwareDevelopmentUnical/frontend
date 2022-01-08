@@ -325,7 +325,7 @@ export default class MainScene extends Phaser.Scene {
             fontSize: '20px',
           }
         ),
-        actions: [this.createLabel(this, 'Yes'), this.createLabel(this, 'No')],
+        actions: [this.createLabel(this, 'Open Shop'), this.createLabel(this, 'Cancel')],
         space: {
           title: 20,
           content: 20,
