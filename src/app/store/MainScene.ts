@@ -15,7 +15,7 @@ export default class MainScene extends Phaser.Scene {
   rexUI: any;
   dialogBox: any;
   textBox: any;
-  
+
   maxWidth = 960;
   maxHeight = 480;
 
@@ -291,6 +291,28 @@ export default class MainScene extends Phaser.Scene {
     x = ~~x;
     y = ~~y + 50;
 
+    let affirmative: string;
+    let negative: string;
+
+    if (npc.texture.key === 'cart') {
+      affirmative = 'Yes';
+      negative = 'No';
+    } else {
+      affirmative = 'Open Shop';
+      negative = 'Cancel';
+    }
+
+    let content: string =
+      this.speeches[npc.texture.key][
+        randomIntFromInterval(0, this.speeches[npc.texture.key].length - 1)
+      ];
+    const name = sessionStorage.getItem('user_name');
+    if (name) {
+      content = content.replace('~user~', name);
+    } else {
+      content = content.replace('~user~', 'Utente');
+    }
+
     this.dialogBox = this.rexUI.add
       .dialog({
         x,
@@ -318,14 +340,12 @@ export default class MainScene extends Phaser.Scene {
         content: this.add.text(
           0,
           0,
-          this.speeches[npc.texture.key][
-            randomIntFromInterval(0, this.speeches[npc.texture.key].length - 1)
-          ],
+          content,
           {
             fontSize: '20px',
           }
         ),
-        actions: [this.createLabel(this, 'Open Shop'), this.createLabel(this, 'Cancel')],
+        actions: [this.createLabel(this, affirmative), this.createLabel(this, negative)],
         space: {
           title: 20,
           content: 20,
@@ -355,13 +375,13 @@ export default class MainScene extends Phaser.Scene {
         if(index === 0) {
           // eslint-disable-next-line max-len
           if(npc.texture.key === 'butcher')
-            StorePage.instance.navigate('MEAT');
+            {StorePage.instance.navigate('MEAT');}
           else if(npc.texture.key === 'ortolan')
-            StorePage.instance.navigate('VEGETABLE');
+            {StorePage.instance.navigate('VEGETABLE');}
           else if(npc.texture.key === 'fruiterer')
-            StorePage.instance.navigate('FRUITS');
+            {StorePage.instance.navigate('FRUITS');}
           else if(npc.texture.key === 'cart')
-            console.log('CHECKOUT DA COMPLETARE!')
+            {console.log('CHECKOUT DA COMPLETARE!');};
         }
       }, this)
       // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
