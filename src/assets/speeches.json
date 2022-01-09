@@ -1,23 +1,26 @@
 {
   "WelcomeCharacter": [
-    "Hi, ~user~, would you like to watch again the tutorial?",
-    "How's goin' dawg?"
+    "Hi, ~user~, welcome to FreshMarket 2.0!\nThis is the best virtual market that you can find.\nHave fun!",
+    "Hey, ~user~, how are you? Are you enjoying FreshMarket?\nKeep in mind that you can bring up the Tutorial page by pressing H."
   ],
   "butcher": [
     "Hey! We have the best meat in the city, come take a look!",
-    "Come and take a look!",
-    "I've got the freshest meats!\nThis pork is so fresh that it's still singing Hakuna Matata!"
+    "Come and take a look at my beautiful products!",
+    "I've got the freshest meats!\nThis pork is so fresh that it's still singing Hakuna Matata!",
+    "Welcome to your favourite butcher, ~user~. Take a look at my products!"
   ],
   "ortolan": [
       "EGGPLANT! LETTUCE! TOMATOES! WE HAVE THE BEST VEGETABLES!",
-      "Do you want some broccoli? Take a look!",
-      "I ain't jokin'. This white stuff is good. Look at this cauliflower!"
+      "Do you want some vegetables? Take a look!",
+      "I ain't jokin'. This white stuff is good. Look at this cauliflower!",
+      "Hello ~user~, come and take a look to my vegetables!"
   ],
   "fruiterer": [
       "All the fruits that you want, you can find 'em here!",
       "We have real apples, not like the one in your pocket",
       "Bananas? Apples? Melons? You ask, you find it.",
-      "Miss the lemons! THE LEMONS, LADYYYYYYYYY!"
+      "Miss the lemons! THE LEMONS, LADYYYYYYYYY!",
+      "Hello ~user~, look at those beautiful fruits!"
   ],
   "cart": [
       "Do you want to go to the checkout?"

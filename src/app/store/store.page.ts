@@ -23,11 +23,15 @@ export class StorePage implements OnInit {
 
   constructor(private navCtrl: NavController, public alertController: AlertController) {
     if(StorePage.instance === null)
-      StorePage.instance = this;
+      {StorePage.instance = this;}
       console.log(StorePage.instance);
   }
 
   ngOnInit() {
+    // Necessary to overcome the game not displaying sometimes
+    document.addEventListener('readystatechange', () => {
+      this.phaserGame.scale.resize(Number(this.config.width), Number(this.config.height));
+    }, false);
     this.initializePhaser();
     this.initializeCart();
     this.initializeTutorial();
@@ -85,30 +89,30 @@ export class StorePage implements OnInit {
   }
 
   addItem(item: Item, availableQuantity: number) {
-    for(let itemInCart of this.cart) {
+    for(const itemInCart of this.cart) {
       if(item.id === itemInCart.id)
-        if(availableQuantity >= +item.getQuantity() + +itemInCart.getQuantity()) {
+        {if(availableQuantity >= +item.getQuantity() + +itemInCart.getQuantity()) {
           itemInCart.addMany(item.getQuantity());
           this.showAlert('Cart', 'Quantity added successfully');
-          return
-        }
+          return;
+        }}
       if(availableQuantity - itemInCart.getQuantity() > 0) {
         this.showConfirm(item, itemInCart, availableQuantity);
         return;
       }
       else
-      this.showAlert('Cart', 'You have already added all available units to your cart!');
+      {this.showAlert('Cart', 'You have already added all available units to your cart!');}
       return;
     }
-    
+
     this.cart.push(item);
     this.showAlert('Cart', 'Product added successfully');
   }
 
   async showAlert(header, message) {
     const alert = await this.alertController.create({
-      header: header,
-      message: message,
+      header,
+      message,
       buttons: ['OK']
     });
 
@@ -159,7 +163,7 @@ export class StorePage implements OnInit {
         modal.removeAttribute('class');
         modal.setAttribute('class', 'unfold');
         sessionStorage.setItem('saw_tutorial', '0');
-      } else if (sessionStorage.getItem('saw_tutorial') === '0') {
+      } else if (sessionStorage.getItem('saw_tutorial') === '0' || sessionStorage.getItem('saw_tutorial') === null) {
         document.getElementById('tutorial-modal').setAttribute('class', 'out');
         sessionStorage.setItem('saw_tutorial', '1');
       }
