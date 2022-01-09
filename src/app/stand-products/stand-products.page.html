@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
     <ion-title>Stand products</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -8,7 +11,7 @@
 
   <ion-col size="auto" *ngFor="let item of standProducts">
     <ion-item>
-      
+
       <!--       AVATAR      -->
       <ion-avatar slot="start">
         <img src= "{{item.photo}}" />

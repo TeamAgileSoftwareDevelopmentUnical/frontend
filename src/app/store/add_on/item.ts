@@ -19,7 +19,7 @@ export class Item {
 
 	public addOne() {this.quantity+=1;}
 	public addMany(num: number) {
-		this.quantity+=num;
+		this.quantity= +this.quantity + +num;
 	}
 	public removeOne() {this.quantity-=1;}
 

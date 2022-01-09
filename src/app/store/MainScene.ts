@@ -15,7 +15,7 @@ export default class MainScene extends Phaser.Scene {
   rexUI: any;
   dialogBox: any;
   textBox: any;
-
+  
   maxWidth = 960;
   maxHeight = 480;
 
@@ -354,16 +354,14 @@ export default class MainScene extends Phaser.Scene {
 
         if(index === 0) {
           // eslint-disable-next-line max-len
-          const params = 'scrollbars=no, resizable=no, status=no, location=no, toolbar=no, menubar=no, width=0, height=0, left=-1000, top=-1000';
-          if(npc.texture.key === 'butcher') {
-            window.open('/stand-products/MEAT','test', params);
-          }
+          if(npc.texture.key === 'butcher')
+            StorePage.instance.navigate('MEAT');
           else if(npc.texture.key === 'ortolan')
-            {window.open('/stand-products/VEGETABLE','test', params);}
+            StorePage.instance.navigate('VEGETABLE');
           else if(npc.texture.key === 'fruiterer')
-            {window.open('/stand-products/FRUITS','test', params);}
+            StorePage.instance.navigate('FRUITS');
           else if(npc.texture.key === 'cart')
-            {window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ','test', params);}
+            console.log('CHECKOUT DA COMPLETARE!')
         }
       }, this)
       // eslint-disable-next-line prefer-arrow/prefer-arrow-functions

@@ -3,12 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import Phaser from 'phaser';
 import MainScene from './MainScene';
 import { Item } from './add_on/item';
+import { AlertController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-store',
   templateUrl: './store.page.html',
   styleUrls: ['./store.page.scss'],
 })
+
 export class StorePage implements OnInit {
   static instance: StorePage = null;
 
@@ -17,10 +19,12 @@ export class StorePage implements OnInit {
 
   cart: Item[];
 
-  debug = true;
+  debug = false;
 
-  constructor() {
-    StorePage.instance = this;
+  constructor(private navCtrl: NavController, public alertController: AlertController) {
+    if(StorePage.instance === null)
+      StorePage.instance = this;
+      console.log(StorePage.instance);
   }
 
   ngOnInit() {
@@ -78,6 +82,61 @@ export class StorePage implements OnInit {
       this.cart.push(new Item(7, 'Sausages', 'Hotter than a dog!', 7.50));
       this.cart.push(new Item(8, 'Bananas', 'Just some bananas', 1.20));
     }
+  }
+
+  addItem(item: Item, availableQuantity: number) {
+    for(let itemInCart of this.cart) {
+      if(item.id === itemInCart.id)
+        if(availableQuantity >= +item.getQuantity() + +itemInCart.getQuantity()) {
+          itemInCart.addMany(item.getQuantity());
+          this.showAlert('Cart', 'Quantity added successfully');
+          return
+        }
+      if(availableQuantity - itemInCart.getQuantity() > 0) {
+        this.showConfirm(item, itemInCart, availableQuantity);
+        return;
+      }
+      else
+      this.showAlert('Cart', 'You have already added all available units to your cart!');
+      return;
+    }
+    
+    this.cart.push(item);
+    this.showAlert('Cart', 'Product added successfully');
+  }
+
+  async showAlert(header, message) {
+    const alert = await this.alertController.create({
+      header: header,
+      message: message,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  showConfirm(item: Item, itemInCart: Item, availableQuantity: number) {
+    this.alertController.create({
+      header: 'Cart',
+      subHeader: 'A maximum of ' + availableQuantity + ' units available.',
+      message: 'You can add up to ' + (availableQuantity - itemInCart.getQuantity()) + ' more items, do you want to proceed?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            itemInCart.addMany(availableQuantity - itemInCart.getQuantity());
+            this.showAlert('Cart', 'Quantity added successfully');
+          }
+        },
+        {
+          text: 'Cancel',
+          handler: () => {
+          }
+        }
+      ]
+    }).then(res => {
+      res.present();
+    });
   }
 
   initializeTutorial(): void {
@@ -224,6 +283,10 @@ export class StorePage implements OnInit {
    */
   public howManyItemsInCart() {
     return this.cart.length;
+  }
+
+  public navigate(category: string) {
+    this.navCtrl.navigateForward('/stand-products/' + category);
   }
 
 }
