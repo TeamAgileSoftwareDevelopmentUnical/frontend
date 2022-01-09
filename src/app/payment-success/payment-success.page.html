@@ -8,5 +8,38 @@
 </ion-header>
 
 <ion-content>
-  <div><h4>Payment Success</h4></div>
+  <div class="ion-justify-content-center ion-text-center">
+    <ion-icon *ngIf="mode" name="checkmark-outline" id="payment-check"></ion-icon>
+    <div id="payment-success-message">
+      <span *ngIf="!mode">Waiting for payment confirmation...</span>
+      <span *ngIf="mode">Thank you for your payment!</span>
+    </div>
+    <div *ngIf="mode">
+      <div id="payment-amount-header">
+        <span id="payment-header">Total Payment Amount</span>
+      </div>
+      <div id="payment-amount">
+        <div>
+          <ion-icon name="logo-euro"></ion-icon>
+        </div>
+        <div>
+          <span>{{amountPaid}}</span>
+        </div>
+      </div>
+      <div id="payment-method-header">
+        <span>Payment Method</span>
+      </div>
+      <div>
+      <span style="display: block; margin-bottom: 10px;">
+        PayPal
+      </span>
+        <span id="payment-info">
+        Payment-ID: {{payment_id}}
+      </span>
+      </div>
+      <div id="timer">
+        <span>Please do not close or press back in the browser. This page automatically redirect you after {{counter}} seconds. </span>
+      </div>
+    </div>
+  </div>
 </ion-content>

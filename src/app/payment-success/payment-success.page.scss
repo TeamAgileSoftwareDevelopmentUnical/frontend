@@ -1,0 +1,44 @@
+#payment-check{
+  font-size: 96px;
+  color: green;
+}
+
+#payment-success-message{
+  font-size: 24px;
+  font-family: sans-serif;
+  padding-bottom: 10px;
+}
+
+#payment-amount-header{
+  font-family: sans-serif;
+  padding-top: 10px;
+}
+
+#payment-header{
+  font-size: 15px;
+}
+
+#payment-amount{
+  font-size: 30px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+}
+
+#payment-method-header{
+  font-size: 15px;
+  padding: 10px;
+  font-family: sans-serif;
+}
+
+#payment-info{
+  inset-block: auto;
+  margin-top: 10px;
+}
+
+#timer{
+  margin-top: 10px;
+  font-size: 18px;
+  font-family: sans-serif;
+}

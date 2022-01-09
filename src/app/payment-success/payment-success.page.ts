@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import {PaymentService} from "../service/payment.service";
-import {PayPalConfirmPaymentRequest} from "../models/request/payPalConfirmPaymentRequest";
-import {PayPalConfirmPaymentResponse} from "../models/response/payPalConfirmPaymentResponse";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {PaymentService} from '../service/payment.service';
+import {PayPalConfirmPaymentRequest} from '../models/request/payPalConfirmPaymentRequest';
+import {PayPalConfirmPaymentResponse} from '../models/response/payPalConfirmPaymentResponse';
 
 @Component({
   selector: 'app-payment-success',
-  templateUrl: './payment-success.page.html',
+  templateUrl: './payment-success.page.html',cl
   styleUrls: ['./payment-success.page.scss'],
 })
 export class PaymentSuccessPage implements OnInit {
@@ -13,6 +13,11 @@ export class PaymentSuccessPage implements OnInit {
   constructor(private paymentService: PaymentService) { }
 
   request: PayPalConfirmPaymentRequest = new PayPalConfirmPaymentRequest();
+  counter = 10;
+  amountPaid = 0;
+  payment_id: string = null;
+  mode = false;
+
 
   ngOnInit() {
     if (document.URL.indexOf('?')){
@@ -35,10 +40,19 @@ export class PaymentSuccessPage implements OnInit {
       .subscribe((response: PayPalConfirmPaymentResponse)=>{
         console.log(response.status);
         if (response.status==='approved'){
-          window.close();
+          this.mode = true;
+          this.payment_id = response.paymentID;
+          this.amountPaid = response.amount;
+          setInterval(()=>{
+            --this.counter;
+            if (this.counter===0){
+              console.log(response);
+              // redirect to store page
+              location.replace('http://localhost:4200/store');
+              //window.close();
+            }
+          },1000);
         }
     });
-
   }
-
 }

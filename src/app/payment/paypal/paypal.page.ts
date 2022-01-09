@@ -34,7 +34,8 @@ export class PaypalPage implements OnInit {
       .subscribe((response: PayPalPaymentResponse)=>{
         if (response.status){
           console.log(response.url);
-          window.open(response.url,'_blank');
+          location.replace(response.url);
+          //window.open(response.url,'_blank');
         }
       });
   }
