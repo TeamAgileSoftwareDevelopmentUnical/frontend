@@ -20,7 +20,7 @@ export class StorePage implements OnInit {
 
   cart: Item[];
 
-  debug = true;
+  debug = false;
 
   constructor(private navCtrl: NavController, public alertController: AlertController, public router: Router) {
     if(StorePage.instance === null)
@@ -100,7 +100,6 @@ export class StorePage implements OnInit {
   }
 
   addItem(item: Item, availableQuantity: number) {
-    // eslint-disable-next-line prefer-const
     for(let itemInCart of this.cart) {
       if(item.id === itemInCart.id) {
         if(availableQuantity >= +item.getQuantity() + +itemInCart.getQuantity()) {
@@ -108,14 +107,15 @@ export class StorePage implements OnInit {
           this.showAlert('Cart', 'Quantity added successfully');
           return;
         }
+        else if(itemInCart.getQuantity() === availableQuantity){
+          this.showAlert('Cart', 'You have already added all available units to your cart!');
+          return;
+        }
+        else if(availableQuantity < +item.getQuantity() + +itemInCart.getQuantity()) {
+          this.showConfirm(item, itemInCart, availableQuantity);
+          return;
+        }
       }
-      if(availableQuantity - itemInCart.getQuantity() > 0) {
-        this.showConfirm(item, itemInCart, availableQuantity);
-        return;
-      } else {
-        this.showAlert('Cart', 'You have already added all available units to your cart!');
-      }
-      return;
     }
 
     this.cart.push(item);
