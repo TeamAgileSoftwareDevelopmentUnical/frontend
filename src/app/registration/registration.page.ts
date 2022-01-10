@@ -50,6 +50,7 @@ export class RegistrationPage implements OnInit {
         }
       },(error: HttpErrorResponse)=>{
         console.log('Error : ', error);
+        this.showError(error.error);
       }
       );
     }else{
