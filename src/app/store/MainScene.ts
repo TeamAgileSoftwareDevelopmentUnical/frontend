@@ -1,5 +1,6 @@
 /* eslint-disable no-bitwise */
 
+import { NavigationExtras } from '@angular/router';
 import { StorePage } from './store.page';
 
 export default class MainScene extends Phaser.Scene {
@@ -11,6 +12,7 @@ export default class MainScene extends Phaser.Scene {
   ortolan: any;
   fruiterer: any;
   cart: any;
+  rickAstley: any;
   cursors: any;
   rexUI: any;
   dialogBox: any;
@@ -37,6 +39,8 @@ export default class MainScene extends Phaser.Scene {
 
     this.load.image('cart', 'assets/cart.png');
     this.load.image('empty-cart', 'assets/empty-cart.png');
+
+    this.load.image('rick-astley', 'assets/rickAstley.png');
 
     this.load.tilemapTiledJSON('map', 'assets/map.json');
 
@@ -98,6 +102,11 @@ export default class MainScene extends Phaser.Scene {
       .setScale(0.2)
       .setImmovable();
     this.fruiterer.body.setSize(850, 730, true);
+    this.rickAstley = this.physics.add
+      .sprite(900, 340, 'rick-astley')
+      .setScale(0.2)
+      .setImmovable();
+    this.rickAstley.body.setSize(150, 280, true);
     const standLayer = map.createLayer('stand', [
       tilesetMarket,
       tilesetObjects,
@@ -211,6 +220,13 @@ export default class MainScene extends Phaser.Scene {
       this.player,
       this.cart,
       this.doCheckout,
+      null,
+      this
+    );
+    this.physics.add.collider(
+      this.player,
+      this.rickAstley,
+      this.doRickroll,
       null,
       this
     );
@@ -380,8 +396,14 @@ export default class MainScene extends Phaser.Scene {
             {StorePage.instance.navigate('VEGETABLE');}
           else if(npc.texture.key === 'fruiterer')
             {StorePage.instance.navigate('FRUITS');}
-          else if(npc.texture.key === 'cart')
-            {console.log('CHECKOUT DA COMPLETARE!');};
+          else if(npc.texture.key === 'cart') {
+            const navigationExtras: NavigationExtras = {
+              queryParams: {
+                amount: StorePage.instance.getTotalCartPrice()
+              }
+            };
+              StorePage.instance.getNavCtrl().navigateForward(['/payment'], navigationExtras);
+            }
         }
       }, this)
       // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
@@ -391,6 +413,11 @@ export default class MainScene extends Phaser.Scene {
       .on('button.out', (button, groupName, index) => {
         button.getElement('background').setStrokeStyle();
       });
+  }
+
+  doRickroll(player, npc) {
+    const params = 'scrollbars=no, resizable=no, status=no, location=no, toolbar=no, menubar=no, width=0, height=0, left=-1000, top=-1000';
+    window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', 'Rickroll', params);
   }
 
   createLabel(scene, text) {

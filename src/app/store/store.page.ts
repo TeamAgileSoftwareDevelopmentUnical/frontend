@@ -19,7 +19,7 @@ export class StorePage implements OnInit {
 
   cart: Item[];
 
-  debug = false;
+  debug = true;
 
   constructor(private navCtrl: NavController, public alertController: AlertController) {
     if(StorePage.instance === null)
@@ -55,7 +55,7 @@ export class StorePage implements OnInit {
       physics: {
         default: 'arcade',
         arcade: {
-            debug: false
+            debug: this.debug
         }
       }
     };
@@ -291,6 +291,10 @@ export class StorePage implements OnInit {
 
   public navigate(category: string) {
     this.navCtrl.navigateForward('/stand-products/' + category);
+  }
+
+  public getNavCtrl() {
+    return this.navCtrl;
   }
 
 }
