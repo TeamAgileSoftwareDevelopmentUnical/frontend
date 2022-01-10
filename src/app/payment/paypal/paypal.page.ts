@@ -15,6 +15,7 @@ export class PaypalPage implements OnInit {
               private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+
   }
 
   request: PaypalPaymentRequest;
