@@ -15,8 +15,6 @@ export class UploadProductPage implements OnInit {
   productImage: string;
   defaultImage = 'assets/icon/no_image.jpeg';
 
-  constructor(private service: ProductService, private route: Router, private formBuilder: FormBuilder, private alertCtrl: AlertController) { }
-
   uploadProductFrom = this.formBuilder.group({
     name: ['', Validators.required],
     description: ['', Validators.required],
@@ -25,9 +23,10 @@ export class UploadProductPage implements OnInit {
     type: ['', Validators.required]
   });
 
-  ngOnInit() {
+  // eslint-disable-next-line max-len
+  constructor(private service: ProductService, private route: Router, private formBuilder: FormBuilder, private alertCtrl: AlertController) { }
 
-  }
+  ngOnInit() {}
 
   uploadProduct() {
     this.request = this.uploadProductFrom.value;
@@ -37,6 +36,7 @@ export class UploadProductPage implements OnInit {
       .subscribe((response: boolean)=>{
         if (response){
           this.showAlert('Product Upload','Product Upload Successfully!','all-product');
+          this.uploadProductFrom.reset();
         }
       });
   }

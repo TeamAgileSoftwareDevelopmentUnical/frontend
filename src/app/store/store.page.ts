@@ -4,6 +4,7 @@ import Phaser from 'phaser';
 import MainScene from './MainScene';
 import { Item } from './add_on/item';
 import { AlertController, NavController } from '@ionic/angular';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 
 @Component({
   selector: 'app-store',
@@ -19,9 +20,9 @@ export class StorePage implements OnInit {
 
   cart: Item[];
 
-  debug = true;
+  debug = false;
 
-  constructor(private navCtrl: NavController, public alertController: AlertController) {
+  constructor(private navCtrl: NavController, public alertController: AlertController, public router: Router) {
     if(StorePage.instance === null)
       {StorePage.instance = this;}
       console.log(StorePage.instance);
@@ -100,20 +101,22 @@ export class StorePage implements OnInit {
   }
 
   addItem(item: Item, availableQuantity: number) {
-    for(const itemInCart of this.cart) {
-      if(item.id === itemInCart.id)
-        {if(availableQuantity >= +item.getQuantity() + +itemInCart.getQuantity()) {
+    for(let itemInCart of this.cart) {
+      if(item.id === itemInCart.id) {
+        if(availableQuantity >= +item.getQuantity() + +itemInCart.getQuantity()) {
           itemInCart.addMany(item.getQuantity());
           this.showAlert('Cart', 'Quantity added successfully');
           return;
-        }}
-      if(availableQuantity - itemInCart.getQuantity() > 0) {
-        this.showConfirm(item, itemInCart, availableQuantity);
-        return;
+        }
+        else if(itemInCart.getQuantity() === availableQuantity){
+          this.showAlert('Cart', 'You have already added all available units to your cart!');
+          return;
+        }
+        else if(availableQuantity < +item.getQuantity() + +itemInCart.getQuantity()) {
+          this.showConfirm(item, itemInCart, availableQuantity);
+          return;
+        }
       }
-      else
-      {this.showAlert('Cart', 'You have already added all available units to your cart!');}
-      return;
     }
 
     this.cart.push(item);
@@ -145,8 +148,7 @@ export class StorePage implements OnInit {
         },
         {
           text: 'Cancel',
-          handler: () => {
-          }
+          handler: () => {}
         }
       ]
     }).then(res => {

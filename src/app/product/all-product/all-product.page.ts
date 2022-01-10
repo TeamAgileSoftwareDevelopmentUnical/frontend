@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {ProductService} from "../../service/product.service";
-import {Router} from "@angular/router";
-import {ProductResponse} from "../../models/response/productResponse";
-import {AlertController} from "@ionic/angular";
+import {ProductService} from '../../service/product.service';
+import {NavigationEnd, NavigationStart, Router} from '@angular/router';
+import {ProductResponse} from '../../models/response/productResponse';
+import {AlertController} from '@ionic/angular';
 
 class LoginResponse {
   token: string;
@@ -19,11 +19,17 @@ class MeResponse {
 })
 export class AllProductPage implements OnInit {
 
-  constructor(private service: ProductService, private route: Router, private alertCtrl: AlertController) { }
-
   allProduct: ProductResponse[] = [];
   product: ProductResponse;
   tokenValue: string;
+
+  constructor(private service: ProductService, private route: Router, private alertCtrl: AlertController) {
+    this.route.events.subscribe((e) => {
+      if (e instanceof NavigationStart) {
+        this.getAllProduct();
+      }
+    });
+  }
 
   ngOnInit() {
     this.getAllProduct();
@@ -38,7 +44,7 @@ export class AllProductPage implements OnInit {
   }
 
   updateProduct(productId: number) {
-    this.route.navigate(['/update-product',productId],{
+    this.route.navigate(['/update-product',productId], {
       replaceUrl : true
      });
   }
@@ -77,7 +83,7 @@ export class AllProductPage implements OnInit {
     return sessionStorage.getItem( 'id');
   }
   isSeller(){
-    if(sessionStorage.getItem('role')==="Seller"){
+    if(sessionStorage.getItem('role')==='Seller'){
       return true;
     }
     return false;
@@ -89,7 +95,7 @@ export class AllProductPage implements OnInit {
     return true;
   }
   isCustomer(){
-    if(sessionStorage.getItem('role')==="Customer"){
+    if(sessionStorage.getItem('role')==='Customer'){
       return true;
     }
     return false;
