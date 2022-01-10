@@ -88,6 +88,11 @@ export class StorePage implements OnInit {
     }
   }
 
+  resetCart(): void {
+    // TODO: clear items from the db
+    this.cart.length = 0;
+  }
+
   addItem(item: Item, availableQuantity: number) {
     for(const itemInCart of this.cart) {
       if(item.id === itemInCart.id)
