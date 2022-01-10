@@ -29,7 +29,9 @@ export class StorePage implements OnInit {
     this.router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {
         this.phaserGame.scale.resize(Number(this.config.width), Number(this.config.height));
-        this.resetCart();
+        if (!this.debug) {
+          this.resetCart();
+        }
       }
     });
   }
