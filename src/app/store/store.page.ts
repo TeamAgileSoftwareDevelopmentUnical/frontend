@@ -88,20 +88,27 @@ export class StorePage implements OnInit {
     }
   }
 
+  resetCart(): void {
+    // TODO: clear items from the db
+    this.cart.length = 0;
+  }
+
   addItem(item: Item, availableQuantity: number) {
-    for(const itemInCart of this.cart) {
-      if(item.id === itemInCart.id)
-        {if(availableQuantity >= +item.getQuantity() + +itemInCart.getQuantity()) {
+    // eslint-disable-next-line prefer-const
+    for(let itemInCart of this.cart) {
+      if(item.id === itemInCart.id) {
+        if(availableQuantity >= +item.getQuantity() + +itemInCart.getQuantity()) {
           itemInCart.addMany(item.getQuantity());
           this.showAlert('Cart', 'Quantity added successfully');
           return;
-        }}
+        }
+      }
       if(availableQuantity - itemInCart.getQuantity() > 0) {
         this.showConfirm(item, itemInCart, availableQuantity);
         return;
+      } else {
+        this.showAlert('Cart', 'You have already added all available units to your cart!');
       }
-      else
-      {this.showAlert('Cart', 'You have already added all available units to your cart!');}
       return;
     }
 

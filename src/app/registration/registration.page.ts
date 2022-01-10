@@ -24,21 +24,20 @@ export class RegistrationPage implements OnInit {
 
   accountForm = this.formBuilder.group({
     username : ['', [Validators.required, Validators.minLength(6)]],
-    password : ['', [Validators.required, 
+    password : ['', [Validators.required,
       // Validators.pattern("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[A-Za-z\d$@$!%*?&].{8,}"),
                       Validators.minLength(6)]],
     name : ['', Validators.required],
     surname : ['', Validators.required],
     email : ['', Validators.required],
   });
-  accountType : string;
+  accountType: string;
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   submit(){
-    console.log("form = ", this.accountForm.value);
-    if(this.accountType && this.accountType === "s"){
+    console.log('form = ', this.accountForm.value);
+    if(this.accountType && this.accountType === 's'){
       this.sellerAccount = new SellerAccount();
       this.sellerAccount = this.accountForm.value;
       this.homeSrv.createSeller(this.sellerAccount)
@@ -49,8 +48,8 @@ export class RegistrationPage implements OnInit {
         else{
           alert('Registration failed.');
         }
-      },(error : HttpErrorResponse)=>{
-        console.log("Error : ", error);
+      },(error: HttpErrorResponse)=>{
+        console.log('Error : ', error);
       }
       );
     }else{
@@ -74,13 +73,13 @@ export class RegistrationPage implements OnInit {
   }
 
   cantSubmit(){//TODO: redo
-    if(!this.accountForm.value.name || !this.accountForm.value.surname || !this.accountForm.value.email 
+    if(!this.accountForm.value.name || !this.accountForm.value.surname || !this.accountForm.value.email
         || !this.accountForm.value.username || !this.accountForm.value.password || !this.accountType){
           return true;
         }
     return false;
   }
-  selectType(event : any){
+  selectType(event: any){
     this.accountType = event.target.value;
   }
   async showError(error: string) {
