@@ -45,11 +45,11 @@ export class PaymentSuccessPage implements OnInit {
           this.amountPaid = response.amount;
           setInterval(()=>{
             --this.counter;
-            if (this.counter===0){
+            if (this.counter <= 0){
               console.log(response);
               // redirect to store page and resetting the cart
+              location.replace('http://localhost:8100/store');
               StorePage.instance.resetCart();
-              location.replace('http://localhost:4200/store');
               //window.close();
             }
           },1000);

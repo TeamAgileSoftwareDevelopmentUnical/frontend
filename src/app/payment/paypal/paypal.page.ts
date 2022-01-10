@@ -34,8 +34,8 @@ export class PaypalPage implements OnInit {
     this.request.intent = 'Sale';
     this.request.currency = 'EUR';
     this.request.method = 'paypal';
-    this.request.cancelURL = 'http://localhost:4200/payment-cancel';
-    this.request.successURL = 'http://localhost:4200/payment-success';
+    this.request.cancelURL = 'http://localhost:8100/payment-cancel';
+    this.request.successURL = 'http://localhost:8100/payment-success';
     this.paymentService.payWithPayPal(this.request)
       .subscribe((response: PayPalPaymentResponse)=>{
         if (response.status){

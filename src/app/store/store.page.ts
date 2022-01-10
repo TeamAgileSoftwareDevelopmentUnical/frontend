@@ -25,6 +25,12 @@ export class StorePage implements OnInit {
     if(StorePage.instance === null)
       {StorePage.instance = this;}
       console.log(StorePage.instance);
+    this.router.events.subscribe((e) => {
+      if (e instanceof NavigationEnd) {
+        this.phaserGame.scale.resize(Number(this.config.width), Number(this.config.height));
+        this.resetCart();
+      }
+    });
   }
 
   ngOnInit() {
