@@ -4,6 +4,7 @@ import Phaser from 'phaser';
 import MainScene from './MainScene';
 import { Item } from './add_on/item';
 import { AlertController, NavController } from '@ionic/angular';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 
 @Component({
   selector: 'app-store',
@@ -21,10 +22,15 @@ export class StorePage implements OnInit {
 
   debug = true;
 
-  constructor(private navCtrl: NavController, public alertController: AlertController) {
+  constructor(private navCtrl: NavController, public alertController: AlertController, public router: Router) {
     if(StorePage.instance === null)
       {StorePage.instance = this;}
       console.log(StorePage.instance);
+    this.router.events.subscribe((e) => {
+      if (e instanceof NavigationEnd) {
+        this.phaserGame.scale.resize(Number(this.config.width), Number(this.config.height));
+      }
+    });
   }
 
   ngOnInit() {
