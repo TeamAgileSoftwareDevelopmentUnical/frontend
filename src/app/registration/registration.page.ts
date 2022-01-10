@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { CustomerAccount } from '../models/customeraccount';
 import { SellerAccount } from '../models/selleraccount';
 import { CustomerAccountService } from '../service/customeraccount.service';
@@ -16,7 +17,7 @@ import { SellerAccountService } from '../service/selleraccount.service';
 export class RegistrationPage implements OnInit {
 
   constructor(private homeSrv : HomeService,
-              private formBuilder: FormBuilder,private route: Router,) { }
+              private formBuilder: FormBuilder,private route: Router, private alertController:AlertController) { }
 
   customerAccount : CustomerAccount;
   sellerAccount: SellerAccount;
@@ -64,6 +65,7 @@ export class RegistrationPage implements OnInit {
       }
       },(error : HttpErrorResponse)=>{
         console.log("Error : ", error);
+        this.showError(error.error);
       }
       );
     }
@@ -80,6 +82,19 @@ export class RegistrationPage implements OnInit {
   }
   selectType(event : any){
     this.accountType = event.target.value;
+  }
+  async showError(error: string) {
+    const alert = await this.alertController.create({
+      // cssClass: 'my-custom-class',
+      header: 'Registration failed.',
+      message: error+' already exist.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
 
