@@ -3,6 +3,8 @@ import {PaymentService} from '../../service/payment.service';
 import {FormBuilder, Validators} from '@angular/forms';
 import {PaypalPaymentRequest} from "../../models/request/paypalPaymentRequest";
 import {PayPalPaymentResponse} from "../../models/response/PayPalPaymentResponse";
+import {ActivatedRoute} from "@angular/router";
+import {StorePage} from "../../store/store.page";
 
 @Component({
   selector: 'app-paypal',
@@ -11,13 +13,17 @@ import {PayPalPaymentResponse} from "../../models/response/PayPalPaymentResponse
 })
 export class PaypalPage implements OnInit {
 
+  request: PaypalPaymentRequest;
+  amount: number;
+
   constructor(private paymentService: PaymentService,
-              private formBuilder: FormBuilder) { }
+              private formBuilder: FormBuilder,
+              ) { }
 
   ngOnInit() {
+    this.amount = StorePage.instance.getTotalCartPrice();
   }
 
-  request: PaypalPaymentRequest;
   paymentForm =  this.formBuilder.group({
     price: ['',Validators.required],
     description: ['', Validators.required]
