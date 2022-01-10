@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {PaymentService} from '../../service/payment.service';
 import {FormBuilder, Validators} from '@angular/forms';
-import {PaypalPaymentRequest} from "../../models/request/paypalPaymentRequest";
-import {PayPalPaymentResponse} from "../../models/response/PayPalPaymentResponse";
-import {ActivatedRoute} from "@angular/router";
-import {StorePage} from "../../store/store.page";
+import {PaypalPaymentRequest} from '../../models/request/paypalPaymentRequest';
+import {PayPalPaymentResponse} from '../../models/response/PayPalPaymentResponse';
+import {StorePage} from '../../store/store.page';
 
 @Component({
   selector: 'app-paypal',
@@ -16,6 +15,11 @@ export class PaypalPage implements OnInit {
   request: PaypalPaymentRequest;
   amount: number;
 
+  paymentForm =  this.formBuilder.group({
+    price: ['',Validators.required],
+    description: ['', Validators.required]
+  });
+
   constructor(private paymentService: PaymentService,
               private formBuilder: FormBuilder,
               ) { }
@@ -23,11 +27,6 @@ export class PaypalPage implements OnInit {
   ngOnInit() {
     this.amount = StorePage.instance.getTotalCartPrice();
   }
-
-  paymentForm =  this.formBuilder.group({
-    price: ['',Validators.required],
-    description: ['', Validators.required]
-  });
 
   paymentWithPayPal() {
     this.request = this.paymentForm.value;
@@ -41,7 +40,6 @@ export class PaypalPage implements OnInit {
         if (response.status){
           console.log(response.url);
           location.replace(response.url);
-          //window.open(response.url,'_blank');
         }
       });
   }

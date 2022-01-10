@@ -14,7 +14,7 @@ export class PaymentSuccessPage implements OnInit {
   request: PayPalConfirmPaymentRequest = new PayPalConfirmPaymentRequest();
   counter = 10;
   amountPaid = 0;
-  payment_id: string = null;
+  paymentId: string = null;
   mode = false;
 
   constructor(private paymentService: PaymentService) { }
@@ -24,6 +24,7 @@ export class PaymentSuccessPage implements OnInit {
       const splitUrl = document.URL.split('?');
       const splitParams = splitUrl[1].split('&');
       let i: any;
+      // eslint-disable-next-line guard-for-in
       for (i in splitParams){
         const singleURLParam = splitParams[i].split('=');
         if (singleURLParam[0]==='paymentId'){
@@ -41,16 +42,14 @@ export class PaymentSuccessPage implements OnInit {
         console.log(response.status);
         if (response.status==='approved'){
           this.mode = true;
-          this.payment_id = response.paymentID;
+          this.paymentId = response.paymentID;
           this.amountPaid = response.amount;
           setInterval(()=>{
             --this.counter;
             if (this.counter <= 0){
               console.log(response);
-              // redirect to store page and resetting the cart
+              // redirect to store page
               location.replace('http://localhost:8100/store');
-              StorePage.instance.resetCart();
-              //window.close();
             }
           },1000);
         }

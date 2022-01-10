@@ -537,7 +537,7 @@ export default class MainScene extends Phaser.Scene {
           const icon = this.getElement('action').setVisible(true);
           this.resetChildVisibleState(icon);
           icon.y -= 30;
-          const tween = scene.tweens.add({
+          scene.tweens.add({
             targets: icon,
             y: '+=30', // '+=100'
             ease: 'Bounce', // 'Cubic', 'Elastic', 'Bounce', 'Back'

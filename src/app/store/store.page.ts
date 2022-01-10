@@ -29,9 +29,6 @@ export class StorePage implements OnInit {
     this.router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {
         this.phaserGame.scale.resize(Number(this.config.width), Number(this.config.height));
-        if (!this.debug) {
-          this.resetCart();
-        }
       }
     });
   }
@@ -103,6 +100,7 @@ export class StorePage implements OnInit {
   }
 
   addItem(item: Item, availableQuantity: number) {
+    // eslint-disable-next-line prefer-const
     for(let itemInCart of this.cart) {
       if(item.id === itemInCart.id) {
         if(availableQuantity >= +item.getQuantity() + +itemInCart.getQuantity()) {
@@ -150,7 +148,9 @@ export class StorePage implements OnInit {
         },
         {
           text: 'Cancel',
-          handler: () => {}
+          handler: () => {
+            // blank
+          }
         }
       ]
     }).then(res => {
