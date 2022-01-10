@@ -293,4 +293,8 @@ export class StorePage implements OnInit {
     this.navCtrl.navigateForward('/stand-products/' + category);
   }
 
+  public getNavCtrl() {
+    return this.navCtrl;
+  }
+
 }

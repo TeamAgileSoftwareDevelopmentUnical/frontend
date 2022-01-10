@@ -1,5 +1,6 @@
 /* eslint-disable no-bitwise */
 
+import { NavigationExtras } from '@angular/router';
 import { StorePage } from './store.page';
 
 export default class MainScene extends Phaser.Scene {
@@ -395,8 +396,14 @@ export default class MainScene extends Phaser.Scene {
             {StorePage.instance.navigate('VEGETABLE');}
           else if(npc.texture.key === 'fruiterer')
             {StorePage.instance.navigate('FRUITS');}
-          else if(npc.texture.key === 'cart')
-            {console.log('CHECKOUT DA COMPLETARE!');};
+          else if(npc.texture.key === 'cart') {
+            const navigationExtras: NavigationExtras = {
+              queryParams: {
+                amount: StorePage.instance.getTotalCartPrice()
+              }
+            };
+              StorePage.instance.getNavCtrl().navigateForward(['/payment'], navigationExtras);
+            }
         }
       }, this)
       // eslint-disable-next-line prefer-arrow/prefer-arrow-functions

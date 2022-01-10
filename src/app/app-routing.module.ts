@@ -75,6 +75,9 @@ const routes: Routes = [
     path: 'payment',
     loadChildren: () => import('./payment/payment.module').then( m => m.PaymentPageModule),
     canActivate:[AuthRoleGuard],
+    data: {
+      role: 'Customer'
+    }
   },
   {
     path: 'not-found',
