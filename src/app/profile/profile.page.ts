@@ -7,6 +7,7 @@ import { Account } from '../models/account';
 import { CustomerAccountService } from '../service/customeraccount.service';
 import { SellerAccountService } from '../service/selleraccount.service';
 import {AlertController} from "@ionic/angular";
+import { StorePage } from '../store/store.page';
 
 
 @Component({
@@ -66,6 +67,10 @@ export class ProfilePage implements OnInit {
 
   deleteAccount(id: number) {
     this.showAlert('Account Delete','Are you really want to delete this account?','/loin',id);
+  }
+
+  showPurchases(){
+    StorePage.instance.getNavCtrl().navigateForward('/purchases/'+this.id);
   }
 
   async showAlert(headers: string, messages: string, redirectTo: string, id: number){

@@ -1,12 +1,11 @@
 import { CustomerAccount } from "./customeraccount";
 import { Product } from "./product";
 
-export class Purchase{
-    id: number;
+export class Order{
     customer: CustomerAccount;
     date: Date;
-    soldProduct: Product;
+    soldProducts: Product[];
     shippingAddress : string;
     paymentMethod : string;
-    total : number;
+    totalAmount : number;
 }

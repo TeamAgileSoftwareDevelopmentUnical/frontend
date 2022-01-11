@@ -90,8 +90,13 @@ const routes: Routes = [
     loadChildren: () => import('./stand-products/stand-products.module').then( m => m.StandProductsPageModule)
   },
 
+  {
+    path: 'purchases/:id',
+    loadChildren: () => import('./purchases/purchases.module').then( m => m.PurchasesPageModule)
+  },
   { path: '404', component: NotFoundPage },
   { path: '**', redirectTo: '404' },
+
 
 
 
