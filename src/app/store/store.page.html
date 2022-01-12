@@ -13,6 +13,9 @@
           <ion-item>
             <p>Total: {{getTotalCartPrice()}}€</p>
           </ion-item>
+          <ion-button (click)="showPurchases()" style="color: white; background-color: #656D4A; height: 50px;">
+            Purchases History
+          </ion-button>
         </ion-list-header>
         <ion-row>
           <ion-col sizeLg="3" sizeMd="4" sizeSm="6" size="12" *ngFor="let item of cart; let i = index">

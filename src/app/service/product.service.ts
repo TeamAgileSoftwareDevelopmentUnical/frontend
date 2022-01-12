@@ -57,7 +57,6 @@ import {ProductUpdateRequest} from "../models/request/productUpdateRequest";
       const headers = new HttpHeaders({
         'Authorization': 'Bearer '+sessionStorage.getItem('token')
       });
-      console.log(category);
       return this.http.get(this.host+'/get-stand-products?category='+category,{headers});
     }
 }

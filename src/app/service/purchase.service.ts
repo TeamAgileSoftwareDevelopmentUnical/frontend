@@ -7,14 +7,14 @@ import { environment } from 'src/environments/environment';
 })
 export class PurchaseService {
 
-  host = environment.apiBaseUrl+'/purchase';
+  host = environment.apiBaseUrl+'/purchases';
 
   constructor(private http: HttpClient) { }
 
-  getPurchasesByCustomerId(customer_id: number){
+  getPurchasesByCustomerId(id: number){
     const headers = new HttpHeaders({
       'Authorization': 'Bearer '+sessionStorage.getItem('token')
     });
-    return this.http.get(this.host+'/purchase?customer_id='+customer_id,{headers});
+    return this.http.get(this.host+'/get-purchases?customer_id='+id, {headers});
   }
 }

@@ -195,6 +195,10 @@ export class StorePage implements OnInit {
     });
   }
 
+  showPurchases(){
+    this.navCtrl.navigateForward('/purchases/'+this.getId());
+  }
+
   /**
    * Decrease the `quantity` of the selected item by 1, if it reachs 0, then it is removed from the cart
    *

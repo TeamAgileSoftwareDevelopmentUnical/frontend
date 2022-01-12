@@ -47,7 +47,7 @@
     <ion-button *ngIf="mod" [disabled] = "notFilled()" (click)="submitAccount()">
       submit
     </ion-button>
-    <ion-button *ngIf="!mod" (click)="showPurchases()">
+    <ion-button *ngIf="!mod && !isSeller()" (click)="showPurchases()">
       purchases
     </ion-button>
     <ion-button *ngIf="!mod" (click)="deleteAccount(account.id)" color="danger">Delete Account</ion-button>

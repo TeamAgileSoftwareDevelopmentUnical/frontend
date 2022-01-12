@@ -13,37 +13,31 @@ import { StorePage } from '../store/store.page';
 })
 export class PurchasesPage implements OnInit {
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private service: PurchaseService) { }
 
   id: number; //customer id to visualize purchases
   purchases: Purchase[] = [];
-  service: PurchaseService;
   orders: Order[]=[];
 
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap =>{
       this.id = +paramMap.get('id');
-      console.log("customer id in purchases = ", this.id)
     });
-    this.fetchPurchases(this.id);
+    this.fetchPurchases();
   }
 
-  fetchPurchases(id: number)
+  fetchPurchases()
   {
-    this.service.getPurchasesByCustomerId(id)
+    this.service.getPurchasesByCustomerId(this.id)
     .subscribe((response: Purchase[]) => {
       this.purchases = response;
-      console.log("purchases from service"+this.purchases);
+      console.log("in front-end purchases from service"+this.purchases);
 
       if(this.purchases.length === 0) {
         console.log(this.purchases.length);
         StorePage.instance.showAlert('Purchases', 'You have not yet made any purchase! :(');
       }
     });
-    // if(this.purchases.length === 0) {
-    //   console.log(this.purchases.length);
-    //   StorePage.instance.showAlert('Purchases', 'You have not yet made any purchase! :(');
-    // }
   }
 
 }
