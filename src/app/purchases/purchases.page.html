@@ -7,11 +7,14 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="purchases && purchases.length>0" >
   <ion-col size="auto" *ngFor="let purchase of purchases">
     <ion-item>
 
       
     </ion-item>
   </ion-col>
+</ion-content>
+<ion-content *ngIf="!purchases || (purchases && purchases.length===0)">
+  There are no purchases.
 </ion-content>

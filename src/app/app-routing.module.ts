@@ -87,12 +87,20 @@ const routes: Routes = [
 
   {
     path: 'stand-products/:category',
-    loadChildren: () => import('./stand-products/stand-products.module').then( m => m.StandProductsPageModule)
+    loadChildren: () => import('./stand-products/stand-products.module').then( m => m.StandProductsPageModule),
+    canActivate:[AuthRoleGuard],
+    // data: {
+    //   role: 'Seller' ?? TODO:
+    // }
   },
 
   {
     path: 'purchases/:id',
-    loadChildren: () => import('./purchases/purchases.module').then( m => m.PurchasesPageModule)
+    loadChildren: () => import('./purchases/purchases.module').then( m => m.PurchasesPageModule),
+    canActivate:[AuthRoleGuard],
+    data: {
+      role: 'Customer'
+    }
   },
   { path: '404', component: NotFoundPage },
   { path: '**', redirectTo: '404' },
