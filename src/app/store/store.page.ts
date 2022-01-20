@@ -159,7 +159,6 @@ export class StorePage implements OnInit {
   }
 
   initializeTutorial(): void {
-    console.log("Inizializzo il tutorial");
     if (sessionStorage.getItem('saw_tutorial') !== '1') {
       const modal = document.getElementById('tutorial-modal');
       modal.removeAttribute('class');
@@ -167,13 +166,11 @@ export class StorePage implements OnInit {
     }
 
     document.getElementById('tutorial-modal').addEventListener('click', () => {
-      console.log('tutorial-modal');
       document.getElementById('tutorial-modal').setAttribute('class', 'out');
       sessionStorage.setItem('saw_tutorial', '1');
       this.phaserGame.scale.resize(Number(this.config.width), Number(this.config.height));
     });
     document.body.addEventListener('keydown', (e) => {
-      console.log('body');
       if (e.key !== 'h') {
         return false;
       }
@@ -189,7 +186,6 @@ export class StorePage implements OnInit {
       this.phaserGame.scale.resize(Number(this.config.width), Number(this.config.height));
     });
     document.getElementById('tutorial-modal-close').addEventListener('click', () => {
-      console.log('tutorial-modal-close');
       document.getElementById('tutorial-modal').setAttribute('class', 'out');
       sessionStorage.setItem('saw_tutorial', '1');
       this.phaserGame.scale.resize(Number(this.config.width), Number(this.config.height));
