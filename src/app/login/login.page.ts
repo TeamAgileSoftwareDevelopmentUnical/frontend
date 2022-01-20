@@ -21,7 +21,7 @@ export class LoginPage implements OnInit {
 
     c: Account = new Account();
 
-  constructor(private homeSrv: HomeService, private alertController:AlertController, private router: Router) { }
+  constructor(private homeSrv: HomeService, private alertController: AlertController, private router: Router) { }
 
   ngOnInit() {
     sessionStorage.clear();
