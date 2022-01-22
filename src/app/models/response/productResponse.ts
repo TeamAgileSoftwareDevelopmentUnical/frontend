@@ -1,5 +1,5 @@
-import {BatchResponse} from "./batchResponse";
-import {SellerResponse} from "./sellerResponse";
+import {BatchResponse} from './batchResponse';
+import {SellerResponse} from './sellerResponse';
 
 export class ProductResponse{
   productId: number;

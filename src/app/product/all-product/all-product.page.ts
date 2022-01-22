@@ -79,8 +79,8 @@ export class AllProductPage implements OnInit {
     });
     await alert.present();
   }
-  getId(){
-    return sessionStorage.getItem( 'id');
+  getId(): number{
+    return Number(sessionStorage.getItem('id'));
   }
   isSeller(){
     if(sessionStorage.getItem('role')==='Seller'){
