@@ -12,6 +12,7 @@ export default class MainScene extends Phaser.Scene {
   ortolan: any;
   fruiterer: any;
   cart: any;
+  postofficebox: any;
   rickAstley: any;
   cursors: any;
   rexUI: any;
@@ -39,6 +40,9 @@ export default class MainScene extends Phaser.Scene {
 
     this.load.image('cart', 'assets/cart.png');
     this.load.image('empty-cart', 'assets/empty-cart.png');
+
+    this.load.image('postofficebox-opened', 'assets/post-office-box-opened.png');
+    this.load.image('postofficebox-closed', 'assets/post-office-box-closed.png');
 
     this.load.image('rick-astley', 'assets/rickAstley.png');
 
@@ -127,6 +131,8 @@ export default class MainScene extends Phaser.Scene {
       .setScale(0.2)
       .setImmovable();
     this.cart = this.physics.add.sprite(430, 400, 'empty-cart').setImmovable();
+    this.postofficebox = this.physics.add.sprite(430, 460, 'postofficebox-closed').setScale(0.2).setImmovable();
+    
 
     this.player = this.physics.add.sprite(480, 450, 'player').setScale(3);
     this.player.body.setSize(6, 6, true);
@@ -225,6 +231,13 @@ export default class MainScene extends Phaser.Scene {
     );
     this.physics.add.collider(
       this.player,
+      this.postofficebox,
+      this.startSupport,
+      null,
+      this
+    );
+    this.physics.add.collider(
+      this.player,
       this.rickAstley,
       this.doRickroll,
       null,
@@ -301,6 +314,15 @@ export default class MainScene extends Phaser.Scene {
     }
   }
 
+  /**
+   * @param player
+   * @param npc
+   */
+   startSupport(player, npc) {
+      this.postofficebox.setTexture('postofficebox-opened');
+      this.speechWithSeller(player, npc);
+  }
+
   speechWithSeller(player, npc) {
     let x = this.cameras.cameras[0].midPoint.x;
     let y = this.cameras.cameras[0].midPoint.y;
@@ -310,7 +332,7 @@ export default class MainScene extends Phaser.Scene {
     let affirmative: string;
     let negative: string;
 
-    if (npc.texture.key === 'cart') {
+    if (npc.texture.key === 'cart' || npc.texture.key === 'postofficebox-opened') {
       affirmative = 'Yes';
       negative = 'No';
     } else {
@@ -404,7 +426,20 @@ export default class MainScene extends Phaser.Scene {
             };
               StorePage.instance.getNavCtrl().navigateForward(['/payment'], navigationExtras);
             }
+          else if(npc.texture.key === 'postofficebox-opened') {
+            const navigationExtras: NavigationExtras = {
+              queryParams: {
+                amount: StorePage.instance.getTotalCartPrice()
+              }
+            };
+              StorePage.instance.getNavCtrl().navigateForward(['/mailsupport'], navigationExtras);
+            }
         }
+
+        if(npc.texture.key === 'postofficebox-opened') {
+          this.postofficebox.setTexture('postofficebox-closed');
+        }
+        
       }, this)
       // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
       .on('button.over', function(button, groupName, index) {

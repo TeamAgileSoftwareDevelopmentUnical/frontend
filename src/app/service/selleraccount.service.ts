@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
 import { SellerAccount } from "../models/selleraccount";
@@ -20,5 +20,13 @@ import { SellerAccount } from "../models/selleraccount";
       getSellerAccount(id)
       {
         return this.http.get(this.host+"/get-account"+[id]);
+      }
+
+      getSellers()
+      {
+        const headers = new HttpHeaders({
+          'Authorization': 'Bearer '+sessionStorage.getItem('token')
+        });
+        return this.http.get(this.host+'/get-sellers',{headers});
       }
   }

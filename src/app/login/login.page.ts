@@ -37,6 +37,7 @@ export class LoginPage implements OnInit {
         sessionStorage.setItem( 'token', response.jwtToken);
         sessionStorage.setItem( 'id', response.id);
         sessionStorage.setItem( 'role' , response.role);
+        sessionStorage.setItem( 'email', response.email);
         sessionStorage.setItem( 'user_name', this.c.username);
 
         if (response.role === 'Seller') {
