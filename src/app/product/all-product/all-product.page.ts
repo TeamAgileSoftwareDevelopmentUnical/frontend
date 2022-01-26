@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {ProductService} from '../../service/product.service';
 import {NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {ProductResponse} from '../../models/response/productResponse';
-import {AlertController} from '@ionic/angular';
+import {AlertController, LoadingController} from '@ionic/angular';
+import {LoadingService} from "../../service/loading.service";
+import {Subscription} from "rxjs";
 
 class LoginResponse {
   token: string;
@@ -22,8 +24,12 @@ export class AllProductPage implements OnInit {
   allProduct: ProductResponse[] = [];
   product: ProductResponse;
   tokenValue: string;
+  //subs: Subscription;
 
-  constructor(private service: ProductService, private route: Router, private alertCtrl: AlertController) {
+  constructor(private service: ProductService,
+              private route: Router,
+              private alertCtrl: AlertController,
+              private loadingService: LoadingService) {
     this.route.events.subscribe((e) => {
       if (e instanceof NavigationStart) {
         this.getAllProduct();
@@ -36,11 +42,13 @@ export class AllProductPage implements OnInit {
   }
 
   getAllProduct(){
-
+    //this.loadingService.showLoading('Product uploading...');
     this.service.getAllProduct()
       .subscribe((response: ProductResponse[]) => {
+        console.log(response);
         this.allProduct = response;
       });
+    //this.subs.add(()=>{this.loadingService.hideLoading()});
   }
 
   updateProduct(productId: number) {

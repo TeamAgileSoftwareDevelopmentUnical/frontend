@@ -3,6 +3,7 @@ import {PaymentService} from '../service/payment.service';
 import {PayPalConfirmPaymentRequest} from '../models/request/payPalConfirmPaymentRequest';
 import {PayPalConfirmPaymentResponse} from '../models/response/payPalConfirmPaymentResponse';
 import { StorePage } from '../store/store.page';
+import {LoadingController} from "@ionic/angular";
 
 @Component({
   selector: 'app-payment-success',
@@ -11,13 +12,15 @@ import { StorePage } from '../store/store.page';
 })
 export class PaymentSuccessPage implements OnInit {
 
+  private loading;
   request: PayPalConfirmPaymentRequest = new PayPalConfirmPaymentRequest();
   counter = 10;
   amountPaid = 0;
   paymentId: string = null;
   mode = false;
 
-  constructor(private paymentService: PaymentService) { }
+  constructor(private paymentService: PaymentService,
+              private loadingCtrl: LoadingController) { }
 
   ngOnInit() {
     if (document.URL.indexOf('?')){
@@ -34,25 +37,30 @@ export class PaymentSuccessPage implements OnInit {
           this.request.payerId = singleURLParam[1].trim();
         }
       }
+      // call to successPayment service
+      this.loadingCtrl.create({message: 'Please Wait...'})
+        .then((overlay)=>{
+          this.loading = overlay;
+          this.loading.present();
+        });
+      this.paymentService.confirmPayment(this.request)
+        .subscribe((response: PayPalConfirmPaymentResponse)=>{
+          console.log(response.status);
+          if (response.status==='approved'){
+            this.loading.dismiss();
+            this.mode = true;
+            this.paymentId = response.paymentID;
+            this.amountPaid = response.amount;
+            setInterval(()=>{
+              --this.counter;
+              if (this.counter <= 0){
+                console.log(response);
+                // redirect to store page
+                location.replace('http://localhost:4200/store');
+              }
+            },1000);
+          }
+        });
     }
-
-    // call to successPayment service
-    this.paymentService.confirmPayment(this.request)
-      .subscribe((response: PayPalConfirmPaymentResponse)=>{
-        console.log(response.status);
-        if (response.status==='approved'){
-          this.mode = true;
-          this.paymentId = response.paymentID;
-          this.amountPaid = response.amount;
-          setInterval(()=>{
-            --this.counter;
-            if (this.counter <= 0){
-              console.log(response);
-              // redirect to store page
-              location.replace('http://localhost:8100/store');
-            }
-          },1000);
-        }
-    });
   }
 }

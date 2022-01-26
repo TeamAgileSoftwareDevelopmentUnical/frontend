@@ -7,6 +7,16 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content class="ion-padding">
+  <form [formGroup]="paymentForm">
+    <ion-item>
+      <ion-label position="floating">Amount</ion-label>
+      <ion-input [(ngModel)]="amount" type="number" required formControlName="price"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Remarks</ion-label>
+      <ion-textarea type="text" required formControlName="description"></ion-textarea>
+    </ion-item>
+    <ion-button color="primary" slot="start" (click)="paymentWithCreditCard()">Pay</ion-button>
+  </form>
 </ion-content>

@@ -50,6 +50,6 @@
       </ion-select>
     </ion-item>
 
-    <ion-button (click)="uploadProduct()" color="primary">Upload</ion-button>
+    <ion-button [disabled]="!uploadProductFrom.valid" (click)="uploadProduct()" color="primary">Upload</ion-button>
   </form>
 </ion-content>

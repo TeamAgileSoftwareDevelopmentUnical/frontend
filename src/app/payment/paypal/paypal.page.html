@@ -11,12 +11,12 @@
   <form [formGroup]="paymentForm">
     <ion-item>
       <ion-label position="floating">Amount</ion-label>
-      <ion-input [(ngModel)]="amount" type="number" required formControlName="price"></ion-input>
+      <ion-input [(ngModel)]="amount" type="number" required="true" formControlName="price"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Remarks</ion-label>
-      <ion-textarea type="text" required formControlName="description"></ion-textarea>
+      <ion-input clear-input="true" inputmode="text" formControlName="description" required="true"></ion-input>
     </ion-item>
-    <ion-button color="primary" slot="start" (click)="paymentWithPayPal()">Pay</ion-button>
+    <ion-button [disabled]="!paymentForm.valid" color="primary" slot="start" (click)="paymentWithPayPal()">Pay</ion-button>
   </form>
 </ion-content>

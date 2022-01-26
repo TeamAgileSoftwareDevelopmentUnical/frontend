@@ -3,6 +3,7 @@ import {environment} from '../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {PaypalPaymentRequest} from '../models/request/paypalPaymentRequest';
 import {PayPalConfirmPaymentRequest} from "../models/request/payPalConfirmPaymentRequest";
+import {StripeCheckoutPaymentRequest} from "../models/request/stripeCheckoutPaymentRequest";
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +24,12 @@ export class PaymentService {
       'Authorization': 'Bearer '+sessionStorage.getItem('token')
     });
     return this.httpClient.post(this.host+'/success',request,{headers});
+  }
+
+  checkoutPayment(request: StripeCheckoutPaymentRequest){
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer '+sessionStorage.getItem('token')
+    });
+    return this.httpClient.post(this.host+'/stripe-checkout',request,{headers});
   }
 }
