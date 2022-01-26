@@ -57,8 +57,7 @@ export class PurchasesPage implements OnInit {
           this.firstDate,
           this.productsInOrder,
           element.shippingAddress,
-          element.paymentMethod,
-          element.total
+          element.paymentMethod
           ));
         
         this.firstDate = element.date;
