@@ -102,6 +102,12 @@ const routes: Routes = [
       role: 'Customer'
     }
   },
+  
+  {
+    path: 'mailsupport',
+    loadChildren: () => import('./mailsupport/mailsupport.module').then( m => m.MailsupportPageModule)
+  },
+  
   { path: '404', component: NotFoundPage },
   { path: '**', redirectTo: '404' },
 

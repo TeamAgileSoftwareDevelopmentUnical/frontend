@@ -7,14 +7,39 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="purchases && purchases.length>0" >
-  <ion-col size="auto" *ngFor="let purchase of purchases">
+<ion-content *ngIf="orders && orders.length>0" >
+  <ion-col size="auto" *ngFor="let order of orders">
     <ion-item>
+      <!-- ORDER INFO -->
+      <ion-label>
+        <h2><b>N. Order: {{order.orderId}}</b></h2>
+        <h3>In Date: {{order.date}}</h3>
+        <h5>With payment method: {{order.paymentMethod}} and shipping address: {{order.shippingAddress}} </h5>
+        <h3><b>Total Amount: {{order.totalAmount}}€</b></h3>
+      </ion-label>
 
-      
+      <!-- PRODUCTS INFO -->
+      <ion-label><h2><b>Products List</b></h2>
+      <ion-col size="auto" *ngFor="let item of order.soldProducts">
+        <ion-item>
+          <ion-avatar slot="start">
+            <img src= "{{item.soldProduct.photo}}" />
+          </ion-avatar>
+
+          <ion-label>
+            <h2><b>{{item.soldProduct.productName}}</b></h2>
+            <h6>Price: {{item.soldProduct.batch.productPrice}}€</h6>
+            <h6>Quantity: {{item.productQuantity}}</h6>
+            <h6>Seller: {{item.soldProduct.seller.username}}</h6>
+            <p>{{item.soldProduct.productDesc}}</p> 
+          </ion-label>
+        </ion-item>
+      </ion-col>
+      </ion-label>
+
     </ion-item>
   </ion-col>
 </ion-content>
-<ion-content *ngIf="!purchases || (purchases && purchases.length===0)">
+<ion-content *ngIf="!orders || (orders && orders.length===0)">
   There are no purchases.
 </ion-content>

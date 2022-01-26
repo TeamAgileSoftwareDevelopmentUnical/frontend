@@ -21,7 +21,7 @@ export class LoginPage implements OnInit {
 
     c: Account = new Account();
 
-  constructor(private homeSrv: HomeService, private alertController:AlertController, private router: Router) { }
+  constructor(private homeSrv: HomeService, private alertController: AlertController, private router: Router) { }
 
   ngOnInit() {
     sessionStorage.clear();
@@ -37,6 +37,7 @@ export class LoginPage implements OnInit {
         sessionStorage.setItem( 'token', response.jwtToken);
         sessionStorage.setItem( 'id', response.id);
         sessionStorage.setItem( 'role' , response.role);
+        sessionStorage.setItem( 'email', response.email);
         sessionStorage.setItem( 'user_name', this.c.username);
 
         if (response.role === 'Seller') {

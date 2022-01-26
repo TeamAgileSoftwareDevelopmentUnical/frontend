@@ -5,13 +5,14 @@ import MainScene from './MainScene';
 import { Item } from './add_on/item';
 import { AlertController, NavController } from '@ionic/angular';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { ProductService } from '../service/product.service';
+import { ProductResponse } from '../models/response/productResponse';
 
 @Component({
   selector: 'app-store',
   templateUrl: './store.page.html',
   styleUrls: ['./store.page.scss'],
 })
-
 export class StorePage implements OnInit {
   static instance: StorePage = null;
 
@@ -22,22 +23,38 @@ export class StorePage implements OnInit {
 
   debug = false;
 
-  constructor(private navCtrl: NavController, public alertController: AlertController, public router: Router) {
-    if(StorePage.instance === null)
-      {StorePage.instance = this;}
-      console.log(StorePage.instance);
+  constructor(
+    private navCtrl: NavController,
+    public alertController: AlertController,
+    public router: Router,
+    private productService: ProductService
+  ) {
+    if (StorePage.instance === null) {
+      StorePage.instance = this;
+    }
+    console.log(StorePage.instance);
     this.router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {
-        this.phaserGame.scale.resize(Number(this.config.width), Number(this.config.height));
+        this.phaserGame.scale.resize(
+          Number(this.config.width),
+          Number(this.config.height)
+        );
       }
     });
   }
 
   ngOnInit() {
     // Necessary to overcome the game not displaying sometimes
-    document.addEventListener('readystatechange', () => {
-      this.phaserGame.scale.resize(Number(this.config.width), Number(this.config.height));
-    }, false);
+    document.addEventListener(
+      'readystatechange',
+      () => {
+        this.phaserGame.scale.resize(
+          Number(this.config.width),
+          Number(this.config.height)
+        );
+      },
+      false
+    );
     this.initializePhaser();
     this.initializeCart();
     this.initializeTutorial();
@@ -56,25 +73,25 @@ export class StorePage implements OnInit {
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
       },
       render: {
-        pixelArt: true
+        pixelArt: true,
       },
       physics: {
         default: 'arcade',
         arcade: {
-            debug: this.debug
-        }
-      }
+          debug: this.debug,
+        },
+      },
     };
 
     this.phaserGame = new Phaser.Game(this.config);
   }
 
-  getId(): number{
+  getId(): number {
     return Number(sessionStorage.getItem('id'));
   }
 
-  isSeller(){
-    if(sessionStorage.getItem('role') === 'Seller'){
+  isSeller() {
+    if (sessionStorage.getItem('role') === 'Seller') {
       return true;
     }
     return false;
@@ -83,14 +100,14 @@ export class StorePage implements OnInit {
   initializeCart(): void {
     this.cart = [];
     if (this.debug) {
-      this.cart.push(new Item(1, 'Lemons', 'MISS! THE LEMONS! MISSSSS!', 1.20));
-      this.cart.push(new Item(2, 'Apples', 'Just some apples', 1.60));
-      this.cart.push(new Item(3, 'Melons', 'Just some melons', 2.60));
-      this.cart.push(new Item(4, 'Cherries', 'Just some cherries', 3.60));
-      this.cart.push(new Item(5, 'Artichokes', 'Just some artichokes', 4.80));
-      this.cart.push(new Item(6, 'Yes', 'No.', 69.420));
-      this.cart.push(new Item(7, 'Sausages', 'Hotter than a dog!', 7.50));
-      this.cart.push(new Item(8, 'Bananas', 'Just some bananas', 1.20));
+      this.cart.push(new Item(1, 'Lemons', 'MISS! THE LEMONS! MISSSSS!', 1.2));
+      this.cart.push(new Item(2, 'Apples', 'Just some apples', 1.6));
+      this.cart.push(new Item(3, 'Melons', 'Just some melons', 2.6));
+      this.cart.push(new Item(4, 'Cherries', 'Just some cherries', 3.6));
+      this.cart.push(new Item(5, 'Artichokes', 'Just some artichokes', 4.8));
+      this.cart.push(new Item(6, 'Yes', 'No.', 69.42));
+      this.cart.push(new Item(7, 'Sausages', 'Hotter than a dog!', 7.5));
+      this.cart.push(new Item(8, 'Bananas', 'Just some bananas', 1.2));
     }
   }
 
@@ -101,18 +118,25 @@ export class StorePage implements OnInit {
 
   addItem(item: Item, availableQuantity: number) {
     // eslint-disable-next-line prefer-const
-    for(let itemInCart of this.cart) {
-      if(item.id === itemInCart.id) {
-        if(availableQuantity >= +item.getQuantity() + +itemInCart.getQuantity()) {
+    for (let itemInCart of this.cart) {
+      if (item.id === itemInCart.id) {
+        if (
+          availableQuantity >=
+          +item.getQuantity() + +itemInCart.getQuantity()
+        ) {
           itemInCart.addMany(item.getQuantity());
           this.showAlert('Cart', 'Quantity added successfully');
           return;
-        }
-        else if(itemInCart.getQuantity() === availableQuantity){
-          this.showAlert('Cart', 'You have already added all available units to your cart!');
+        } else if (itemInCart.getQuantity() === availableQuantity) {
+          this.showAlert(
+            'Cart',
+            'You have already added all available units to your cart!'
+          );
           return;
-        }
-        else if(availableQuantity < +item.getQuantity() + +itemInCart.getQuantity()) {
+        } else if (
+          availableQuantity <
+          +item.getQuantity() + +itemInCart.getQuantity()
+        ) {
           this.showConfirm(item, itemInCart, availableQuantity);
           return;
         }
@@ -127,35 +151,40 @@ export class StorePage implements OnInit {
     const alert = await this.alertController.create({
       header,
       message,
-      buttons: ['OK']
+      buttons: ['OK'],
     });
 
     await alert.present();
   }
 
   showConfirm(item: Item, itemInCart: Item, availableQuantity: number) {
-    this.alertController.create({
-      header: 'Cart',
-      subHeader: 'A maximum of ' + availableQuantity + ' units available.',
-      message: 'You can add up to ' + (availableQuantity - itemInCart.getQuantity()) + ' more items, do you want to proceed?',
-      buttons: [
-        {
-          text: 'Yes',
-          handler: () => {
-            itemInCart.addMany(availableQuantity - itemInCart.getQuantity());
-            this.showAlert('Cart', 'Quantity added successfully');
-          }
-        },
-        {
-          text: 'Cancel',
-          handler: () => {
-            // blank
-          }
-        }
-      ]
-    }).then(res => {
-      res.present();
-    });
+    this.alertController
+      .create({
+        header: 'Cart',
+        subHeader: 'A maximum of ' + availableQuantity + ' units available.',
+        message:
+          'You can add up to ' +
+          (availableQuantity - itemInCart.getQuantity()) +
+          ' more items, do you want to proceed?',
+        buttons: [
+          {
+            text: 'Yes',
+            handler: () => {
+              itemInCart.addMany(availableQuantity - itemInCart.getQuantity());
+              this.showAlert('Cart', 'Quantity added successfully');
+            },
+          },
+          {
+            text: 'Cancel',
+            handler: () => {
+              // blank
+            },
+          },
+        ],
+      })
+      .then((res) => {
+        res.present();
+      });
   }
 
   initializeTutorial(): void {
@@ -168,6 +197,10 @@ export class StorePage implements OnInit {
     document.getElementById('tutorial-modal').addEventListener('click', () => {
       document.getElementById('tutorial-modal').setAttribute('class', 'out');
       sessionStorage.setItem('saw_tutorial', '1');
+      this.phaserGame.scale.resize(
+        Number(this.config.width),
+        Number(this.config.height)
+      );
     });
     document.body.addEventListener('keydown', (e) => {
       if (e.key !== 'h') {
@@ -178,25 +211,40 @@ export class StorePage implements OnInit {
         modal.removeAttribute('class');
         modal.setAttribute('class', 'unfold');
         sessionStorage.setItem('saw_tutorial', '0');
-      } else if (sessionStorage.getItem('saw_tutorial') === '0' || sessionStorage.getItem('saw_tutorial') === null) {
+      } else if (
+        sessionStorage.getItem('saw_tutorial') === '0' ||
+        sessionStorage.getItem('saw_tutorial') === null
+      ) {
         document.getElementById('tutorial-modal').setAttribute('class', 'out');
         sessionStorage.setItem('saw_tutorial', '1');
       }
+      this.phaserGame.scale.resize(
+        Number(this.config.width),
+        Number(this.config.height)
+      );
     });
-    document.getElementById('tutorial-modal-close').addEventListener('click', () => {
-      document.getElementById('tutorial-modal').setAttribute('class', 'out');
-      sessionStorage.setItem('saw_tutorial', '1');
-    });
-    document.getElementById('tutorial-modal-content').addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      e.stopImmediatePropagation();
-      return false;
-    });
+    document
+      .getElementById('tutorial-modal-close')
+      .addEventListener('click', () => {
+        document.getElementById('tutorial-modal').setAttribute('class', 'out');
+        sessionStorage.setItem('saw_tutorial', '1');
+        this.phaserGame.scale.resize(
+          Number(this.config.width),
+          Number(this.config.height)
+        );
+      });
+    document
+      .getElementById('tutorial-modal-content')
+      .addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        return false;
+      });
   }
 
-  showPurchases(){
-    this.navCtrl.navigateForward('/purchases/'+this.getId());
+  showPurchases() {
+    this.navCtrl.navigateForward('/purchases/' + this.getId());
   }
 
   /**
@@ -215,7 +263,11 @@ export class StorePage implements OnInit {
 
     let toDelete: Item = null;
     this.cart.forEach((element) => {
-      if (element.name === itemName && element.description === itemDescription && element.getPrice() === itemPrice) {
+      if (
+        element.name === itemName &&
+        element.description === itemDescription &&
+        element.getPrice() === itemPrice
+      ) {
         element.removeOne();
         if (element.getQuantity() <= 0) {
           toDelete = element;
@@ -240,20 +292,32 @@ export class StorePage implements OnInit {
     const target = event.target || event.srcElement || event.currentTarget;
     const itemNodeList = target.parentElement.parentElement.childNodes;
 
-    const itemId = itemNodeList[0].textContent;
     const itemName = itemNodeList[0].textContent;
     const itemDescription = itemNodeList[1].textContent;
     const itemPrice = itemNodeList[2].textContent.slice(0, -1);
 
     this.cart.forEach((element) => {
-      if (element.name === itemName && element.description === itemDescription && element.getPrice() === itemPrice) {
-        element.addOne();
+      if (
+        element.name === itemName &&
+        element.description === itemDescription &&
+        element.getPrice() === itemPrice
+      ) {
+        // Effectively getting the product from db
+        this.productService
+          .getProductBy(element.id)
+          .subscribe((response: ProductResponse) => {
+            // Checkin for availability
+            if (response.batch.availableQuantity - element.getQuantity() > 0) {
+              element.addOne();
+            } else {
+              this.showAlert('Not enough item in stock!', `There are no ${element.name} left in stock!`);
+            }
+          });
+      }
+      if (this.debug) {
+        console.log(new Item(element.id, itemName, itemDescription, itemPrice));
       }
     });
-
-    if (this.debug) {
-      console.log(new Item(itemId, itemName, itemDescription, itemPrice));
-    }
   }
   /**
    * Remove, regardless of its `quantity`, the selected item
@@ -272,7 +336,11 @@ export class StorePage implements OnInit {
     let index = 0;
 
     this.cart.forEach((element) => {
-      if (element.name === itemName && element.description === itemDescription && element.getPrice() === itemPrice) {
+      if (
+        element.name === itemName &&
+        element.description === itemDescription &&
+        element.getPrice() === itemPrice
+      ) {
         index = this.cart.indexOf(element);
       }
     });
@@ -295,7 +363,7 @@ export class StorePage implements OnInit {
   public getTotalCartPrice(): number {
     let returnValue = 0;
     this.cart.forEach((element) => {
-      returnValue += (element.getQuantity() * Number(element.getPrice()));
+      returnValue += element.getQuantity() * Number(element.getPrice());
     });
     // Round is needed to avoid the js divisions thing
     return Math.round(returnValue * 100) / 100;
@@ -315,5 +383,4 @@ export class StorePage implements OnInit {
   public getNavCtrl() {
     return this.navCtrl;
   }
-
 }

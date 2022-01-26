@@ -24,5 +24,8 @@
   ],
   "cart": [
       "Do you want to go to the checkout?"
+  ],
+  "postofficebox-opened": [
+    "Do you want support? Choose the seller and asks him directly."
   ]
 }
