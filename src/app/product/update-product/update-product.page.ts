@@ -5,6 +5,7 @@ import { ProductService } from '../../service/product.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ProductUpdateRequest } from '../../models/request/productUpdateRequest';
 import { AlertController } from '@ionic/angular';
+import {min} from "rxjs/operators";
 
 @Component({
   selector: 'app-update-product',
@@ -18,8 +19,8 @@ export class UpdateProductPage implements OnInit {
   updateProductForm = this.form.group({
     productName: ['', Validators.required],
     productDescription: ['', Validators.required],
-    productPrice: ['', Validators.required],
-    productQuantity: ['', Validators.required],
+    productPrice: ['', Validators.required,Validators.min(0.01)],
+    productQuantity: ['', Validators.required,Validators.min(1)],
   });
 
   constructor(

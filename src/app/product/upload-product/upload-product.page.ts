@@ -20,7 +20,7 @@ export class UploadProductPage implements OnInit {
 
     name: ['', Validators.required],
     description: ['', Validators.required],
-    price: ['null',[ Validators.required, Validators.min(1)]],
+    price: ['null',[ Validators.required, Validators.min(0.01)]],
     availableQuantity: ['null',[ Validators.required, Validators.min(1)]],
     type: ['', Validators.required]
   });
