@@ -4,4 +4,5 @@ export class ProductUpdateRequest{
   productDescription: string;
   productPrice: number;
   productQuantity: number;
+  photo: string;
 }

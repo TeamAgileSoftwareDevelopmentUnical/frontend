@@ -9,19 +9,34 @@
 
 <ion-content class="ion-padding">
   <form [formGroup]="updateProductForm">
-    <ion-item>
+
+    <div class="image-container">
+      
+       <div class="avatar-upload"> <div class="avatar-edit">
+          <input (change)="loadImageFromDevice($event)" type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+          <label for="imageUpload"></label>
+        </div>
+        <div class="avatar-preview">
+          <img src="{{ product.photo }}" id="imagePreview" alt="product-image"/>
+        </div>
+      </div>
+    </div>
+
+
+
+    <ion-item >
       <ion-label position="floating">Product Name</ion-label>
       <ion-input type="text" [(ngModel)]="product.productName" required formControlName="productName"></ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-item >
       <ion-label position="floating">Product Price</ion-label>
-      <ion-input type="number" [ngModel]="product.batch.productPrice" required formControlName="productPrice"></ion-input>
+      <ion-input type="number" min="0" [ngModel]="product.batch.productPrice" required formControlName="productPrice"></ion-input>
     </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Product Quantity</ion-label>
-      <ion-input type="number" [ngModel]="product.batch.availableQuantity" required formControlName="productQuantity"></ion-input>
+    <ion-item >
+        <ion-label position="floating">Product Quantity</ion-label>
+      <ion-input type="number" min="0" [ngModel]="product.batch.availableQuantity" required formControlName="productQuantity"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -29,6 +44,9 @@
       <ion-textarea type="text" [ngModel]="product.productDesc" required formControlName="productDescription"></ion-textarea>
     </ion-item>
 
-    <ion-button (click)="updateProduct()" color="primary">Update</ion-button>
+   
+    <ion-button [disabled]="!updateProductForm.valid"   (click)="updateProduct()" color="primary">Update</ion-button>
+     
+
   </form>
 </ion-content>

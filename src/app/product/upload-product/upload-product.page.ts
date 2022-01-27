@@ -16,10 +16,11 @@ export class UploadProductPage implements OnInit {
   defaultImage = 'assets/icon/no_image.jpeg';
 
   uploadProductFrom = this.formBuilder.group({
+  
     name: ['', Validators.required],
     description: ['', Validators.required],
-    price: ['', Validators.required, Validators.min(1)],
-    availableQuantity: ['', Validators.required, Validators.min(1)],
+    price: ['null',[ Validators.required, Validators.min(1)]],
+    availableQuantity: ['null',[ Validators.required, Validators.min(1)]],
     type: ['', Validators.required]
   });
 

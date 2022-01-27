@@ -37,6 +37,7 @@ export class UpdateProductPage implements OnInit {
   updateProduct() {
     this.request = this.updateProductForm.value;
     this.request.productID = this.product_id;
+    this.request.photo = this.product.photo;
     console.log(this.request);
     this.service.updateProduct(this.request)
       .subscribe((response: boolean)=>{
@@ -60,5 +61,17 @@ export class UpdateProductPage implements OnInit {
       ]
     });
     await alert.present();
+  }
+
+  loadImageFromDevice($event) {
+    const file = $event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () =>{
+      if (typeof reader.result === 'string') {
+        this.product.photo = reader.result;
+        console.log(reader.result);
+      }
+    };
   }
 }

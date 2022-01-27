@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/all-product"><ion-icon name="arrow-back-circle-outline"></ion-icon></ion-button>
+    </ion-buttons>
+    <ion-title>Details of [{{product.productName}}]</ion-title>
+  </ion-toolbar>            
+</ion-header>
+
+
+<ion-content fullscreen="true" slot="fixed" *ngIf="product">
+
+  <div class="avatar-view">
+    <div class="image-container">
+      <div class="avatar-preview">
+        <img src="{{ product.photo }}" id="imagePreview" alt="product-image"/>
+      </div>
+
+    </div>
+
+    </div>
+
+    <div class="ion-padding">
+
+    <div class="product-meta ion-text-center">
+      <ion-label class="product">{{product.Id}}</ion-label>
+    </div>
+  
+    <ion-item>
+      <ion-label position="floating"  >name</ion-label>
+      <ion-input [(ngModel)] = "product.productName"  disabled = "{{!mod}}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating"  >Description</ion-label>
+      <ion-textarea [(ngModel)] = "product.productDesc" disabled= "{{!mod}}"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating"  >Price</ion-label>
+      <ion-textarea [(ngModel)] = "product.batch.productPrice" disabled= "{{!mod}}"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating"  >Quantity</ion-label>
+      <ion-textarea [(ngModel)] = "product.batch.availableQuantity" disabled= "{{!mod}}"></ion-textarea>
+    </ion-item>
+
+
+  </div>
+
+  
+   
+
+</ion-content>

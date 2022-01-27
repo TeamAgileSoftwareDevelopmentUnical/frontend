@@ -58,6 +58,14 @@ const routes: Routes = [
         role:'Seller'
       }
     },
+    {
+    path: 'view-product/:productId',
+    loadChildren: () => import('./product/view-product/view-product.module').then( m => m.ViewProductPageModule),
+    canActivate:[AuthRoleGuard],
+        data:{
+        role:'Seller'
+      }
+  },
   {
     path: 'store',
     loadChildren: () => import('./store/store.module').then( m => m.StorePageModule),
@@ -104,9 +112,7 @@ const routes: Routes = [
   },
   { path: '404', component: NotFoundPage },
   { path: '**', redirectTo: '404' },
-
-
-
+  
 
 ];
 

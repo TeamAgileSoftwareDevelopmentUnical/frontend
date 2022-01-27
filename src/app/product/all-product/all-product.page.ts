@@ -12,6 +12,7 @@ class MeResponse {
   value: string;
 }
 
+
 @Component({
   selector: 'app-all-product',
   templateUrl: './all-product.page.html',
@@ -35,6 +36,8 @@ export class AllProductPage implements OnInit {
     this.getAllProduct();
   }
 
+  
+
   getAllProduct(){
 
     this.service.getAllProduct()
@@ -42,13 +45,23 @@ export class AllProductPage implements OnInit {
         this.allProduct = response;
       });
   }
+  
+  ViewDeatilsProduct(productId: number){
+       console.log(
+    );
+    this.route.navigate(['/view-product',productId], {
+      replaceUrl : true
+     });
+    }
 
   updateProduct(productId: number) {
     this.route.navigate(['/update-product',productId], {
       replaceUrl : true
      });
+     
   }
-
+  
+ 
   deleteProduct(productId: number) {
     this.showAlert('Product Delete','Are you really wants to delete this product?',null, productId);
   }
@@ -69,6 +82,8 @@ export class AllProductPage implements OnInit {
               });
           }
         },
+
+        
         {
           text: 'Disagree',
           handler: ()=>{
@@ -100,4 +115,8 @@ export class AllProductPage implements OnInit {
     }
     return false;
   }
+  
+ 
+ 
+  
 }

@@ -45,6 +45,14 @@ import {ProductUpdateRequest} from "../models/request/productUpdateRequest";
       return this.http.post(this.host+'/update',request,{headers});
     }
 
+    /*ViewProductPage(product_id: number){
+      const headers = new HttpHeaders({
+        'Authorization': 'Bearer '+sessionStorage.getItem('token')
+      });
+      console.log(product_id);
+      return this.http.get(this.host+'/get-product?product_id='+product_id,{headers});
+    }
+*/
     deleteProduct(productID: number){
       const headers = new HttpHeaders({
         'Authorization': 'Bearer '+sessionStorage.getItem('token')
