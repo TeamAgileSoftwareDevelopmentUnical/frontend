@@ -45,7 +45,6 @@ export class AllProductPage implements OnInit {
 
 
 
-  getAllProduct(){
   getAllProduct() {
     //this.loadingService.showLoading('Product uploading...');
 
@@ -70,11 +69,7 @@ export class AllProductPage implements OnInit {
     this.route.navigate(['/update-product', productId], {
       replaceUrl: true,
     });
-    this.route.navigate(['/update-product',productId], {
-      replaceUrl : true
-     });
-
-  }
+     }
 
 
   deleteProduct(productId: number) {
