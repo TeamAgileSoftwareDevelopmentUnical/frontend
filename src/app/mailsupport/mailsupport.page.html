@@ -1,0 +1,66 @@
+
+<ion-content [fullscreen]="true">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/"></ion-back-button>
+      </ion-buttons>
+      <ion-title>Mail support</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container">
+    <!-- <strong>Ready to create an app?</strong>
+    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+   -->
+
+   <ion-card>
+     <ion-list>
+      <div id="input-container">
+      
+        <ion-item>
+          <ion-label>Seller</ion-label>
+          <ion-select [(ngModel)]="selectedSellerEmail">
+            <ion-select-option *ngFor="let seller of sellers" value={{seller.email}}>{{seller.username}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+   
+      </div>
+      <div id="input-container">
+        <ion-label >
+         From
+        </ion-label>
+        <ion-item id="rounded">
+          <ion-input type="text" disabled="True" value={{userEmail}}></ion-input>
+        </ion-item> 
+       </div>
+       <div id="input-container">
+        <ion-label >
+         To
+        </ion-label>
+        <ion-item id="rounded">
+          <ion-input type="text" disabled="True" value={{selectedSellerEmail}}></ion-input>
+        </ion-item> 
+       </div>
+     
+     <div id="input-container">
+      <ion-label >
+       Message
+      </ion-label>
+      <ion-item id="round">
+        <ion-textarea [(ngModel)]="messageBody" rows="6" cols="20" id="message" placeholder="Message"></ion-textarea>
+      </ion-item> 
+     </div>
+        <div id="input-container">
+        <ion-input id="submit-btn" type="button" value="Send Message" (click)=submit()></ion-input>
+        </div>
+    </ion-list>
+  </ion-card>
+  </div>
+</ion-content>
+
+
+
+
+
+

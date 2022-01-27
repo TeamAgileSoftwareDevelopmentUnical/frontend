@@ -6,58 +6,82 @@ import { AuthRoleGuard } from './security/auth-role.guard';
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    loadChildren: () =>
+      import('./home/home.module').then((m) => m.HomePageModule),
   },
   {
     path: '',
     redirectTo: 'home',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () =>
+      import('./login/login.module').then((m) => m.LoginPageModule),
   },
   {
     path: 'registration',
-    loadChildren: () => import('./registration/registration.module').then( m => m.RegistrationPageModule)
+    loadChildren: () =>
+      import('./registration/registration.module').then(
+        (m) => m.RegistrationPageModule
+      ),
   },
   {
     path: 'forgot-password',
-    loadChildren: () => import('./forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
+    loadChildren: () =>
+      import('./forgot-password/forgot-password.module').then(
+        (m) => m.ForgotPasswordPageModule
+      ),
   },
   {
     path: 'payment-success',
-    loadChildren: () => import('./payment-success/payment-success.module').then( m => m.PaymentSuccessPageModule)
+    loadChildren: () =>
+      import('./payment-success/payment-success.module').then(
+        (m) => m.PaymentSuccessPageModule
+      ),
+    canActivate: [AuthRoleGuard],
   },
   {
     path: 'payment-cancel',
-    loadChildren: () => import('./payment-cancel/payment-cancel.module').then( m => m.PaymentCancelPageModule)
+    loadChildren: () =>
+      import('./payment-cancel/payment-cancel.module').then(
+        (m) => m.PaymentCancelPageModule
+      ),
+    canActivate: [AuthRoleGuard],
   },
   {
     path: 'all-product',
-    loadChildren: () => import('./product/all-product/all-product.module').then( m => m.AllProductPageModule),
-    canActivate:[AuthRoleGuard],
-    data:{
-      role:'Seller'
-    }
+    loadChildren: () =>
+      import('./product/all-product/all-product.module').then(
+        (m) => m.AllProductPageModule
+      ),
+    canActivate: [AuthRoleGuard],
+    data: {
+      role: 'Seller',
+    },
   },
   {
     path: 'upload-product',
-    loadChildren: () => import('./product/upload-product/upload-product.module').then( m => m.UploadProductPageModule),
-    canActivate:[AuthRoleGuard],
-    data:{
-      role:'Seller'
-    }
-
+    loadChildren: () =>
+      import('./product/upload-product/upload-product.module').then(
+        (m) => m.UploadProductPageModule
+      ),
+    canActivate: [AuthRoleGuard],
+    data: {
+      role: 'Seller',
+    },
   },
   {
     path: 'update-product/:productId',
-    loadChildren: () => import('./product/update-product/update-product.module').then( m => m.UpdateProductPageModule),
-    canActivate:[AuthRoleGuard],
-        data:{
-        role:'Seller'
-      }
+    loadChildren: () =>
+      import('./product/update-product/update-product.module').then(
+        (m) => m.UpdateProductPageModule
+      ),
+    canActivate: [AuthRoleGuard],
+    data: {
+      role: 'Seller',
     },
+  },
     {
     path: 'view-product/:productId',
     loadChildren: () => import('./product/view-product/view-product.module').then( m => m.ViewProductPageModule),
@@ -68,35 +92,41 @@ const routes: Routes = [
   },
   {
     path: 'store',
-    loadChildren: () => import('./store/store.module').then( m => m.StorePageModule),
-    canActivate:[AuthRoleGuard],
-    data:{
-      role: 'Customer'
-    }
+    loadChildren: () =>
+      import('./store/store.module').then((m) => m.StorePageModule),
+    canActivate: [AuthRoleGuard],
+    data: {
+      role: 'Customer',
+    },
   },
   {
     path: 'profile/:id',
-    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule),
-    canActivate:[AuthRoleGuard],
+    loadChildren: () =>
+      import('./profile/profile.module').then((m) => m.ProfilePageModule),
+    canActivate: [AuthRoleGuard],
   },
   {
     path: 'payment',
-    loadChildren: () => import('./payment/payment.module').then( m => m.PaymentPageModule),
-    canActivate:[AuthRoleGuard],
+    loadChildren: () =>
+      import('./payment/payment.module').then((m) => m.PaymentPageModule),
+    canActivate: [AuthRoleGuard],
     data: {
-      role: 'Customer'
-    }
+      role: 'Customer',
+    },
   },
   {
     path: 'not-found',
-    loadChildren: () => import('./not-found/not-found.module').then( m => m.NotFoundPageModule)
+    loadChildren: () =>
+      import('./not-found/not-found.module').then((m) => m.NotFoundPageModule),
   },
-
 
   {
     path: 'stand-products/:category',
-    loadChildren: () => import('./stand-products/stand-products.module').then( m => m.StandProductsPageModule),
-    canActivate:[AuthRoleGuard],
+    loadChildren: () =>
+      import('./stand-products/stand-products.module').then(
+        (m) => m.StandProductsPageModule
+      ),
+    canActivate: [AuthRoleGuard],
     // data: {
     //   role: 'Seller' ?? TODO:
     // }
@@ -104,22 +134,36 @@ const routes: Routes = [
 
   {
     path: 'purchases/:id',
-    loadChildren: () => import('./purchases/purchases.module').then( m => m.PurchasesPageModule),
-    canActivate:[AuthRoleGuard],
+    loadChildren: () =>
+      import('./purchases/purchases.module').then((m) => m.PurchasesPageModule),
+    canActivate: [AuthRoleGuard],
     data: {
-      role: 'Customer'
-    }
+      role: 'Customer',
+    },
   },
+
+  {
+    path: 'mailsupport',
+    loadChildren: () =>
+      import('./mailsupport/mailsupport.module').then(
+        (m) => m.MailsupportPageModule
+      ),
+    canActivate: [AuthRoleGuard],
+    data: {
+      role: 'Customer',
+    },
+  },
+
   { path: '404', component: NotFoundPage },
   { path: '**', redirectTo: '404' },
-  
+
 
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

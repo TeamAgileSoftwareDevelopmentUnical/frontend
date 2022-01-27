@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {FormBuilder, Validators} from '@angular/forms';
 import {ProductUploadRequest} from '../../models/request/productUploadRequest';
 import {AlertController} from '@ionic/angular';
+import {LoadingService} from '../../service/loading.service';
 
 @Component({
   selector: 'app-upload-product',
@@ -16,7 +17,7 @@ export class UploadProductPage implements OnInit {
   defaultImage = 'assets/icon/no_image.jpeg';
 
   uploadProductFrom = this.formBuilder.group({
-  
+
     name: ['', Validators.required],
     description: ['', Validators.required],
     price: ['null',[ Validators.required, Validators.min(1)]],
@@ -25,7 +26,11 @@ export class UploadProductPage implements OnInit {
   });
 
   // eslint-disable-next-line max-len
-  constructor(private service: ProductService, private route: Router, private formBuilder: FormBuilder, private alertCtrl: AlertController) { }
+  constructor(private service: ProductService,
+              private route: Router,
+              private formBuilder: FormBuilder,
+              private alertCtrl: AlertController,
+              private loading: LoadingService) { }
 
   ngOnInit() {}
 
@@ -33,9 +38,11 @@ export class UploadProductPage implements OnInit {
     this.request = this.uploadProductFrom.value;
     this.request.photo = this.productImage;
     this.request.sellerID = +sessionStorage.getItem('id');
+    this.loading.showLoading('Product Uploading...');
     this.service.uploadProduct(this.request)
       .subscribe((response: boolean)=>{
         if (response){
+          this.loading.hideLoading();
           this.showAlert('Product Upload','Product Upload Successfully!','all-product');
           this.uploadProductFrom.reset();
         }

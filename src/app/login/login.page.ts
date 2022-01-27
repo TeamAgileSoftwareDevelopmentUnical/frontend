@@ -21,7 +21,7 @@ export class LoginPage implements OnInit {
 
     c: Account = new Account();
 
-  constructor(private homeSrv: HomeService, private alertController:AlertController, private router: Router) { }
+  constructor(private homeSrv: HomeService, private alertController: AlertController, private router: Router) { }
 
   ngOnInit() {
     sessionStorage.clear();
@@ -37,13 +37,18 @@ export class LoginPage implements OnInit {
         sessionStorage.setItem( 'token', response.jwtToken);
         sessionStorage.setItem( 'id', response.id);
         sessionStorage.setItem( 'role' , response.role);
+        sessionStorage.setItem( 'email', response.email);
         sessionStorage.setItem( 'user_name', this.c.username);
 
         if (response.role === 'Seller') {
-          this.router.navigate(['/all-product']);
+          this.router.navigate(['/all-product'],{
+            replaceUrl : true
+           });
         }else {
           console.log('loggato, storage = ', sessionStorage);
-          this.router.navigate(['/store']);
+          this.router.navigate(['/store'],{
+            replaceUrl : true
+           });
         }
     } else {
         this.showError();
@@ -71,7 +76,7 @@ export class LoginPage implements OnInit {
     await alert.present();
 
     const { role } = await alert.onDidDismiss();
-    console.log('onDidDismiss resolved with role', role);
+    // console.log('onDidDismiss resolved with role', role);
   }
 
 }

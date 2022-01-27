@@ -36,36 +36,31 @@ export class RegistrationPage implements OnInit {
   ngOnInit() {}
 
   submit(){
-    console.log('form = ', this.accountForm.value);
+    // console.log('form = ', this.accountForm.value);
     if(this.accountType && this.accountType === 's'){
       this.sellerAccount = new SellerAccount();
       this.sellerAccount = this.accountForm.value;
       this.homeSrv.createSeller(this.sellerAccount)
-      .subscribe((response: boolean) => {
-        if(response){
-          this.route.navigate(['/login']);
-        }
-        else{
-          alert('Registration failed.');
-        }
+      .subscribe((response: any) => {
+        this.showSuccess();
       },(error: HttpErrorResponse)=>{
-        console.log('Error : ', error);
-        this.showError(error.error);
+        if(error){
+          // console.log('Error : ', error);
+          this.showError(error.error);
+        }
       }
       );
     }else{
       this.customerAccount = new CustomerAccount();
       this.customerAccount = this.accountForm.value;
       this.homeSrv.createCustomer(this.customerAccount)
-      .subscribe((response: boolean) => {
-        if(response){
-          this.route.navigate(['/login']);
-        }else {
-          alert('Registration failed.');
-      }
+      .subscribe((response: Response) => {
+          this.showSuccess();
       },(error : HttpErrorResponse)=>{
-        console.log("Error : ", error);
-        this.showError(error.error);
+        if(error){
+          // console.log("Error : ", error.error);
+          this.showError(error.error);
+        }
       }
       );
     }
@@ -94,7 +89,21 @@ export class RegistrationPage implements OnInit {
     await alert.present();
 
     const { role } = await alert.onDidDismiss();
-    console.log('onDidDismiss resolved with role', role);
+    // console.log('onDidDismiss resolved with role', role);
+  }
+  async showSuccess() {
+    const alert = await this.alertController.create({
+      // cssClass: 'my-custom-class',
+      header: 'Registration success.',
+      message: 'Account created, you can login.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+    this.route.navigate(['/login']);
+    // console.log('onDidDismiss resolved with role', role);
   }
 
 
