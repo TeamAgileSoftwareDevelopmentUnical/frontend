@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Product } from '../models/product';
 import {ProductUploadRequest} from '../models/request/productUploadRequest';
 import {ProductUpdateRequest} from '../models/request/productUpdateRequest';
+import {ProductQuantityCheckRequest} from "../models/request/productQuantityCheckRequest";
 import { ProductUpdateAvailaBilityRequest } from '../models/request/productUpdateAvailabilityRequest';
 
 @Injectable({
@@ -66,5 +67,12 @@ import { ProductUpdateAvailaBilityRequest } from '../models/request/productUpdat
         Authorization: 'Bearer '+sessionStorage.getItem('token')
       });
       return this.http.get(this.host+'/get-stand-products?category='+category,{headers});
+    }
+
+    checkProductQuantity(productId: number){
+      const headers = new HttpHeaders({
+        Authorization: 'Bearer '+sessionStorage.getItem('token')
+      });
+      return this.http.get(this.host+'/check-product-quantity?product_id='+productId,{headers});
     }
 }

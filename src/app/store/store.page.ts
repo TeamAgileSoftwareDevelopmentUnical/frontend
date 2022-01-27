@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Injectable, OnInit} from '@angular/core';
 
 import Phaser from 'phaser';
 import MainScene from './MainScene';
@@ -17,6 +17,7 @@ export class StorePage implements OnInit {
   static instance: StorePage = null;
 
   phaserGame: Phaser.Game;
+  musicPlaying: boolean;
   config: Phaser.Types.Core.GameConfig;
 
   cart: Item[];
@@ -84,6 +85,27 @@ export class StorePage implements OnInit {
     };
 
     this.phaserGame = new Phaser.Game(this.config);
+    this.musicPlaying = true;
+
+    document.addEventListener('keypress', (e) => {
+      if (e.key === '+') {
+        this.phaserGame.sound.volume += this.phaserGame.sound.volume < 1 ? 0.01: 0;
+      }
+      if (e.key === '-') {
+        this.phaserGame.sound.volume -= this.phaserGame.sound.volume > 0 ? 0.01: 0;
+      }
+      if (e.key !== 'm') {
+        return false;
+      }
+
+      if (this.musicPlaying) {
+        this.phaserGame.sound.pauseAll();
+      } else {
+        this.phaserGame.sound.resumeAll();
+      }
+      this.musicPlaying = !this.musicPlaying;
+      MainScene.muted = !MainScene.muted;
+    });
   }
 
   getId(): number {
@@ -310,7 +332,10 @@ export class StorePage implements OnInit {
             if (response.batch.availableQuantity - element.getQuantity() > 0) {
               element.addOne();
             } else {
-              this.showAlert('Not enough item in stock!', `There are no ${element.name} left in stock!`);
+              this.showAlert(
+                'Not enough item in stock!',
+                `There are no ${element.name} left in stock!`
+              );
             }
           });
       }

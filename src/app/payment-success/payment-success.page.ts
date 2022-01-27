@@ -2,12 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PaymentService } from '../service/payment.service';
 import { PayPalConfirmPaymentRequest } from '../models/request/payPalConfirmPaymentRequest';
 import { PayPalConfirmPaymentResponse } from '../models/response/payPalConfirmPaymentResponse';
+import {LoadingController, NavController} from '@ionic/angular';
+import {LoadingService} from '../service/loading.service';
+import {ProductInfo} from '../models/request/productInfo';
 import { StorePage } from '../store/store.page';
-import { LoadingController } from '@ionic/angular';
 import { PurchaseService } from '../service/purchase.service';
-import { Purchase } from '../models/purchase';
 import { ProductService } from '../service/product.service';
-import { ProductResponse } from '../models/response/productResponse';
 
 @Component({
   selector: 'app-payment-success',
@@ -21,11 +21,9 @@ export class PaymentSuccessPage implements OnInit {
   paymentId: string = null;
   mode = false;
 
-  private loading;
-
   constructor(
     private paymentService: PaymentService,
-    private loadingCtrl: LoadingController,
+    private loadingService: LoadingService,
     private purchaseService: PurchaseService,
     private productService: ProductService
   ) {}
@@ -46,16 +44,22 @@ export class PaymentSuccessPage implements OnInit {
         }
       }
       // call to successPayment service
-      this.loadingCtrl.create({ message: 'Please Wait...' }).then((overlay) => {
-        this.loading = overlay;
-        this.loading.present();
+      this.loadingService.showLoading('Please Wait...');
+      this.request.customerId = +sessionStorage.getItem('id');
+      JSON.parse(sessionStorage.getItem('cart')).forEach(data=>{
+        const info: ProductInfo = new ProductInfo();
+        info.quantity = data.quantity;
+        info.productId = data.productId;
+        this.request.productIds.push(info);
       });
-      this.paymentService
-        .confirmPayment(this.request)
+      console.log(this.request);
+
+      this.paymentService.confirmPayment(this.request)
         .subscribe((response: PayPalConfirmPaymentResponse) => {
           console.log(response.status);
-          if (response.status === 'approved') {
-            this.loading.dismiss();
+          if (response.status==='approved'){
+            sessionStorage.removeItem('cart');
+            this.loadingService.hideLoading();
             this.mode = true;
             this.paymentId = response.paymentID;
             this.amountPaid = response.amount;
@@ -68,11 +72,11 @@ export class PaymentSuccessPage implements OnInit {
                 location.replace('http://localhost:8100/store');
               }
             }, 1000);
-          } else
+          } /*else
             {StorePage.instance.showAlert(
               'Payment Error',
               'Something get wrong during the payment!'
-            );}
+            );}*/
         });
     }
   }

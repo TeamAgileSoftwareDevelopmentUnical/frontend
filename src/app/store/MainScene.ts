@@ -4,6 +4,8 @@ import { NavigationExtras } from '@angular/router';
 import { StorePage } from './store.page';
 
 export default class MainScene extends Phaser.Scene {
+  static muted: boolean;
+
   speeches: any;
   player: any;
   butcher: any;
@@ -137,7 +139,6 @@ export default class MainScene extends Phaser.Scene {
       .setImmovable();
     this.cart = this.physics.add.sprite(430, 400, 'empty-cart').setImmovable();
     this.postofficebox = this.physics.add.sprite(430, 460, 'postofficebox-closed').setScale(0.2).setImmovable();
-    
 
     this.player = this.physics.add.sprite(480, 450, 'player').setScale(3);
     this.player.body.setSize(6, 6, true);
@@ -264,6 +265,7 @@ export default class MainScene extends Phaser.Scene {
     this.footsteps = this.sound.add('footsteps');
     this.music = this.sound.add('songtheme');
     this.music.loop=true;
+    this.sound.volume = 0.05;
     this.music.play();
   }
 
@@ -274,31 +276,31 @@ export default class MainScene extends Phaser.Scene {
       this.player.setVelocity(0);
       this.player.play('up', true);
       this.player.setVelocityY(-100);
-      if(!this.footsteps.isPlaying)
-        this.footsteps.play();
+      if(!this.footsteps.isPlaying && !MainScene.muted)
+        {this.footsteps.play();}
     } else if (this.cursors.down.isDown) {
       this.player.setVelocity(0);
       this.player.play('down', true);
       this.player.setVelocityY(100);
-      if(!this.footsteps.isPlaying)
-        this.footsteps.play();
+      if(!this.footsteps.isPlaying && !MainScene.muted)
+        {this.footsteps.play();}
     } else if (this.cursors.right.isDown) {
       this.player.setVelocity(0);
       this.player.play('right', true);
       this.player.setVelocityX(100);
-      if(!this.footsteps.isPlaying)
-        this.footsteps.play();
+      if(!this.footsteps.isPlaying && !MainScene.muted)
+        {this.footsteps.play();}
     } else if (this.cursors.left.isDown) {
       this.player.setVelocity(0);
       this.player.play('left', true);
       this.player.setVelocityX(-100);
-      if(!this.footsteps.isPlaying)
-        this.footsteps.play();
+      if(!this.footsteps.isPlaying && !MainScene.muted)
+        {this.footsteps.play();}
     } else {
       this.player.stop();
       this.player.setVelocity(0);
-      if(this.footsteps.isPlaying)
-        this.footsteps.stop();
+      if(this.footsteps.isPlaying && !MainScene.muted)
+        {this.footsteps.stop();}
     }
 
     if (this.dialogBox != null) {
@@ -459,7 +461,7 @@ export default class MainScene extends Phaser.Scene {
         if(npc.texture.key === 'postofficebox-opened') {
           this.postofficebox.setTexture('postofficebox-closed');
         }
-        
+
       }, this)
       // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
       .on('button.over', function(button, groupName, index) {
