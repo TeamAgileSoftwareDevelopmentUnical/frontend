@@ -19,8 +19,8 @@ export class UpdateProductPage implements OnInit {
   updateProductForm = this.form.group({
     productName: ['', Validators.required],
     productDescription: ['', Validators.required],
-    productPrice: ['', Validators.required,Validators.min(0.01)],
-    productQuantity: ['', Validators.required,Validators.min(1)],
+    productPrice: ['null',[ Validators.required,Validators.min(0.01)]],
+    productQuantity: ['null',[ Validators.required, Validators.min(1)]],
   });
 
   constructor(
