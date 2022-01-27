@@ -44,10 +44,13 @@ export class AllProductPage implements OnInit {
 
   getAllProduct() {
     //this.loadingService.showLoading('Product uploading...');
-    this.service.getAllProduct().subscribe((response: ProductResponse[]) => {
-      console.log(response);
-      this.allProduct = response;
-    });
+
+    if(!sessionStorage.getItem('token')){return;}
+    this.service.getAllProduct()
+      .subscribe((response: ProductResponse[]) => {
+        console.log(response);
+        this.allProduct = response;
+      });
     //this.subs.add(()=>{this.loadingService.hideLoading()});
   }
 

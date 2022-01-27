@@ -13,13 +13,13 @@
 
         <ion-img src="assets/logo.png" style="width:30%; margin-left: auto; margin-right: auto;"></ion-img>
 
-        <ion-button [routerLink]="['/registration']" expand="block" color="primary" shape="round" style="width:30%; margin-left: auto; margin-right: auto;">Register</ion-button>
+        <ion-button (click)="registration()" expand="block" color="primary" shape="round" style="width:30%; margin-left: auto; margin-right: auto;">Register</ion-button>
 
         <span class="divider line one-line" style="width:30%; margin-left: auto; margin-right: auto;">or</span>
 
         <span class="already">Already a user?</span>
 
-        <ion-button [routerLink]="['/login']" expand="block" color="danger" shape="round" style="width:30%; margin-left: auto; margin-right: auto;">Sign In</ion-button>
+        <ion-button (click)="login()" expand="block" color="danger" shape="round" style="width:30%; margin-left: auto; margin-right: auto;">Sign In</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
