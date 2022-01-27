@@ -1,11 +1,11 @@
 {
   "name": "front-end",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "author": "Amazon-1 ASD Group",
+  "homepage": "http://localhost:8100/",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "concurrently \"ionic serve\" \"node src/app/mailsupport/mailsender.js\"",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -21,8 +21,11 @@
     "@angular/router": "~12.1.1",
     "@capacitor/core": "3.3.2",
     "@ionic/angular": "^5.5.2",
+    "@ionic/cli": "^6.18.1",
+    "concurrently": "^7.0.0",
     "express": "^4.17.2",
     "googleapis": "^92.0.0",
+    "ionic": "^5.4.16",
     "nodemailer": "^6.7.2",
     "phaser": "^3.55.2",
     "phaser-ce": "^2.19.2",
@@ -66,5 +69,5 @@
     "ts-node": "~8.3.0",
     "typescript": "~4.2.4"
   },
-  "description": "An Ionic project"
+  "description": "A Ionic FreshMarket!"
 }
