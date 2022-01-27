@@ -30,8 +30,11 @@ export class StandProductsPage implements OnInit {
       this.service
         .getProductsByCategory(this.category)
         .subscribe((response: ProductResponse[]) => {
-          this.standProducts = response;
-          console.log(this.standProducts);
+          response.forEach(element => {
+            if (element.batch.availableQuantity > 0) {
+              this.standProducts.push(element);
+            }
+          });
 
           if (this.standProducts.length === 0) {
             console.log(this.standProducts.length);

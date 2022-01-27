@@ -92,7 +92,7 @@ export class CardPage implements OnInit {
         {
           text: 'Okay',
           handler: ()=>{
-            location.replace('http://localhost:4200/store');
+            location.replace('http://localhost:8100/store');
           }
         }
       ]

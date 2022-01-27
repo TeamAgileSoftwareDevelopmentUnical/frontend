@@ -16,7 +16,6 @@ export class Order{
         purchases: Purchase[],
         shippingAddress: string,
         paymentMethod: string,
-        totalAmount: number
         ){
             this.orderId = orderId;
             this.customer = customer;
@@ -24,6 +23,19 @@ export class Order{
             this.soldProducts = purchases;
             this.shippingAddress = shippingAddress;
             this.paymentMethod = paymentMethod;
-            this.totalAmount = totalAmount;
+            this.totalAmount = this.getSumAmount();
+        }
+
+        getSumAmount()
+        {
+            let sum = 0;
+            if(this.soldProducts.length !== 0)
+            {               
+                this.soldProducts.forEach(element => {
+                    sum += element.total;                    
+                });                
+            }
+            return sum;
         }
 }
+

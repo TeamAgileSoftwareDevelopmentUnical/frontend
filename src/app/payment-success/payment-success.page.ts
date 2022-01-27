@@ -1,11 +1,12 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {PaymentService} from '../service/payment.service';
-import {PayPalConfirmPaymentRequest} from '../models/request/payPalConfirmPaymentRequest';
-import {PayPalConfirmPaymentResponse} from '../models/response/payPalConfirmPaymentResponse';
-import { StorePage } from '../store/store.page';
-import {LoadingController, NavController} from "@ionic/angular";
-import {LoadingService} from "../service/loading.service";
-import {ProductInfo} from "../models/request/productInfo";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { PaymentService } from '../service/payment.service';
+import { PayPalConfirmPaymentRequest } from '../models/request/payPalConfirmPaymentRequest';
+import { PayPalConfirmPaymentResponse } from '../models/response/payPalConfirmPaymentResponse';
+import {LoadingController, NavController} from '@ionic/angular';
+import {LoadingService} from '../service/loading.service';
+import {ProductInfo} from '../models/request/productInfo';
+import { PurchaseService } from '../service/purchase.service';
+import { ProductService } from '../service/product.service';
 
 @Component({
   selector: 'app-payment-success',
@@ -14,7 +15,6 @@ import {ProductInfo} from "../models/request/productInfo";
 })
 export class PaymentSuccessPage implements OnInit {
 
-  private loading;
   request: PayPalConfirmPaymentRequest = new PayPalConfirmPaymentRequest();
   counter = 10;
   amountPaid = 0;
@@ -23,33 +23,30 @@ export class PaymentSuccessPage implements OnInit {
 
   constructor(private paymentService: PaymentService,
               private navCtrl: NavController,
-              private loadingService: LoadingService) { }
+              private loadingService: LoadingService,
+              private purchaseService: PurchaseService,
+              private productService: ProductService) { }
 
   ngOnInit() {
-    if (document.URL.indexOf('?')){
+    if (document.URL.indexOf('?')) {
       const splitUrl = document.URL.split('?');
       const splitParams = splitUrl[1].split('&');
       let i: any;
       // eslint-disable-next-line guard-for-in
-      for (i in splitParams){
+      for (i in splitParams) {
         const singleURLParam = splitParams[i].split('=');
-        if (singleURLParam[0]==='paymentId'){
+        if (singleURLParam[0] === 'paymentId') {
           this.request.paymentId = singleURLParam[1].trim();
         }
-        if (singleURLParam[0]==='PayerID'){
+        if (singleURLParam[0] === 'PayerID') {
           this.request.payerId = singleURLParam[1].trim();
         }
       }
-
-      if (StorePage.instance == null){
-        console.log('Okay');
-      }
-
       // call to successPayment service
       this.loadingService.showLoading('Please Wait...');
       this.request.customerId = +sessionStorage.getItem('id');
       JSON.parse(sessionStorage.getItem('cart')).forEach(data=>{
-        let info: ProductInfo = new ProductInfo();
+        const info: ProductInfo = new ProductInfo();
         info.quantity = data.quantity;
         info.productId = data.productId;
         this.request.productIds.push(info);
@@ -57,7 +54,7 @@ export class PaymentSuccessPage implements OnInit {
       console.log(this.request);
 
       this.paymentService.confirmPayment(this.request)
-        .subscribe((response: PayPalConfirmPaymentResponse)=>{
+        .subscribe((response: PayPalConfirmPaymentResponse) => {
           console.log(response.status);
           if (response.status==='approved'){
             sessionStorage.removeItem('cart');
@@ -65,16 +62,20 @@ export class PaymentSuccessPage implements OnInit {
             this.mode = true;
             this.paymentId = response.paymentID;
             this.amountPaid = response.amount;
-            setInterval(()=>{
+
+            setInterval(() => {
               --this.counter;
-              if (this.counter <= 0){
+              if (this.counter <= 0) {
                 console.log(response);
                 // redirect to store page
-                location.replace('http://localhost:4200/store');
+                location.replace('http://localhost:8100/store');
               }
-            },1000);
+            }, 1000);
           }
         });
     }
   }
+
+
+
 }

@@ -5,6 +5,7 @@ import { Product } from '../models/product';
 import {ProductUploadRequest} from '../models/request/productUploadRequest';
 import {ProductUpdateRequest} from '../models/request/productUpdateRequest';
 import {ProductQuantityCheckRequest} from "../models/request/productQuantityCheckRequest";
+import { ProductUpdateAvailaBilityRequest } from '../models/request/productUpdateAvailabilityRequest';
 
 @Injectable({
     providedIn: 'root'
@@ -43,6 +44,13 @@ import {ProductQuantityCheckRequest} from "../models/request/productQuantityChec
         Authorization: 'Bearer '+sessionStorage.getItem('token')
       });
       return this.http.post(this.host+'/update',request,{headers});
+    }
+
+    updateAvailableQuantity(request: ProductUpdateAvailaBilityRequest) {
+      const headers = new HttpHeaders({
+        Authorization: 'Bearer '+sessionStorage.getItem('token')
+      });
+      return this.http.post(this.host+'/update-availability', request, {headers});
     }
 
     deleteProduct(productID: number){
