@@ -20,6 +20,7 @@ import { ProductUpdateAvailaBilityRequest } from '../models/request/productUpdat
       const headers = new HttpHeaders({
         Authorization: 'Bearer '+sessionStorage.getItem('token')
       });
+      if(!sessionStorage.getItem('token')){return;}
       return this.http.get(this.host+'/get-all?seller_id='+sessionStorage.getItem('id'),{headers});
     }
 

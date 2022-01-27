@@ -5,6 +5,7 @@ import { PayPalConfirmPaymentResponse } from '../models/response/payPalConfirmPa
 import {LoadingController, NavController} from '@ionic/angular';
 import {LoadingService} from '../service/loading.service';
 import {ProductInfo} from '../models/request/productInfo';
+import { StorePage } from '../store/store.page';
 import { PurchaseService } from '../service/purchase.service';
 import { ProductService } from '../service/product.service';
 
@@ -14,18 +15,18 @@ import { ProductService } from '../service/product.service';
   styleUrls: ['./payment-success.page.scss'],
 })
 export class PaymentSuccessPage implements OnInit {
-
   request: PayPalConfirmPaymentRequest = new PayPalConfirmPaymentRequest();
   counter = 10;
   amountPaid = 0;
   paymentId: string = null;
   mode = false;
 
-  constructor(private paymentService: PaymentService,
-              private navCtrl: NavController,
-              private loadingService: LoadingService,
-              private purchaseService: PurchaseService,
-              private productService: ProductService) { }
+  constructor(
+    private paymentService: PaymentService,
+    private loadingService: LoadingService,
+    private purchaseService: PurchaseService,
+    private productService: ProductService
+  ) {}
 
   ngOnInit() {
     if (document.URL.indexOf('?')) {
@@ -71,11 +72,12 @@ export class PaymentSuccessPage implements OnInit {
                 location.replace('http://localhost:8100/store');
               }
             }, 1000);
-          }
+          } /*else
+            {StorePage.instance.showAlert(
+              'Payment Error',
+              'Something get wrong during the payment!'
+            );}*/
         });
     }
   }
-
-
-
 }

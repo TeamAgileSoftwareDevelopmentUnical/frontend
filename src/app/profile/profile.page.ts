@@ -84,6 +84,7 @@ export class ProfilePage implements OnInit {
             this.customerAccountService.delete(id)
               .subscribe((response: boolean) => {
                 if (response){
+                  sessionStorage.clear();
                   this.router.navigate(['/login']);
                 }
               });
