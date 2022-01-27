@@ -104,6 +104,7 @@ export class StorePage implements OnInit {
         this.phaserGame.sound.resumeAll();
       }
       this.musicPlaying = !this.musicPlaying;
+      MainScene.muted = !MainScene.muted;
     });
   }
 

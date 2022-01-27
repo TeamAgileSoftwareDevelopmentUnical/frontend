@@ -4,6 +4,8 @@ import { NavigationExtras } from '@angular/router';
 import { StorePage } from './store.page';
 
 export default class MainScene extends Phaser.Scene {
+  static muted: boolean;
+
   speeches: any;
   player: any;
   butcher: any;
@@ -274,30 +276,30 @@ export default class MainScene extends Phaser.Scene {
       this.player.setVelocity(0);
       this.player.play('up', true);
       this.player.setVelocityY(-100);
-      if(!this.footsteps.isPlaying)
+      if(!this.footsteps.isPlaying && !MainScene.muted)
         {this.footsteps.play();}
     } else if (this.cursors.down.isDown) {
       this.player.setVelocity(0);
       this.player.play('down', true);
       this.player.setVelocityY(100);
-      if(!this.footsteps.isPlaying)
+      if(!this.footsteps.isPlaying && !MainScene.muted)
         {this.footsteps.play();}
     } else if (this.cursors.right.isDown) {
       this.player.setVelocity(0);
       this.player.play('right', true);
       this.player.setVelocityX(100);
-      if(!this.footsteps.isPlaying)
+      if(!this.footsteps.isPlaying && !MainScene.muted)
         {this.footsteps.play();}
     } else if (this.cursors.left.isDown) {
       this.player.setVelocity(0);
       this.player.play('left', true);
       this.player.setVelocityX(-100);
-      if(!this.footsteps.isPlaying)
+      if(!this.footsteps.isPlaying && !MainScene.muted)
         {this.footsteps.play();}
     } else {
       this.player.stop();
       this.player.setVelocity(0);
-      if(this.footsteps.isPlaying)
+      if(this.footsteps.isPlaying && !MainScene.muted)
         {this.footsteps.stop();}
     }
 
