@@ -3,7 +3,9 @@ import {PaymentService} from '../service/payment.service';
 import {PayPalConfirmPaymentRequest} from '../models/request/payPalConfirmPaymentRequest';
 import {PayPalConfirmPaymentResponse} from '../models/response/payPalConfirmPaymentResponse';
 import { StorePage } from '../store/store.page';
-import {LoadingController} from "@ionic/angular";
+import {LoadingController, NavController} from "@ionic/angular";
+import {LoadingService} from "../service/loading.service";
+import {ProductInfo} from "../models/request/productInfo";
 
 @Component({
   selector: 'app-payment-success',
@@ -20,7 +22,8 @@ export class PaymentSuccessPage implements OnInit {
   mode = false;
 
   constructor(private paymentService: PaymentService,
-              private loadingCtrl: LoadingController) { }
+              private navCtrl: NavController,
+              private loadingService: LoadingService) { }
 
   ngOnInit() {
     if (document.URL.indexOf('?')){
@@ -37,17 +40,28 @@ export class PaymentSuccessPage implements OnInit {
           this.request.payerId = singleURLParam[1].trim();
         }
       }
+
+      if (StorePage.instance == null){
+        console.log('Okay');
+      }
+
       // call to successPayment service
-      this.loadingCtrl.create({message: 'Please Wait...'})
-        .then((overlay)=>{
-          this.loading = overlay;
-          this.loading.present();
-        });
+      this.loadingService.showLoading('Please Wait...');
+      this.request.customerId = +sessionStorage.getItem('id');
+      JSON.parse(sessionStorage.getItem('cart')).forEach(data=>{
+        let info: ProductInfo = new ProductInfo();
+        info.quantity = data.quantity;
+        info.productId = data.productId;
+        this.request.productIds.push(info);
+      });
+      console.log(this.request);
+
       this.paymentService.confirmPayment(this.request)
         .subscribe((response: PayPalConfirmPaymentResponse)=>{
           console.log(response.status);
           if (response.status==='approved'){
-            this.loading.dismiss();
+            sessionStorage.removeItem('cart');
+            this.loadingService.hideLoading();
             this.mode = true;
             this.paymentId = response.paymentID;
             this.amountPaid = response.amount;

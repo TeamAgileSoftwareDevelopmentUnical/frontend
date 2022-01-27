@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Injectable, OnInit} from '@angular/core';
 
 import Phaser from 'phaser';
 import MainScene from './MainScene';

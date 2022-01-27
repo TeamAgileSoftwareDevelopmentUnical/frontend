@@ -4,7 +4,9 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {PaypalPaymentRequest} from '../../models/request/paypalPaymentRequest';
 import {PayPalPaymentResponse} from '../../models/response/PayPalPaymentResponse';
 import {StorePage} from '../../store/store.page';
-import {LoadingController} from "@ionic/angular";
+import {LoadingService} from "../../service/loading.service";
+import {ProductService} from "../../service/product.service";
+import {NavController} from "@ionic/angular";
 
 @Component({
   selector: 'app-paypal',
@@ -24,8 +26,9 @@ export class PaypalPage implements OnInit {
   });
 
   constructor(private paymentService: PaymentService,
+              private productService: ProductService,
               private formBuilder: FormBuilder,
-              private loadingCtrl: LoadingController
+              private loadingService: LoadingService
               ) { }
 
   ngOnInit() {
@@ -33,12 +36,7 @@ export class PaypalPage implements OnInit {
   }
 
   paymentWithPayPal() {
-    this.loadingCtrl.create({
-      message: 'Please Wait...'
-    }).then((overlay)=>{
-      this.loading = overlay;
-      this.loading.present();
-    });
+    this.loadingService.showLoading('Please Wait...');
     this.request = this.paymentForm.value;
     this.request.intent = 'Sale';
     this.request.currency = 'EUR';
@@ -48,9 +46,14 @@ export class PaypalPage implements OnInit {
     this.paymentService.payWithPayPal(this.request)
       .subscribe((response: PayPalPaymentResponse)=>{
         if (response.status){
-          this.loading.dismiss();
+          this.loadingService.hideLoading();
           console.log(response.url);
           location.replace(response.url);
+          /*StorePage.instance.getNavCtrl().navigateForward(response.url).then((res)=>{
+            if (!res) {
+              console.log('not working...');
+            }
+          });*/
         }
       });
   }
