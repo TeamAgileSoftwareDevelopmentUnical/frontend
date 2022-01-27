@@ -27,11 +27,13 @@ const routes: Routes = [
   },
   {
     path: 'payment-success',
-    loadChildren: () => import('./payment-success/payment-success.module').then( m => m.PaymentSuccessPageModule)
+    loadChildren: () => import('./payment-success/payment-success.module').then( m => m.PaymentSuccessPageModule),
+    canActivate:[AuthRoleGuard],
   },
   {
     path: 'payment-cancel',
-    loadChildren: () => import('./payment-cancel/payment-cancel.module').then( m => m.PaymentCancelPageModule)
+    loadChildren: () => import('./payment-cancel/payment-cancel.module').then( m => m.PaymentCancelPageModule),
+    canActivate:[AuthRoleGuard],
   },
   {
     path: 'all-product',
@@ -105,7 +107,11 @@ const routes: Routes = [
   
   {
     path: 'mailsupport',
-    loadChildren: () => import('./mailsupport/mailsupport.module').then( m => m.MailsupportPageModule)
+    loadChildren: () => import('./mailsupport/mailsupport.module').then( m => m.MailsupportPageModule),
+    canActivate:[AuthRoleGuard],
+    data: {
+      role: 'Customer'
+    }
   },
   
   { path: '404', component: NotFoundPage },
