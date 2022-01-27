@@ -41,10 +41,14 @@ export class LoginPage implements OnInit {
         sessionStorage.setItem( 'user_name', this.c.username);
 
         if (response.role === 'Seller') {
-          this.router.navigate(['/all-product']);
+          this.router.navigate(['/all-product'],{
+            replaceUrl : true
+           });
         }else {
           console.log('loggato, storage = ', sessionStorage);
-          this.router.navigate(['/store']);
+          this.router.navigate(['/store'],{
+            replaceUrl : true
+           });
         }
     } else {
         this.showError();
@@ -72,7 +76,7 @@ export class LoginPage implements OnInit {
     await alert.present();
 
     const { role } = await alert.onDidDismiss();
-    console.log('onDidDismiss resolved with role', role);
+    // console.log('onDidDismiss resolved with role', role);
   }
 
 }
