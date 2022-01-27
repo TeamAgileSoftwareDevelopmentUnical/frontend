@@ -43,6 +43,8 @@ export class AllProductPage implements OnInit {
 
   getAllProduct(){
     //this.loadingService.showLoading('Product uploading...');
+    
+    if(!sessionStorage.getItem('token')){return;}
     this.service.getAllProduct()
       .subscribe((response: ProductResponse[]) => {
         console.log(response);
