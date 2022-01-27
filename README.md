@@ -20,7 +20,7 @@ After the installation, you can execute the project running in the root folder t
 npm start
 ```
 Then, wait untill the browser will start.\
-:::warning
+::: warning
 Pay attention that, for security reasons, the mail API keys are not included here on GitHub.\
 We can give you the configuration file if you want to test the mail support.
 :::
