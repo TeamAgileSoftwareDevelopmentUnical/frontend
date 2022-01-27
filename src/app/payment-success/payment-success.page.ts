@@ -3,7 +3,7 @@ import { PaymentService } from '../service/payment.service';
 import { PayPalConfirmPaymentRequest } from '../models/request/payPalConfirmPaymentRequest';
 import { PayPalConfirmPaymentResponse } from '../models/response/payPalConfirmPaymentResponse';
 import { StorePage } from '../store/store.page';
-import { LoadingController } from "@ionic/angular";
+import { LoadingController } from '@ionic/angular';
 import { PurchaseService } from '../service/purchase.service';
 import { Purchase } from '../models/purchase';
 import { ProductService } from '../service/product.service';
@@ -15,18 +15,20 @@ import { ProductResponse } from '../models/response/productResponse';
   styleUrls: ['./payment-success.page.scss'],
 })
 export class PaymentSuccessPage implements OnInit {
-
-  private loading;
   request: PayPalConfirmPaymentRequest = new PayPalConfirmPaymentRequest();
   counter = 10;
   amountPaid = 0;
   paymentId: string = null;
   mode = false;
 
-  constructor(private paymentService: PaymentService,
+  private loading;
+
+  constructor(
+    private paymentService: PaymentService,
     private loadingCtrl: LoadingController,
     private purchaseService: PurchaseService,
-    private productService: ProductService) { }
+    private productService: ProductService
+  ) {}
 
   ngOnInit() {
     if (document.URL.indexOf('?')) {
@@ -44,12 +46,12 @@ export class PaymentSuccessPage implements OnInit {
         }
       }
       // call to successPayment service
-      this.loadingCtrl.create({ message: 'Please Wait...' })
-        .then((overlay) => {
-          this.loading = overlay;
-          this.loading.present();
-        });
-      this.paymentService.confirmPayment(this.request)
+      this.loadingCtrl.create({ message: 'Please Wait...' }).then((overlay) => {
+        this.loading = overlay;
+        this.loading.present();
+      });
+      this.paymentService
+        .confirmPayment(this.request)
         .subscribe((response: PayPalConfirmPaymentResponse) => {
           console.log(response.status);
           if (response.status === 'approved') {
@@ -66,13 +68,12 @@ export class PaymentSuccessPage implements OnInit {
                 location.replace('http://localhost:8100/store');
               }
             }, 1000);
-          }
-          else
-            StorePage.instance.showAlert('Payment Error', 'Something get wrong during the payment!');
+          } else
+            {StorePage.instance.showAlert(
+              'Payment Error',
+              'Something get wrong during the payment!'
+            );}
         });
     }
   }
-
-  
-
 }
