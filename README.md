@@ -19,10 +19,11 @@ After the installation, you can execute the project running in the root folder t
 ```
 npm start
 ```
-Then, wait untill the browser will start.\
+Then, wait untill the browser will start.
 
 >Pay attention that, for security reasons, the mail API keys are not included here on GitHub.
 >We can give you the configuration file if you want to test the mail support.
+
 In the `README.md` file of the other repository you can find all the backend instructions.
 
 Once your browser will start, the home page will appear.
