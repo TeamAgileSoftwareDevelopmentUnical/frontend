@@ -58,15 +58,12 @@ export class PaymentSuccessPage implements OnInit {
             this.paymentId = response.paymentID;
             this.amountPaid = response.amount;
 
-            this.deleteFromDBAndCreatePurchase()
-
-
             setInterval(() => {
               --this.counter;
               if (this.counter <= 0) {
                 console.log(response);
                 // redirect to store page
-                location.replace('http://localhost:4200/store');
+                location.replace('http://localhost:8100/store');
               }
             }, 1000);
           }
@@ -76,32 +73,6 @@ export class PaymentSuccessPage implements OnInit {
     }
   }
 
-  private deleteFromDBAndCreatePurchase() {
-    const customer = Number(sessionStorage.getItem('id'));
-    const date = new Date();
-    // FIXME: add a non hardcoded shipping address
-    const shippingAddress = 'Via Verdi 16';
-    const paymentMethod = this.mode ? 'paypal' : 'credit card';
-    StorePage.instance.cart.forEach(element => {
-      let soldProduct: ProductResponse;
-      this.productService.getProductBy(element.id).subscribe((response: ProductResponse) => {
-        if (response) {
-          soldProduct = response;
-        }
-      });
-      const productQuantity = element.getQuantity();
-      const total = Number(element.getPrice()) * Number(productQuantity);
-      this.purchaseService.createPurchase(
-        customer,
-        date,
-        soldProduct,
-        productQuantity,
-        shippingAddress,
-        paymentMethod,
-        total
-      );
-      this.productService.updateAvailableQuantity({ product_id: element.id, availability: soldProduct.batch.availableQuantity - element.getQuantity() })
-    });
-  }
+  
 
 }
