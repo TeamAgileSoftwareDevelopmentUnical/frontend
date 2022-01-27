@@ -10,27 +10,18 @@ Developed by [Team Amazon 1](https://github.com/TeamAgileSoftwareDevelopmentUnic
 ## How to run the project.
 First of all, clone both the frontend and the [backend](https://github.com/TeamAgileSoftwareDevelopmentUnical/backend) repositories.\
 For the frontend part we suggest to open it with Visual Studio Code.\
-Then install some `npm packages` running the following code lines in the terminal:\
+Then install some `npm packages` running the following code line in the terminal:\
+```
+npm install
+```
+_You can check all the dependencies in the file `package.json`._\
+After the installation, you can execute the project running in the root folder this instruction:
+```
+npm start
+```
+Then, wait untill the browser will start.\
+In the `README.md` file of the other repository you can find all the backend instructions.\
 
-Angular Packages
-```
-npm install angular/cli
-```
-Ionic Packages
-```
-npm install ionic/cli
-```
-Phaser Packages
-```
-npm install phaser
-```
-Mail sender Packages
-```
-npm install googleapis nodemailer express
-```
-
-In the `README.md` file of the other repository you can find all the backend instruction.
-
-...mini tutorial con screen
+Once your browser will start, the home page will appear.
 
 # Enjoy!
