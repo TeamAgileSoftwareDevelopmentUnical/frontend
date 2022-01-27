@@ -1,4 +1,4 @@
-# frontend repository🎨
+# Frontend repository🎨
 ## ASD Project's frontend using Angular, Ionic and Phaser frameworks.
 Master degree project for [Agile Software Development](https://sites.google.com/unical.it/inf-agile-software-development) course, [Computer Science](https://informatica.unical.it/home-page), [Unical](https://www.unical.it/portale/).\
 Developed by [Team Amazon 1](https://github.com/TeamAgileSoftwareDevelopmentUnical):
