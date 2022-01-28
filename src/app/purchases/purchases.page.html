@@ -26,7 +26,7 @@
       <ion-col size="auto" *ngFor="let soldProduct of order.soldProducts">
         <ion-item>
 
-          <ion-avatar slot="start">
+          <ion-avatar slot="start" *ngIf="soldProduct.photo !== null">
             <img src= "{{soldProduct.photo}}" />
           </ion-avatar>
 

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {StorePage} from "../store/store.page";
-import {LoadingService} from "../service/loading.service";
-import {ProductService} from "../service/product.service";
-import {ProductInfo} from "../models/request/productInfo";
-import {AlertController} from "@ionic/angular";
+import {ActivatedRoute, Router} from '@angular/router';
+import {StorePage} from '../store/store.page';
+import {LoadingService} from '../service/loading.service';
+import {ProductService} from '../service/product.service';
+import {ProductInfo} from '../models/request/productInfo';
+import {AlertController} from '@ionic/angular';
 
 @Component({
   selector: 'app-payment',
@@ -30,7 +30,7 @@ export class PaymentPage implements OnInit {
     if (StorePage.instance.cart.length>0){
 
       StorePage.instance.cart.forEach(cart=>{
-        let info: ProductInfo = new ProductInfo();
+        const info: ProductInfo = new ProductInfo();
         info.quantity = cart.getQuantity();
         info.productId = cart.id;
         this.cartInfo.push(info);
@@ -38,6 +38,7 @@ export class PaymentPage implements OnInit {
           .subscribe((response: any)=>{
             console.log(response);
             if (!response.status){
+              // FIXME: Why there should be a shipping address error within the productService request?
               this.showAlert('Payment Issue',response.message,'/store');
             }
           });
@@ -54,8 +55,12 @@ export class PaymentPage implements OnInit {
         {
           text: 'Okay',
           handler: ()=>{
-            sessionStorage.removeItem('cart');
-            this.route.navigate([redirectTo]);
+            if (messages === 'Shipping address not found!\nUpdate your shipping address in your profile!') {
+              StorePage.instance.getNavCtrl().navigateForward(`/profile/${sessionStorage.getItem('id')}`);
+            } else {
+              sessionStorage.removeItem('cart');
+              this.route.navigate([redirectTo]);
+            }
           }
         }
       ]

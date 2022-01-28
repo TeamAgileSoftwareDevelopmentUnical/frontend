@@ -1,12 +1,10 @@
-import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Order } from '../models/order';
-import { Purchase } from '../models/purchase';
 import { PurchaseResponse } from '../models/response/purchaseResponse';
 import { PurchaseService } from '../service/purchase.service';
 import { StorePage } from '../store/store.page';
-import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -15,9 +13,6 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./purchases.page.scss'],
 })
 export class PurchasesPage implements OnInit {
-
-  constructor(private route: ActivatedRoute, private service: PurchaseService) { }
-
   id: number; //customer id to visualize purchases
   purchases: PurchaseResponse[] = [];
   orders: Order[]=[];
@@ -25,7 +20,9 @@ export class PurchasesPage implements OnInit {
 
   productsInOrder: PurchaseResponse[] = [];
   firstDate: string;
-  firstOrder: number = 0;
+  firstOrder = 0;
+
+  constructor(private route: ActivatedRoute, private service: PurchaseService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap =>{
@@ -36,13 +33,14 @@ export class PurchasesPage implements OnInit {
 
   fetchPurchases()
   {
-    // console.log("sono in fetch, aspetto il subscribe")
+    // console.log('sono in fetch, aspetto il subscribe');
     this.service.getPurchasesByCustomerId(this.id)
     .subscribe((response: PurchaseResponse[]) => {
       this.purchases = response;
 
       if(this.purchases.length === 0) {
         StorePage.instance.showAlert('Purchases', 'You have not yet made any purchase! :(');
+        StorePage.instance.getNavCtrl().pop();
       }
       else
       {
@@ -59,7 +57,7 @@ export class PurchasesPage implements OnInit {
               element.shippingAddress,
               element.paymentMethod
               ));
-              
+
               this.firstDate = this.datepipe.transform(element.purchaseDate, 'dd-MMM-YYYY HH:mm:ss');
               this.productsInOrder = [];
           }
@@ -81,10 +79,10 @@ export class PurchasesPage implements OnInit {
           }
         });
       }
-      // console.log('lenght orders: '+this.orders.length)
+      // console.log('lenght orders: '+this.orders.length);
     });
 
-    
+
   }
 
 }

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { StorePage } from 'src/app/store/store.page';
 
 @Component({
   selector: 'app-menu',
@@ -48,7 +49,7 @@ export class MenuComponent implements OnInit {
 
   logout(){
     sessionStorage.clear();
-    this.router.navigate(['/home']);
+    window.location.replace('/home');
   }
 
 }
