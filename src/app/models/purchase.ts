@@ -7,7 +7,7 @@ export class Purchase{
     customer: CustomerAccount;
     date: Date;
     // FIXME: not the same of the backend
-    soldProduct: ProductResponse;
+    soldProduct: Product;
     productQuantity: number;
     shippingAddress: string;
     paymentMethod: string;

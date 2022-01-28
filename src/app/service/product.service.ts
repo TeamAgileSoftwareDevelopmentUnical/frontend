@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Product } from '../models/product';
 import {ProductUploadRequest} from '../models/request/productUploadRequest';
 import {ProductUpdateRequest} from '../models/request/productUpdateRequest';
-import {ProductQuantityCheckRequest} from "../models/request/productQuantityCheckRequest";
+import {ProductQuantityCheckRequest} from '../models/request/productQuantityCheckRequest';
 import { ProductUpdateAvailaBilityRequest } from '../models/request/productUpdateAvailabilityRequest';
 
 @Injectable({
@@ -24,11 +25,11 @@ import { ProductUpdateAvailaBilityRequest } from '../models/request/productUpdat
       return this.http.get(this.host+'/get-all?seller_id='+sessionStorage.getItem('id'),{headers});
     }
 
-    getProductBy(product_id: number){
+    getProductBy(productID: number){
       const headers = new HttpHeaders({
         Authorization: 'Bearer '+sessionStorage.getItem('token')
       });
-      return this.http.get(this.host+'/get-product?product_id='+product_id,{headers});
+      return this.http.get(this.host+'/get-product?product_id='+productID,{headers});
     }
 
     uploadProduct(request: ProductUploadRequest){

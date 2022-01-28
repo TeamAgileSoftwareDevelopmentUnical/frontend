@@ -27,11 +27,11 @@
           </ion-avatar>
 
           <ion-label>
-            <h2><b>{{item.soldProduct.productName}}</b></h2>
-            <h6>Price: {{item.soldProduct.batch.productPrice}}€</h6>
+            <h2><b>{{item.soldProduct.name}}</b></h2>
+            <h6>Price: {{item.soldProduct.price}}€</h6>
             <h6>Quantity: {{item.productQuantity}}</h6>
-            <h6>Seller: {{item.soldProduct.seller.username}}</h6>
-            <p>{{item.soldProduct.productDesc}}</p> 
+            <h6>Seller: {{getSellerName(item.soldProduct.sellerID)}}</h6>
+            <p>{{item.soldProduct.description}}</p> 
           </ion-label>
         </ion-item>
       </ion-col>

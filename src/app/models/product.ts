@@ -7,8 +7,8 @@ export class Product{
     name: string;
     description: string;
     price: number;
-    seller: number;
+    sellerID: number;
     availableQuantity: number;
     type: string;
-
+    photo: string;
 }

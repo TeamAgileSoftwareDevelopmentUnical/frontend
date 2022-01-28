@@ -1,12 +1,10 @@
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import { CustomerAccount } from '../models/customeraccount';
-import { SellerAccount } from '../models/selleraccount';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { Account } from '../models/account';
 import { CustomerAccountService } from '../service/customeraccount.service';
 import { SellerAccountService } from '../service/selleraccount.service';
-import {AlertController} from "@ionic/angular";
 import { StorePage } from '../store/store.page';
 
 
@@ -16,22 +14,21 @@ import { StorePage } from '../store/store.page';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
+  // customerAccount : CustomerAccount;
+  // sellerAccount: SellerAccount;
+  id: number; //it's a Long in Java
+  account: Account;
+  mod = false;
 
   constructor(private customerAccountService: CustomerAccountService, private sellerAccountService: SellerAccountService,
               private route: ActivatedRoute, private router: Router,
               private alertCtrl: AlertController) { }
 
-  // customerAccount : CustomerAccount;
-  // sellerAccount: SellerAccount;
-  id: number; //it's a Long in Java
-  account : Account;
-  mod: boolean = false;
-
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap =>{
       this.id = +paramMap.get('id');
-      console.log("id = ", this.id)
-      console.log("token = ",  sessionStorage.getItem('token'))
+      console.log('id = ', this.id);
+      console.log('token = ',  sessionStorage.getItem('token'));
     });
      this.getAccount();
   }
@@ -40,10 +37,10 @@ export class ProfilePage implements OnInit {
     //TO DO: same but with seller account and add an IF?
     this.customerAccountService.getCustomerAccount(this.id).subscribe(
       (response: any) => {
-        console.log("Account: ",response);
+        console.log('Account: ',response);
         this.account = response;
       },(error: HttpErrorResponse) => {
-        console.log("Error in finding a customer account: ", error);
+        console.log('Error in finding a customer account: ', error);
       }
     );
   }
@@ -53,14 +50,14 @@ export class ProfilePage implements OnInit {
 
   }
 
-  submitAccount(){console.log("CIAO", this.account);
+  submitAccount(){console.log('CIAO', this.account);
     //TO DO: same but with seller account and add an IF?
     this.customerAccountService.update(this.account).subscribe(
       (response: any) => {
-      console.log("Account : ",response);
+      console.log('Account : ',response);
       this.mod = false;
-    },(error : HttpErrorResponse)=>{
-      console.log("Error in updating a customer account: ", error);
+    },(error: HttpErrorResponse)=>{
+      console.log('Error in updating a customer account: ', error);
     }
     );
   }
@@ -108,14 +105,14 @@ export class ProfilePage implements OnInit {
     return sessionStorage.getItem( 'id');
   }
   isSeller(){
-    if(sessionStorage.getItem('role')==="Seller"){
+    if(sessionStorage.getItem('role')==='Seller'){
       return true;
     }
     return false;
   }
   notFilled(){
-    if(!this.account.name || this.account.name=="" || !this.account.surname || this.account.surname=="" || !this.account.email || 
-        !this.account.email.match("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$") || this.account.email==""){
+    if(!this.account.name || this.account.name==='' || !this.account.surname || this.account.surname==='' || !this.account.email ||
+        !this.account.email.match('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$') || this.account.email===''){
           return true;
         }
     return false;

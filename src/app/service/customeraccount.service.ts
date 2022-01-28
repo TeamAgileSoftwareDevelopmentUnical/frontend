@@ -16,7 +16,7 @@ import { Account } from '../models/account';
     create(request: Account )
     {
       const headers = new HttpHeaders({
-        'Authorization': 'Bearer '+sessionStorage.getItem('token')
+        Authorization: 'Bearer '+sessionStorage.getItem('token')
       });
       return this.http.post(this.host+'/create', request, {headers});
     }
@@ -24,7 +24,7 @@ import { Account } from '../models/account';
     getCustomerAccount(id)
     {
       const headers = new HttpHeaders({
-        'Authorization': 'Bearer '+sessionStorage.getItem('token')
+        Authorization: 'Bearer '+sessionStorage.getItem('token')
       });
       return this.http.get(this.host+'/get-account/'+[id] ,{headers});
     }
@@ -33,14 +33,14 @@ import { Account } from '../models/account';
     update(request: Account )
     {//to do
       const headers = new HttpHeaders({
-        'Authorization': 'Bearer '+sessionStorage.getItem('token')
+        Authorization: 'Bearer '+sessionStorage.getItem('token')
       });
       return this.http.post(this.host+'/update', request,{headers});
     }
 
-    delete(user_id:number){
+    delete(user_id: number){
       const headers = new HttpHeaders({
-        'Authorization': 'Bearer '+sessionStorage.getItem('token')
+        Authorization: 'Bearer '+sessionStorage.getItem('token')
       });
       return this.http.get(this.h+'/remove-account?user_id='+user_id,{headers});
     }
