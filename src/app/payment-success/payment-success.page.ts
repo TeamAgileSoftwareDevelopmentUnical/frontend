@@ -75,6 +75,7 @@ export class PaymentSuccessPage implements OnInit {
             }, 1000);
           } else{
             this.showFailedAlert(response.message);
+            console.log(response.message);
           }
         });
     }

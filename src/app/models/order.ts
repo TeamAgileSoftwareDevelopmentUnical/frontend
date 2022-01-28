@@ -6,9 +6,9 @@ export class Order{
     customer: number;
     date: string;
     soldProducts: PurchaseResponse[];
-    shippingAddress : string;
-    paymentMethod : string;
-    totalAmount : number;
+    shippingAddress: string;
+    paymentMethod: string;
+    totalAmount: number;
 
     constructor(
         orderId: number,
@@ -31,10 +31,10 @@ export class Order{
         {
             let sum = 0;
             if(this.soldProducts.length !== 0)
-            {               
+            {
                 this.soldProducts.forEach(element => {
-                    sum += element.totalPrice;                    
-                });                
+                    sum += element.totalPrice;
+                });
             }
             return sum;
         }

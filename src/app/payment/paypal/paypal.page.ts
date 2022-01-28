@@ -16,7 +16,6 @@ import { ProductResponse } from 'src/app/models/response/productResponse';
 })
 export class PaypalPage implements OnInit {
 
-  private loading;
   request: PaypalPaymentRequest;
   amount: number;
   description: string;
@@ -25,6 +24,8 @@ export class PaypalPage implements OnInit {
     price: ['',[Validators.required,Validators.nullValidator]],
     description: ['',[Validators.required,Validators.nullValidator]]
   });
+
+  private loading;
 
   constructor(private paymentService: PaymentService,
               private productService: ProductService,
