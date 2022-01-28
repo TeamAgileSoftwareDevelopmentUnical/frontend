@@ -69,10 +69,10 @@ import { ProductUpdateAvailaBilityRequest } from '../models/request/productUpdat
       return this.http.get(this.host+'/get-stand-products?category='+category,{headers});
     }
 
-    checkProductQuantity(productId: number){
+    checkProductQuantity(productId: number,quantity: number){
       const headers = new HttpHeaders({
         Authorization: 'Bearer '+sessionStorage.getItem('token')
       });
-      return this.http.get(this.host+'/check-product-quantity?product_id='+productId,{headers});
+      return this.http.get(this.host+'/check-product-quantity?product_id='+productId+'&quantity='+quantity+'&customer_id='+sessionStorage.getItem('id'),{headers});
     }
 }

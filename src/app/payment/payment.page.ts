@@ -34,11 +34,11 @@ export class PaymentPage implements OnInit {
         info.quantity = cart.getQuantity();
         info.productId = cart.id;
         this.cartInfo.push(info);
-        this.productService.checkProductQuantity(cart.id)
-          .subscribe((response: boolean)=>{
+        this.productService.checkProductQuantity(cart.id,cart.getQuantity())
+          .subscribe((response: any)=>{
             console.log(response);
-            if (!response){
-              this.showAlert('Out Of Stock','Some product is out of stock, please choose different product.','/store');
+            if (!response.status){
+              this.showAlert('Payment Issue',response.message,'/store');
             }
           });
       });

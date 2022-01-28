@@ -69,11 +69,13 @@ export class CardPage implements OnInit {
       });
       this.paymentService.checkoutPayment(this.request)
         .subscribe((response: any) => {
+          this.loadingCtrl.hideLoading();
           if (response.status==='succeeded'){
             console.log('Payment successfully implemented!');
-            this.loadingCtrl.hideLoading();
             sessionStorage.removeItem('cart');
             this.showSuccessAlert(response);
+          }else{
+            this.showFailedAlert(response.message);
           }
         });
     };
@@ -82,6 +84,22 @@ export class CardPage implements OnInit {
       description: this.paymentForm.value.description,
       amount: this.amount * 100
     });
+  }
+
+  async showFailedAlert(msg: string){
+    const alerts = await this.alert.create({
+      header: 'Card Payment',
+      message: msg,
+      buttons: [
+        {
+          text: 'Okay',
+          handler: ()=>{
+            location.replace('http://localhost:8100/store');
+          }
+        }
+      ]
+    });
+    await alerts.present();
   }
 
   async showSuccessAlert(data: any){

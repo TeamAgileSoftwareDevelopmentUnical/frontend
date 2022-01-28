@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PaymentService } from '../service/payment.service';
 import { PayPalConfirmPaymentRequest } from '../models/request/payPalConfirmPaymentRequest';
 import { PayPalConfirmPaymentResponse } from '../models/response/payPalConfirmPaymentResponse';
-import {LoadingController, NavController} from '@ionic/angular';
+import {AlertController, LoadingController, NavController} from '@ionic/angular';
 import {LoadingService} from '../service/loading.service';
 import {ProductInfo} from '../models/request/productInfo';
 import { StorePage } from '../store/store.page';
@@ -25,7 +25,8 @@ export class PaymentSuccessPage implements OnInit {
     private paymentService: PaymentService,
     private loadingService: LoadingService,
     private purchaseService: PurchaseService,
-    private productService: ProductService
+    private productService: ProductService,
+    private alert: AlertController
   ) {}
 
   ngOnInit() {
@@ -57,9 +58,9 @@ export class PaymentSuccessPage implements OnInit {
       this.paymentService.confirmPayment(this.request)
         .subscribe((response: PayPalConfirmPaymentResponse) => {
           console.log(response.status);
+          this.loadingService.hideLoading();
           if (response.status==='approved'){
             sessionStorage.removeItem('cart');
-            this.loadingService.hideLoading();
             this.mode = true;
             this.paymentId = response.paymentID;
             this.amountPaid = response.amount;
@@ -72,12 +73,26 @@ export class PaymentSuccessPage implements OnInit {
                 location.replace('http://localhost:8100/store');
               }
             }, 1000);
-          } /*else
-            {StorePage.instance.showAlert(
-              'Payment Error',
-              'Something get wrong during the payment!'
-            );}*/
+          } else{
+            this.showFailedAlert(response.message);
+          }
         });
     }
+  }
+
+  async showFailedAlert(msg: string) {
+    const alerts = await this.alert.create({
+      header: 'Card Payment',
+      message: msg,
+      buttons: [
+        {
+          text: 'Okay',
+          handler: ()=>{
+            location.replace('http://localhost:8100/store');
+          }
+        }
+      ]
+    });
+    await alerts.present();
   }
 }
