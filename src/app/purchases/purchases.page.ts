@@ -43,6 +43,7 @@ export class PurchasesPage implements OnInit {
 
       if(this.purchases.length === 0) {
         StorePage.instance.showAlert('Purchases', 'You have not yet made any purchase! :(');
+        StorePage.instance.getNavCtrl().pop();
       }
       else
       {
