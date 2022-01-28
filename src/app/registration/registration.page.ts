@@ -79,16 +79,27 @@ export class RegistrationPage implements OnInit {
     this.accountType = event.target.value;
   }
   async showError(error: string) {
-    const alert = await this.alertController.create({
-      // cssClass: 'my-custom-class',
-      header: 'Registration failed.',
-      message: error+' already exist.',
-      buttons: ['OK']
-    });
+    if(error!== "Password"){
+      const alert = await this.alertController.create({
+        // cssClass: 'my-custom-class',
+        header: 'Registration failed.',
+        message: error+' already exist.',
+        buttons: ['OK']
+      });
+      await alert.present();
+      const { role } = await alert.onDidDismiss();
+    }else{
+      const alert = await this.alertController.create({
+        // cssClass: 'my-custom-class',
+        header: 'Registration failed.',
+        message: 'Password must be more than 6 characters.',
+        buttons: ['OK']
+      });
+      await alert.present();
+      const { role } = await alert.onDidDismiss();
+    }
 
-    await alert.present();
 
-    const { role } = await alert.onDidDismiss();
     // console.log('onDidDismiss resolved with role', role);
   }
   async showSuccess() {
