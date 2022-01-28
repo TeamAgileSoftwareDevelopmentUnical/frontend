@@ -30,8 +30,8 @@ export class ProfilePage implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap =>{
       this.id = +paramMap.get('id');
-      console.log("id = ", this.id)
-      console.log("token = ",  sessionStorage.getItem('token'))
+      // console.log("id = ", this.id)
+      // console.log("token = ",  sessionStorage.getItem('token'))
     });
      this.getAccount();
   }
@@ -40,7 +40,7 @@ export class ProfilePage implements OnInit {
     //TO DO: same but with seller account and add an IF?
     this.customerAccountService.getCustomerAccount(this.id).subscribe(
       (response: any) => {
-        console.log("Account: ",response);
+        // console.log("Account: ",response);
         this.account = response;
       },(error: HttpErrorResponse) => {
         console.log("Error in finding a customer account: ", error);
@@ -53,11 +53,11 @@ export class ProfilePage implements OnInit {
 
   }
 
-  submitAccount(){console.log("CIAO", this.account);
+  submitAccount(){
     //TO DO: same but with seller account and add an IF?
     this.customerAccountService.update(this.account).subscribe(
       (response: any) => {
-      console.log("Account : ",response);
+      // console.log("Account : ",response);
       this.mod = false;
     },(error : HttpErrorResponse)=>{
       console.log("Error in updating a customer account: ", error);
