@@ -1,10 +1,11 @@
 import { Purchase } from '../models/purchase';
+import { PurchaseResponse } from './response/purchaseResponse';
 
 export class Order{
     orderId: number;
     customer: number;
-    date: Date;
-    soldProducts: Purchase[];
+    date: string;
+    soldProducts: PurchaseResponse[];
     shippingAddress : string;
     paymentMethod : string;
     totalAmount : number;
@@ -12,8 +13,8 @@ export class Order{
     constructor(
         orderId: number,
         customer: number,
-        date: Date,
-        purchases: Purchase[],
+        date: string,
+        purchases: PurchaseResponse[],
         shippingAddress: string,
         paymentMethod: string,
         ){
@@ -32,7 +33,7 @@ export class Order{
             if(this.soldProducts.length !== 0)
             {               
                 this.soldProducts.forEach(element => {
-                    sum += element.total;                    
+                    sum += element.totalPrice;                    
                 });                
             }
             return sum;

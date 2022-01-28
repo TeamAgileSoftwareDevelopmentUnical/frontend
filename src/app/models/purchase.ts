@@ -6,7 +6,6 @@ export class Purchase{
     id: number;
     customer: CustomerAccount;
     date: Date;
-    // FIXME: not the same of the backend
     soldProduct: ProductResponse;
     productQuantity: number;
     shippingAddress: string;
