@@ -16,7 +16,7 @@ export class HomePage implements OnInit{
 
   ngOnInit() {
     sessionStorage.clear();
-    console.log("session = " , sessionStorage)
+    // console.log("session = " , sessionStorage)
   }
   registration(){
     this.router.navigate(['/registration'],{

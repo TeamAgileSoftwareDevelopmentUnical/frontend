@@ -33,7 +33,7 @@ export class LoginPage implements OnInit {
     this.homeSrv.login(this.c)
     .subscribe((response: any) => {
       if (response) {
-        console.log(response);
+        // console.log(response);
         sessionStorage.setItem( 'token', response.jwtToken);
         sessionStorage.setItem( 'id', response.id);
         sessionStorage.setItem( 'role' , response.role);
@@ -45,7 +45,7 @@ export class LoginPage implements OnInit {
             replaceUrl : true
            });
         }else {
-          console.log('loggato, storage = ', sessionStorage);
+          // console.log('loggato, storage = ', sessionStorage);
           this.router.navigate(['/store'],{
             replaceUrl : true
            });

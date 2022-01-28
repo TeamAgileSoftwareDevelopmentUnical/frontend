@@ -36,7 +36,7 @@ export class PurchasesPage implements OnInit {
 
   fetchPurchases()
   {
-    console.log("sono in fetch, aspetto il subscribe")
+    // console.log("sono in fetch, aspetto il subscribe")
     this.service.getPurchasesByCustomerId(this.id)
     .subscribe((response: PurchaseResponse[]) => {
       this.purchases = response;
@@ -81,7 +81,7 @@ export class PurchasesPage implements OnInit {
           }
         });
       }
-      console.log('lenght orders: '+this.orders.length)
+      // console.log('lenght orders: '+this.orders.length)
     });
 
     

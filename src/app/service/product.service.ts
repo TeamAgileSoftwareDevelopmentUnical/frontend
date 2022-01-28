@@ -32,11 +32,11 @@ import { ProductUpdateAvailaBilityRequest } from '../models/request/productUpdat
     }
 
     uploadProduct(request: ProductUploadRequest){
-      console.log(sessionStorage.getItem('token'));
+      // console.log(sessionStorage.getItem('token'));
       const headers = new HttpHeaders({
         Authorization: 'Bearer '+sessionStorage.getItem('token')
       });
-      console.log(headers);
+      // console.log(headers);
       return this.http.post(this.host+'/upload',request,{headers});
     }
 
@@ -58,7 +58,7 @@ import { ProductUpdateAvailaBilityRequest } from '../models/request/productUpdat
       const headers = new HttpHeaders({
         Authorization: 'Bearer '+sessionStorage.getItem('token')
       });
-      console.log(productID);
+      // console.log(productID);
       return this.http.get(this.host+'/delete?id='+productID,{headers});
     }
 
